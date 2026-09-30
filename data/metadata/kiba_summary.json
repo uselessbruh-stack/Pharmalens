@@ -1,0 +1,38 @@
+{
+  "dataset_name": "kiba",
+  "generated_at": "2026-09-11T21:37:01.929405",
+  "matrix_shape": [
+    2111,
+    229
+  ],
+  "total_matrix_entries": 483419,
+  "measured_interactions": 118254,
+  "unmeasured_interactions": 365165,
+  "sparsity_pct": 75.54,
+  "num_records": 118254,
+  "unique_drugs": 2111,
+  "unique_targets": 229,
+  "duplicate_pairs": 0,
+  "missing_smiles": 0,
+  "missing_sequences": 0,
+  "missing_scores": 0,
+  "score_statistics": {
+    "mean": 11.7199,
+    "std": 0.8369,
+    "min": 0.0,
+    "max": 17.2002,
+    "median": 11.5,
+    "q25": 11.2,
+    "q75": 11.9239
+  },
+  "smiles_length_stats": {
+    "mean": 54.6,
+    "min": 20,
+    "max": 590
+  },
+  "sequence_length_stats": {
+    "mean": 730.9,
+    "min": 215,
+    "max": 4128
+  }
+}

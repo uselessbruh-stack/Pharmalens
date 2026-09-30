@@ -1,0 +1,86 @@
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pharmalens"
+version = "0.1.0"
+description = "An Explainable AI Framework for Drug-Target Interaction Prediction and Candidate Prioritization"
+readme = "README.md"
+license = {text = "MIT"}
+requires-python = ">=3.10"
+authors = [
+    {name = "PharmaLens Team"}
+]
+
+dependencies = [
+    # Core scientific
+    "numpy>=1.24",
+    "pandas>=2.0",
+    "scipy>=1.10",
+    "scikit-learn>=1.3",
+
+    # Chemistry
+    "rdkit",
+
+    # Machine Learning
+    "xgboost>=2.0",
+
+    # Deep Learning (CPU)
+    "torch>=2.0",
+    "torch-geometric>=2.4",
+
+    # Explainability
+    "shap>=0.43",
+    "captum>=0.7",
+
+    # Hyperparameter tuning
+    "optuna>=3.0",
+
+    # Visualization
+    "matplotlib>=3.7",
+    "seaborn>=0.12",
+    "plotly>=5.15",
+
+    # API
+    "fastapi>=0.100",
+    "uvicorn[standard]>=0.23",
+    "pydantic>=2.0",
+
+    # Notebooks
+    "jupyter>=1.0",
+    "jupyterlab>=4.0",
+    "ipywidgets>=8.0",
+
+    # Utilities
+    "tqdm>=4.65",
+    "requests>=2.31",
+    "python-multipart>=0.0.6",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.4",
+    "pytest-asyncio>=0.21",
+    "httpx>=0.24",
+    "ruff>=0.1",
+]
+intel = [
+    "intel-extension-for-pytorch",
+]
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["src*", "backend*"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "W"]
+ignore = ["E501"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]

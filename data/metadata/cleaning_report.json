@@ -1,0 +1,152 @@
+{
+  "drug_preprocessing": {
+    "original_count": 118254,
+    "steps": [
+      {
+        "step": "remove_missing_smiles",
+        "removed": 0
+      },
+      {
+        "step": "validate_smiles",
+        "removed": 0
+      },
+      {
+        "step": "remove_salts",
+        "removed": 0
+      }
+    ],
+    "unique_drugs_after": 2065,
+    "final_count": 118254,
+    "total_removed": 0
+  },
+  "protein_preprocessing": {
+    "original_count": 118254,
+    "steps": [
+      {
+        "step": "remove_missing_sequences",
+        "removed": 0
+      },
+      {
+        "step": "normalize",
+        "removed": 0
+      },
+      {
+        "step": "replace_nonstandard_aa",
+        "affected": 0
+      },
+      {
+        "step": "validate",
+        "removed": 0
+      },
+      {
+        "step": "filter_by_length",
+        "removed": 0,
+        "min_length": 50,
+        "max_length": 5000
+      }
+    ],
+    "unique_targets_after": 229,
+    "final_count": 118254,
+    "total_removed": 0
+  },
+  "interaction_preprocessing": {
+    "original_count": 118254,
+    "dataset": "kiba",
+    "steps": [
+      {
+        "step": "remove_missing_scores",
+        "removed": 0
+      },
+      {
+        "step": "remove_duplicates",
+        "removed": 0,
+        "strategy": "mean"
+      },
+      {
+        "step": "outlier_detection",
+        "n_outliers": 2137,
+        "sigma": 3.0,
+        "removed": 0
+      },
+      {
+        "step": "score_transformation",
+        "dataset": "kiba"
+      }
+    ],
+    "final_count": 118254,
+    "total_removed": 0,
+    "score_stats_after": {
+      "mean": 11.7199,
+      "std": 0.8369,
+      "min": 0.0,
+      "max": 17.2002,
+      "median": 11.5
+    }
+  },
+  "splits": [
+    {
+      "split_name": "random",
+      "train_interactions": 94602,
+      "val_interactions": 11826,
+      "test_interactions": 11826,
+      "train_drugs": 2111,
+      "val_drugs": 1877,
+      "test_drugs": 1864,
+      "train_targets": 229,
+      "val_targets": 224,
+      "test_targets": 226,
+      "drug_overlap_train_test": 1864,
+      "target_overlap_train_test": 226,
+      "drug_overlap_train_val": 1877,
+      "target_overlap_train_val": 224,
+      "unseen_test_drugs": 0,
+      "unseen_test_targets": 0
+    },
+    {
+      "split_name": "cold_drug",
+      "train_interactions": 95823,
+      "val_interactions": 11523,
+      "test_interactions": 10908,
+      "train_drugs": 1689,
+      "val_drugs": 211,
+      "test_drugs": 211,
+      "train_targets": 229,
+      "val_targets": 224,
+      "test_targets": 223,
+      "drug_overlap_train_test": 0,
+      "target_overlap_train_test": 223,
+      "drug_overlap_train_val": 0,
+      "target_overlap_train_val": 224,
+      "unseen_test_drugs": 211,
+      "unseen_test_targets": 0
+    },
+    {
+      "split_name": "cold_target",
+      "train_interactions": 97948,
+      "val_interactions": 9069,
+      "test_interactions": 11237,
+      "train_drugs": 2111,
+      "val_drugs": 1802,
+      "test_drugs": 1983,
+      "train_targets": 185,
+      "val_targets": 22,
+      "test_targets": 22,
+      "drug_overlap_train_test": 1983,
+      "target_overlap_train_test": 0,
+      "drug_overlap_train_val": 1802,
+      "target_overlap_train_val": 0,
+      "unseen_test_drugs": 0,
+      "unseen_test_targets": 22
+    }
+  ],
+  "before": {
+    "total_records": 118254,
+    "unique_drugs": 2111,
+    "unique_targets": 229
+  },
+  "after": {
+    "total_records": 118254,
+    "unique_drugs": 2111,
+    "unique_targets": 229
+  }
+}

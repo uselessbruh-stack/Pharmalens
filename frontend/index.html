@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="PharmaLens — An Explainable AI Framework for Drug-Target Interaction Prediction and Candidate Prioritization">
+    <title>PharmaLens — Drug-Target Interaction Prediction</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="nav" id="navbar">
+        <div class="nav__container">
+            <a href="#" class="nav__logo">
+                <span class="nav__logo-icon">💊</span>
+                <span class="nav__logo-text">Pharma<strong>Lens</strong></span>
+            </a>
+            <div class="nav__links">
+                <a href="#predict" class="nav__link nav__link--active" data-section="predict">Predict</a>
+                <a href="#screen" class="nav__link" data-section="screen">Screen</a>
+                <a href="#explore" class="nav__link" data-section="explore">Explore</a>
+                <a href="#models" class="nav__link" data-section="models">Models</a>
+            </div>
+            <div class="nav__status" id="server-status">
+                <span class="status-dot status-dot--checking"></span>
+                <span class="status-text">Connecting...</span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="hero" id="hero-section">
+        <div class="hero__bg"></div>
+        <div class="hero__container">
+            <div class="hero__badge">MCA Research Project</div>
+            <h1 class="hero__title">
+                <span class="hero__title-gradient">PharmaLens</span>
+            </h1>
+            <p class="hero__subtitle">An Explainable AI Framework for<br>Drug–Target Interaction Prediction</p>
+            <div class="hero__stats" id="hero-stats">
+                <div class="stat-card">
+                    <div class="stat-card__value" id="stat-drugs">—</div>
+                    <div class="stat-card__label">Drugs</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-card__value" id="stat-targets">—</div>
+                    <div class="stat-card__label">Targets</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-card__value" id="stat-interactions">—</div>
+                    <div class="stat-card__label">Interactions</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-card__value" id="stat-models">6</div>
+                    <div class="stat-card__label">Models</div>
+                </div>
+            </div>
+            <a href="#predict" class="hero__cta">Start Predicting →</a>
+        </div>
+    </header>
+
+    <!-- Predict Section -->
+    <section class="section" id="predict">
+        <div class="section__container">
+            <div class="section__header">
+                <h2 class="section__title">🔬 Predict Interaction</h2>
+                <p class="section__desc">Enter a drug SMILES string and a protein sequence to predict binding affinity</p>
+            </div>
+
+            <div class="predict-grid">
+                <!-- Input Panel -->
+                <div class="card card--input">
+                    <div class="card__header">
+                        <h3>Input</h3>
+                    </div>
+                    <div class="card__body">
+                        <div class="form-group">
+                            <label class="form-label" for="smiles-input">Drug SMILES</label>
+                            <textarea class="form-input form-input--mono" id="smiles-input" rows="3"
+                                      placeholder="e.g., CC1=C(C=C(C=C1)NC(=O)C2=CC=C(C=C2)CN3CCN(CC3)C)NC4=NC=CC(=N4)C5=CN=CC=C5"></textarea>
+                            <div class="form-help">Enter a valid SMILES string representing the drug molecule</div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="sequence-input">Protein Sequence</label>
+                            <textarea class="form-input form-input--mono" id="sequence-input" rows="5"
+                                      placeholder="e.g., MKKFFDSRREQGGSGLGSGSSGGGGSTSGLGSGYIGREVDPTPKPLTLKPK..."></textarea>
+                            <div class="form-help">Enter the amino acid sequence (single-letter code)</div>
+                        </div>
+                        <div class="form-group form-group--checkbox">
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="explain-checkbox">
+                                <span class="checkbox-custom"></span>
+                                Include SHAP Explanation
+                            </label>
+                        </div>
+                        <button class="btn btn--primary btn--full" id="predict-btn" onclick="runPrediction()">
+                            <span class="btn__icon">⚡</span>
+                            Predict Interaction Score
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Result Panel -->
+                <div class="card card--result" id="result-panel" style="display: none;">
+                    <div class="card__header">
+                        <h3>Prediction Result</h3>
+                        <span class="badge" id="result-time"></span>
+                    </div>
+                    <div class="card__body">
+                        <div class="result-score-wrapper">
+                            <div class="result-score" id="result-score">—</div>
+                            <div class="result-score-label">KIBA Score</div>
+                            <div class="result-binding" id="result-binding"></div>
+                        </div>
+
+                        <div class="result-details">
+                            <div class="detail-row">
+                                <span class="detail-label">SMILES (cleaned)</span>
+                                <span class="detail-value detail-value--mono" id="result-smiles"></span>
+                            </div>
+                            <div class="detail-row">
+                                <span class="detail-label">Sequence Length</span>
+                                <span class="detail-value" id="result-seqlen"></span>
+                            </div>
+                        </div>
+
+                        <!-- SHAP Explanation -->
+                        <div id="shap-section" style="display: none;">
+                            <h4 class="subsection-title">🧠 SHAP Explanation</h4>
+                            <div class="shap-base" id="shap-base"></div>
+                            <div class="shap-features" id="shap-features"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Screen Section -->
+    <section class="section section--alt" id="screen">
+        <div class="section__container">
+            <div class="section__header">
+                <h2 class="section__title">🎯 Batch Screening</h2>
+                <p class="section__desc">Screen multiple drugs against targets and rank by predicted binding</p>
+            </div>
+
+            <div class="card">
+                <div class="card__header">
+                    <h3>Screening Panel</h3>
+                </div>
+                <div class="card__body">
+                    <div class="screen-inputs">
+                        <div class="form-group">
+                            <label class="form-label" for="screen-drugs">Drug SMILES (one per line)</label>
+                            <textarea class="form-input form-input--mono" id="screen-drugs" rows="4"
+                                      placeholder="CCO&#10;CC(=O)OC1=CC=CC=C1C(=O)O&#10;CC12CCC3C(C1CCC2O)CCC4=CC(=O)CCC34C"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="screen-targets">Protein Sequences (one per line)</label>
+                            <textarea class="form-input form-input--mono" id="screen-targets" rows="4"
+                                      placeholder="MKTFVLLLDAPGRSPS...&#10;MDPSGNAHGVNPHLG..."></textarea>
+                        </div>
+                    </div>
+                    <button class="btn btn--primary" id="screen-btn" onclick="runScreening()">
+                        <span class="btn__icon">📊</span>
+                        Run Screening
+                    </button>
+                </div>
+            </div>
+
+            <div id="screen-results" class="card" style="display: none;">
+                <div class="card__header">
+                    <h3>Screening Results</h3>
+                    <span class="badge" id="screen-count"></span>
+                </div>
+                <div class="card__body">
+                    <div class="table-wrapper">
+                        <table class="data-table" id="screen-table">
+                            <thead>
+                                <tr>
+                                    <th>Rank</th>
+                                    <th>Drug</th>
+                                    <th>Target</th>
+                                    <th>Score</th>
+                                    <th>Binding</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Explore Section -->
+    <section class="section" id="explore">
+        <div class="section__container">
+            <div class="section__header">
+                <h2 class="section__title">📊 Dataset Explorer</h2>
+                <p class="section__desc">Explore the KIBA dataset and model performance</p>
+            </div>
+
+            <div class="explore-grid">
+                <div class="card">
+                    <div class="card__header">
+                        <h3>Dataset Statistics</h3>
+                    </div>
+                    <div class="card__body" id="dataset-stats">
+                        <div class="stats-grid">
+                            <div class="stat-item">
+                                <div class="stat-item__icon">💊</div>
+                                <div class="stat-item__value" id="ds-drugs">—</div>
+                                <div class="stat-item__label">Unique Drugs</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-item__icon">🧬</div>
+                                <div class="stat-item__value" id="ds-targets">—</div>
+                                <div class="stat-item__label">Protein Targets</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-item__icon">🔗</div>
+                                <div class="stat-item__value" id="ds-interactions">—</div>
+                                <div class="stat-item__label">Interactions</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-item__icon">📏</div>
+                                <div class="stat-item__value" id="ds-score-range">—</div>
+                                <div class="stat-item__label">Score Range</div>
+                            </div>
+                        </div>
+                        <button class="btn btn--secondary" onclick="loadDatasetStats()">Refresh Stats</button>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card__header">
+                        <h3>Split Information</h3>
+                    </div>
+                    <div class="card__body">
+                        <div id="split-info" class="split-bars">
+                            <p class="placeholder-text">Click "Refresh Stats" to load split information</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Models Section -->
+    <section class="section section--alt" id="models">
+        <div class="section__container">
+            <div class="section__header">
+                <h2 class="section__title">🏆 Model Comparison</h2>
+                <p class="section__desc">Compare performance across all trained models</p>
+            </div>
+
+            <div class="card">
+                <div class="card__header">
+                    <h3>All Models — Test Set Results</h3>
+                    <button class="btn btn--secondary btn--sm" onclick="loadModelComparison()">Load Results</button>
+                </div>
+                <div class="card__body">
+                    <div class="table-wrapper">
+                        <table class="data-table" id="model-table">
+                            <thead>
+                                <tr>
+                                    <th>Model</th>
+                                    <th>RMSE ↓</th>
+                                    <th>MAE ↓</th>
+                                    <th>Pearson ↑</th>
+                                    <th>R² ↑</th>
+                                    <th>CI ↑</th>
+                                    <th>Train Time</th>
+                                </tr>
+                            </thead>
+                            <tbody id="model-table-body">
+                                <tr><td colspan="7" class="placeholder-text">Click "Load Results" to see model comparison</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer__container">
+            <div class="footer__text">
+                <strong>PharmaLens</strong> — MCA Final Year Project
+            </div>
+            <div class="footer__text footer__text--muted">
+                An Explainable AI Framework for Drug–Target Interaction Prediction and Candidate Prioritization
+            </div>
+        </div>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,67 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.egg-info/
+dist/
+build/
+*.egg
+.eggs/
+
+# Virtual environments
+venv/
+env/
+.venv/
+.env
+
+# Jupyter
+.ipynb_checkpoints/
+*.ipynb_metadata/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Data (large files)
+data/raw/
+data/processed/*.pkl
+data/processed/*.npy
+data/processed/*.h5
+
+# Models (large checkpoints)
+models/baselines/*.pkl
+models/baselines/*.joblib
+models/xgboost/*.json
+models/xgboost/*.pkl
+models/deeptda/*.pt
+models/deeptda/*.pth
+models/gnn/*.pt
+models/gnn/*.pth
+models/best/*.pt
+models/best/*.pth
+models/best/*.pkl
+
+# Experiment logs (keep structure, ignore large logs)
+experiments/logs/*.log
+
+# Node.js (frontend)
+frontend/node_modules/
+frontend/dist/
+frontend/.env
+frontend/.env.local
+
+# Misc
+*.log
+*.tmp
+*.bak
+.coverage
+htmlcov/
