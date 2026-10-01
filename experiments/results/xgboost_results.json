@@ -1,0 +1,51 @@
+{
+  "model": "XGBoost",
+  "hyperparameters": {
+    "n_estimators": 1000,
+    "max_depth": 7,
+    "learning_rate": 0.1,
+    "subsample": 0.8,
+    "colsample_bytree": 0.8,
+    "reg_alpha": 0.01,
+    "reg_lambda": 1.0,
+    "min_child_weight": 5
+  },
+  "train_metrics": {
+    "rmse": 0.2339,
+    "mae": 0.1617,
+    "mse": 0.0547,
+    "pearson": 0.9631,
+    "pearson_pvalue": 0.0,
+    "spearman": 0.9397,
+    "spearman_pvalue": 0.0,
+    "r2": 0.922,
+    "ci": 0.9204,
+    "n_samples": 94602
+  },
+  "val_metrics": {
+    "rmse": 0.43,
+    "mae": 0.2763,
+    "mse": 0.1849,
+    "pearson": 0.8554,
+    "pearson_pvalue": 0.0,
+    "spearman": 0.8386,
+    "spearman_pvalue": 0.0,
+    "r2": 0.7296,
+    "ci": 0.8497,
+    "n_samples": 11826
+  },
+  "test_metrics": {
+    "rmse": 0.4346,
+    "mae": 0.2804,
+    "mse": 0.1889,
+    "pearson": 0.8572,
+    "pearson_pvalue": 0.0,
+    "spearman": 0.8383,
+    "spearman_pvalue": 0.0,
+    "r2": 0.733,
+    "ci": 0.8497,
+    "n_samples": 11826
+  },
+  "training_time": 71.07736492156982,
+  "best_iteration": 1000
+}

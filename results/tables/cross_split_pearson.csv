@@ -1,0 +1,3 @@
+model,cold_drug,cold_target,random
+RandomForest,0.743,0.5123,0.8197
+XGBoost,0.7523,0.6516,0.8572
