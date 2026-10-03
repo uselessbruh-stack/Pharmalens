@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PharmaLens — Capstone Phase-1</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0e0e0e;--card:#1b1b1b;--border:#2d2d2d;
+  --green:#4ade80;--green2:#22c55e;--gdim:#14352a;
+  --amber:#f5b942;--adim:#352b14;
+  --coral:#ef6f5c;--cdim:#351d18;
+  --warm:#ebe5d8;--tx:#b5ae9f;--tx2:#7a7568;--tx3:#4e4a44;
+  --mono:'IBM Plex Mono',monospace;--sans:'DM Sans',system-ui,sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:100%;height:100%;overflow:hidden;font-family:var(--sans);background:var(--bg);color:var(--warm)}
+
+/* ══ SLIDE ENGINE ══ */
+.deck{width:100vw;height:100vh;position:relative}
+.slide{position:absolute;top:0;left:0;width:100vw;height:100vh;opacity:0;pointer-events:none;transition:opacity .4s ease,transform .4s ease;transform:scale(.98)}
+.slide.active{opacity:1;pointer-events:auto;transform:scale(1)}
+.S{width:100%;height:100%;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:5vh 6vw;overflow-y:auto}
+.S::-webkit-scrollbar{width:3px}.S::-webkit-scrollbar-thumb{background:#333;border-radius:8px}
+/* inner wrapper stretches full width */
+.W{width:100%;max-width:100%}
+
+/* progress */
+.ptrack{position:fixed;top:0;left:0;right:0;height:3px;background:#1a1a1a;z-index:999}
+.pfill{height:100%;background:var(--green2);transition:width .4s ease;border-radius:0 3px 3px 0}
+.snum{position:fixed;bottom:14px;right:24px;font:500 12px var(--mono);color:var(--tx3);z-index:999}
+.shelp{position:fixed;bottom:14px;left:24px;font:400 11px var(--sans);color:var(--tx3);z-index:999}
+
+/* ══ ANIMATIONS ══ */
+@keyframes up{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+@keyframes pop{from{opacity:0;transform:scale(.88)}to{opacity:1;transform:scale(1)}}
+@keyframes wide{from{width:0}to{width:var(--w)}}
+.slide.active .a1{animation:up .4s .05s both}
+.slide.active .a2{animation:up .4s .13s both}
+.slide.active .a3{animation:up .4s .21s both}
+.slide.active .a4{animation:up .4s .29s both}
+.slide.active .a5{animation:up .4s .37s both}
+.slide.active .p1{animation:pop .35s .1s both}
+.slide.active .p2{animation:pop .35s .2s both}
+.slide.active .p3{animation:pop .35s .3s both}
+.slide.active .p4{animation:pop .35s .4s both}
+
+/* ══ TYPOGRAPHY ══ */
+h1{font-size:clamp(40px,5.5vw,72px);font-weight:700;letter-spacing:-2px;line-height:1.05;color:var(--warm)}
+h2{font-size:clamp(26px,3vw,38px);font-weight:600;letter-spacing:-.5px;color:var(--warm);margin-bottom:4px}
+.lbl{font:600 clamp(10px,1vw,13px) var(--mono);text-transform:uppercase;letter-spacing:2.5px;color:var(--green);margin-bottom:clamp(10px,1.5vh,18px)}
+.sub{font-size:clamp(16px,1.6vw,22px);color:var(--tx);line-height:1.65;margin-top:clamp(8px,1vh,14px)}
+.note{font-size:clamp(12px,1vw,15px);color:var(--tx2);margin-top:10px}
+
+/* ══ GRIDS ══ */
+.r{display:flex;gap:clamp(14px,1.5vw,28px);width:100%;margin-top:clamp(14px,2vh,28px)}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:clamp(14px,1.5vw,24px);width:100%;margin-top:clamp(14px,2vh,24px)}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:clamp(12px,1.2vw,22px);width:100%;margin-top:clamp(14px,2vh,24px)}
+.g4{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:clamp(10px,1vw,20px);width:100%;margin-top:clamp(14px,2vh,24px)}
+.col{flex:1;min-width:0}
+
+/* ══ CARDS ══ */
+.card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:clamp(18px,2vw,30px);width:100%}
+.card h3{font-size:clamp(14px,1.3vw,18px);font-weight:600;color:var(--warm);margin-bottom:clamp(8px,1vh,14px);display:flex;align-items:center;gap:8px}
+.card li{font-size:clamp(13px,1.1vw,16px);color:var(--tx);line-height:1.6;padding:4px 0 4px 20px;position:relative;list-style:none}
+.card li::before{content:'—';position:absolute;left:0;color:var(--tx3)}
+.card ul{list-style:none;padding:0}
+.card p{font-size:clamp(13px,1.1vw,16px);color:var(--tx);line-height:1.6}
+
+/* ══ TABLE ══ */
+table{width:100%;border-collapse:collapse;margin-top:clamp(10px,1.5vh,18px)}
+th{text-align:left;padding:clamp(8px,1vh,14px) clamp(10px,1vw,18px);font:600 clamp(9px,.8vw,12px) var(--mono);text-transform:uppercase;letter-spacing:.7px;color:var(--tx3);border-bottom:2px solid var(--border)}
+td{padding:clamp(8px,1vh,14px) clamp(10px,1vw,18px);border-bottom:1px solid #222;color:var(--tx);font-size:clamp(12px,1vw,15px)}
+td:first-child{font-weight:500;color:var(--warm)}
+.best td{color:var(--green)!important;font-weight:600}
+
+/* ══ STATS ══ */
+.stat{padding:clamp(18px,2.5vh,32px) clamp(14px,1.5vw,24px);border-radius:12px;background:var(--card);border:1px solid var(--border);text-align:center}
+.stat .v{font:700 clamp(28px,3vw,44px) var(--mono);letter-spacing:-1px;color:var(--green)}
+.stat .l{font:500 clamp(9px,.8vw,12px) var(--mono);text-transform:uppercase;letter-spacing:.8px;color:var(--tx3);margin-top:6px}
+.stat.am .v{color:var(--amber)}.stat.co .v{color:var(--coral)}.stat.wm .v{color:var(--warm)}
+
+/* ══ BARS ══ */
+.bars{display:flex;flex-direction:column;gap:clamp(8px,1.2vh,16px);width:100%;margin-top:clamp(14px,2vh,24px)}
+.bar{display:flex;align-items:center;gap:clamp(8px,1vw,16px)}
+.bname{width:clamp(100px,12vw,160px);font-size:clamp(12px,1.1vw,16px);color:var(--tx);text-align:right;flex-shrink:0}
+.btrack{flex:1;height:clamp(24px,3.5vh,36px);background:#161616;border-radius:8px;overflow:hidden;border:1px solid var(--border)}
+.bfill{height:100%;border-radius:7px;display:flex;align-items:center;justify-content:flex-end;padding-right:12px;font:500 clamp(10px,.9vw,13px) var(--mono);animation:wide .7s ease-out both}
+.bfill.g{background:var(--gdim);color:var(--green)}
+.bfill.a{background:var(--adim);color:var(--amber)}
+.bfill.c{background:var(--cdim);color:var(--coral)}
+.bfill.n{background:#1e1e1e;color:var(--tx3)}
+
+/* ══ UML ══ */
+.ubox{display:inline-flex;align-items:center;gap:8px;padding:clamp(10px,1.4vh,18px) clamp(16px,1.8vw,28px);border:2px solid var(--border);border-radius:6px;font-size:clamp(13px,1.2vw,17px);font-weight:500;color:var(--tx);background:var(--bg)}
+.ubox.pill{border-radius:28px}
+.ubox.gr{border-color:var(--green2);color:var(--green)}
+.ubox.am{border-color:var(--amber);color:var(--amber)}
+.ubox.co{border-color:var(--coral);color:var(--coral)}
+.ust{font:italic clamp(9px,.75vw,11px) var(--sans);color:var(--tx3);margin-bottom:3px}
+.uarr{color:var(--tx3);font-size:clamp(14px,1.4vw,22px);padding:0 clamp(4px,.5vw,10px);flex-shrink:0}
+.udown{color:var(--tx3);font-size:clamp(13px,1.2vw,18px);text-align:center;padding:clamp(4px,.5vh,8px) 0}
+
+/* ══ TAGS ══ */
+.tag{display:inline-block;padding:4px 12px;border-radius:6px;font:500 clamp(10px,.9vw,13px) var(--mono);background:var(--gdim);color:var(--green);margin:3px 4px}
+.tag.a{background:var(--adim);color:var(--amber)}
+
+/* ══ TITLE ══ */
+.title .S{justify-content:center;align-items:center;text-align:center}
+.meta{font-size:clamp(14px,1.2vw,18px);color:var(--tx2);line-height:2.1;margin-top:clamp(28px,4vh,48px)}
+.meta b{color:var(--tx);font-weight:500}
+
+/* ══ PROPORTION ══ */
+.prow{display:flex;align-items:center;gap:clamp(8px,1vw,16px);margin-bottom:clamp(10px,1.4vh,18px);width:100%}
+.plbl{width:clamp(100px,12vw,160px);font-size:clamp(13px,1.1vw,16px);color:var(--tx);text-align:right;flex-shrink:0}
+.ptrk{flex:1;height:clamp(28px,3.5vh,38px);background:#161616;border-radius:6px;overflow:hidden}
+.pfll{height:100%;display:flex;align-items:center;justify-content:flex-end;padding-right:14px;font:600 clamp(11px,1vw,14px) var(--mono);border-radius:6px}
+</style>
+</head>
+<body>
+
+<div class="ptrack"><div class="pfill" id="pbar"></div></div>
+<div class="snum" id="snum"></div>
+<div class="shelp">← → Navigate · F11 Fullscreen</div>
+
+<div class="deck" id="deck">
+
+<!-- ═══ 1 · TITLE ═══ -->
+<div class="slide title active">
+<div class="S">
+  <div class="lbl a1">MCA Capstone Project · Phase 1</div>
+  <h1 class="a2">PharmaLens</h1>
+  <p class="sub a3" style="text-align:center;max-width:700px">An Explainable AI Framework for Drug–Target Interaction<br>Prediction and Candidate Prioritization</p>
+  <div class="meta a4">
+    <b>Student:</b> [Your Name] · <b>Roll:</b> [Roll No]<br>
+    <b>Guide:</b> [Guide Name], [Designation]<br>
+    Department of Computer Applications, [University]<br>
+    October 2026
+  </div>
+</div>
+</div>
+
+<!-- ═══ 2 · ABSTRACT ═══ -->
+<div class="slide">
+<div class="S">
+<div class="W">
+  <div class="lbl a1">Abstract</div>
+  <h2 class="a2">Project Overview</h2>
+  <div class="r a3">
+    <div class="col">
+      <p style="font-size:clamp(15px,1.4vw,20px);color:var(--tx);line-height:1.85;margin-top:8px">
+        Drug discovery costs <b style="color:var(--warm)">$1–2 billion</b> and takes <b style="color:var(--warm)">10–15 years</b> per drug. Testing every drug-protein combination experimentally is infeasible.
+      </p>
+      <p style="font-size:clamp(15px,1.4vw,20px);color:var(--tx);line-height:1.85;margin-top:16px">
+        PharmaLens uses machine learning to predict binding affinity from molecular structure and protein sequences. It compares <b style="color:var(--warm)">7 models</b> on the KIBA benchmark and provides <b style="color:var(--warm)">SHAP explainability</b> for interpretable predictions.
+      </p>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:clamp(10px,1vw,18px);width:clamp(240px,28vw,400px);flex-shrink:0">
+      <div class="stat p1"><div class="v">118K</div><div class="l">Interactions</div></div>
+      <div class="stat am p2"><div class="v">7</div><div class="l">Models</div></div>
+      <div class="stat p3"><div class="v">0.421</div><div class="l">Best RMSE</div></div>
+      <div class="stat wm p4"><div class="v">0.867</div><div class="l">Pearson r</div></div>
+    </div>
+  </div>
+</div>
+</div>
+</div>
+
+<!-- ═══ 3 · INTRODUCTION ═══ -->
+<div class="slide">
+<div class="S">
+<div class="W">
+  <div class="lbl a1">Introduction</div>
+  <h2 class="a2">Problem · Solution · Scope</h2>
+  <div class="g2 a3">
+    <div class="card p1"><h3>🚨 Problem</h3><ul><li>Experimental screening is slow and costs billions</li><li>Combinatorial explosion: thousands of drugs × hundreds of proteins</li><li>Most AI models lack interpretability</li></ul></div>
+    <div class="card p2"><h3>💡 Solution</h3><ul><li>ML framework predicting binding from SMILES + protein sequence</li><li>7-model comparison: baselines → XGBoost → CNN → GNN</li><li>SHAP explainability for every prediction</li></ul></div>
+    <div class="card p3"><h3>🎯 Purpose</h3><ul><li>Accelerate early-stage drug candidate prioritization</li><li>Provide trustworthy, interpretable predictions</li><li>Enable batch screening for researchers</li></ul></div>
+    <div class="card p4"><h3>📐 Scope</h3><ul><li>KIBA benchmark dataset (kinase inhibitors)</li><li>Continuous binding affinity prediction</li><li>Web app for interactive prediction and screening</li><li>Does not replace experimental validation</li></ul></div>
+  </div>
+</div>
+</div>
+</div>
+
+<!-- ═══ 4 · LITERATURE SURVEY ═══ -->
+<div class="slide">
+<div class="S">
+<div class="W">
+  <div class="lbl a1">Literature Survey</div>
+  <h2 class="a2">Research Papers (IEEE / Scopus Indexed)</h2>
+  <div class="a3" style="overflow-y:auto;flex:1;width:100%;margin-top:16px">
+  <table>
+    <thead><tr><th>#</th><th>Title & Authors</th><th>Year</th><th>Publication</th><th>Key Contribution</th></tr></thead>
+    <tbody>
+    <tr><td>1</td><td><b>DeepDTA</b> — Öztürk H. et al.</td><td>2018</td><td>Bioinformatics</td><td>CNN on raw SMILES + protein sequence</td></tr>
+    <tr><td>2</td><td><b>GraphDTA</b> — Nguyen T. et al.</td><td>2021</td><td>Bioinformatics</td><td>GNN on molecular graphs; captures topology</td></tr>
+    <tr><td>3</td><td><b>KIBA Score</b> — Tang J. et al.</td><td>2014</td><td>J. Chem. Inf. Model.</td><td>Unified bioactivity score (Ki + Kd + IC50)</td></tr>
+    <tr><td>4</td><td><b>KronRLS</b> — Pahikkala T. et al.</td><td>2015</td><td>Brief. Bioinform.</td><td>Cold-start evaluation protocol</td></tr>
+    <tr><td>5</td><td><b>SimBoost</b> — He T. et al.</td><td>2017</td><td>J. Cheminform.</td><td>Gradient boosting with feature engineering</td></tr>
+    <tr><td>6</td><td><b>TransformerCPI</b> — Chen L. et al.</td><td>2020</td><td>Bioinformatics</td><td>Transformer attention for CPI</td></tr>
+    <tr><td>7</td><td><b>DeepConv-DTI</b> — Lee I. et al.</td><td>2019</td><td>PLOS Comput. Biol.</td><td>Deep convolution on protein subsequences</td></tr>
+    <tr><td>8</td><td><b>MGraphDTA</b> — Yang Z. et al.</td><td>2022</td><td>Chemical Science</td><td>Multi-scale GNN for local + global features</td></tr>
+    <tr><td>9</td><td><b>AttentionDTA</b> — Zhao Q. et al.</td><td>2022</td><td>IEEE/ACM Trans. CBB</td><td>Attention on drug/protein sub-regions</td></tr>
+    <tr><td>10</td><td><b>SHAP</b> — Lundberg S. et al.</td><td>2017</td><td>NeurIPS</td><td>Shapley-value feature attribution</td></tr>
+    </tbody>
+  </table>
+  </div>
+</div>
+</div>
+</div>
+
+<!-- ═══ 5 · COMPARATIVE ═══ -->
+<div class="slide">
+<div class="S">
+<div class="W">
+  <div class="lbl a1">Comparative Study</div>
+  <h2 class="a2">Existing Systems vs PharmaLens</h2>
+  <div class="a3" style="width:100%;margin-top:20px">
+  <table>
+    <thead><tr><th>Feature</th><th>DeepDTA '18</th><th>GraphDTA '21</th><th>MGraphDTA '22</th><th style="color:var(--green)">PharmaLens</th></tr></thead>
+    <tbody>
+    <tr><td>Multi-model comparison</td><td>✗</td><td>✗</td><td>✗</td><td style="color:var(--green)">✓ 7 models</td></tr>
+    <tr><td>Traditional ML baselines</td><td>✗</td><td>✗</td><td>✗</td><td style="color:var(--green)">✓ Ridge, RF, XGBoost</td></tr>
+    <tr><td>Deep Learning</td><td>CNN</td><td>GNN</td><td>Multi-GNN</td><td style="color:var(--green)">✓ CNN + GNN</td></tr>
+    <tr><td>Explainability</td><td>✗</td><td>✗</td><td>✗</td><td style="color:var(--green)">✓ SHAP</td></tr>
+    <tr><td>Cold-start evaluation</td><td>✗</td><td>✗</td><td>Partial</td><td style="color:var(--green)">✓ Drug + Target</td></tr>
+    <tr><td>Hyperparameter tuning</td><td>Manual</td><td>Manual</td><td>Manual</td><td style="color:var(--green)">✓ Bayesian (Optuna)</td></tr>
+    <tr><td>Web application</td><td>✗</td><td>✗</td><td>✗</td><td style="color:var(--green)">✓ FastAPI + UI</td></tr>
+    <tr><td>Batch screening</td><td>✗</td><td>✗</td><td>✗</td><td style="color:var(--green)">✓ Drug × Target</td></tr>
+    </tbody>
+  </table>
+  </div>
+</div>
+</div>
+</div>
+
+<!-- ═══ 6 · TOOLS ═══ -->
+<div class="slide">
+<div class="S">
+<div class="W">
+  <div class="lbl a1">Tools & Technologies</div>
+  <h2 class="a2">Stack</h2>
+  <div class="g3 a3">
+    <div class="card"><h3>🐍 Language</h3><p><span class="tag">Python 3.12</span><span class="tag a">JS ES6+</span><span class="tag a">HTML5/CSS3</span></p></div>
+    <div class="card"><h3>📊 ML & Data</h3><p><span class="tag">scikit-learn 1.3+</span><span class="tag">XGBoost 2.0+</span><span class="tag">Optuna 3.0+</span><span class="tag a">NumPy 1.24+</span><span class="tag a">Pandas 2.0+</span></p></div>
+    <div class="card"><h3>🧠 Deep Learning</h3><p><span class="tag">PyTorch 2.0+</span><span class="tag">PyG 2.4+</span></p></div>
+    <div class="card"><h3>⚗️ Chemistry</h3><p><span class="tag">RDKit 2024.03+</span></p><p class="note">SMILES validation, descriptors, fingerprints, molecular graphs</p></div>
+    <div class="card"><h3>💡 Explainability</h3><p><span class="tag">SHAP 0.43+</span></p><p class="note">TreeExplainer, summary, waterfall, dependence plots</p></div>
+    <div class="card"><h3>🌐 Web & Viz</h3><p><span class="tag">FastAPI 0.100+</span><span class="tag a">Uvicorn 0.23+</span><span class="tag a">Matplotlib 3.7+</span><span class="tag a">Seaborn 0.12+</span></p></div>
+  </div>
+</div>
+</div>
+</div>
+
+<!-- ═══ 7 · FUNCTIONAL REQ ═══ -->
+<div class="slide">
+<div class="S">
+<div class="W">
+  <div class="lbl a1">Functional Requirements</div>
+  <h2 class="a2">System Capabilities</h2>
+  <p class="a3 note" style="font-size:clamp(13px,1.1vw,16px);color:var(--tx)">Users: Researchers · Pharmacologists · Bioinformatics Students</p>
+  <div class="a4" style="overflow-y:auto;flex:1;width:100%">
+  <table>
+    <thead><tr><th>ID</th><th>Requirement</th><th>Description</th></tr></thead>
+    <tbody>
+    <tr><td>FR-01</td><td>Dataset Loading</td><td>Load KIBA dataset, display statistics and distributions</td></tr>
+    <tr><td>FR-02</td><td>Preprocessing</td><td>Validate SMILES via RDKit, normalize sequences, generate splits</td></tr>
+    <tr><td>FR-03</td><td>Drug Features</td><td>10 molecular descriptors + 1024-bit Morgan fingerprint</td></tr>
+    <tr><td>FR-04</td><td>Protein Features</td><td>AAC (20D) + dipeptide composition (400D)</td></tr>
+    <tr><td>FR-05</td><td>Model Training</td><td>Train 7 models: Mean, Ridge, RF, XGBoost, DeepDTA, GraphDTA</td></tr>
+    <tr><td>FR-06</td><td>Evaluation</td><td>RMSE, MAE, Pearson, Spearman, R², CI on test set</td></tr>
+    <tr><td>FR-07</td><td>HP Tuning</td><td>Bayesian optimization via Optuna — 50 trials</td></tr>
+    <tr><td>FR-08</td><td>Cold-Start</td><td>Evaluate on unseen drugs and proteins separately</td></tr>
+    <tr><td>FR-09</td><td>Explainability</td><td>SHAP feature attribution, waterfall, dependence plots</td></tr>
+    <tr><td>FR-10</td><td>Prediction API</td><td>REST: SMILES + sequence → predicted binding score</td></tr>
+    <tr><td>FR-11</td><td>Batch Screening</td><td>Screen drug × target matrix, return ranked results</td></tr>
+    <tr><td>FR-12</td><td>Web Dashboard</td><td>Interactive UI for prediction, screening, comparison</td></tr>
+    </tbody>
+  </table>
+  </div>
+</div>
+</div>
+</div>
+
+<!-- ═══ 8 · NON-FUNCTIONAL ═══ -->
+<div class="slide">
+<div class="S">
+<div class="W">
+  <div class="lbl a1">Non-Functional Requirements</div>
+  <h2 class="a2">Quality Attributes</h2>
+  <div class="g2 a3">
+    <div class="card p1"><h3>⚡ Performance</h3><ul><li>Single prediction: <b style="color:var(--warm)">&lt; 100ms</b></li><li>200-pair screening: <b style="color:var(--warm)">&lt; 5 sec</b></li><li>XGBoost training: <b style="color:var(--warm)">&lt; 6 min</b></li></ul></div>
+    <div class="card p2"><h3>🔄 Reproducibility</h3><ul><li>Fixed random seed (42) across all experiments</li><li>Experiment tracker logs every run</li><li>Persisted train/val/test splits</li></ul></div>
+    <div class="card p3"><h3>🧩 Modularity</h3><ul><li>Separate packages: preprocessing, features, models, evaluation</li><li>Model registry with plug-and-play inference</li><li>Unified pipeline interface</li></ul></div>
+    <div class="card p4"><h3>🔍 Interpretability</h3><ul><li>SHAP explanation for every prediction</li><li>Drug vs protein feature category breakdown</li><li>Per-prediction waterfall decomposition</li></ul></div>
+  </div>
+</div>
+</div>
+</div>
+
+<!-- ═══ 9 · ARCHITECTURE ═══ -->
+<div class="slide">
+<div class="S">
+<div class="W">
+  <div class="lbl a1">Design</div>
+  <h2 class="a2">System Architecture — Component Diagram</h2>
+  <div class="a3" style="display:flex;flex-direction:column;gap:clamp(8px,1.2vh,16px);margin-top:clamp(20px,3vh,36px);width:100%;align-items:center">
+
+    <div style="display:flex;align-items:center;gap:clamp(6px,.8vw,14px);flex-wrap:wrap;justify-content:center">
+      <div><div class="ust">«datastore»</div><div class="ubox">📁 KIBA Dataset</div></div>
+      <div class="uarr">──▶</div>
+      <div><div class="ust">«component»</div><div class="ubox">⚗️ Preprocessing</div></div>
+      <div class="uarr">──▶</div>
+      <div><div class="ust">«component»</div><div class="ubox">🔣 Feature Engineering</div></div>
+    </div>
+
+    <div style="display:flex;gap:clamp(16px,3vw,40px);justify-content:center;flex-wrap:wrap">
+      <div class="ubox am">💊 Drug: Descriptors + FP → 1034D</div>
+      <div class="ubox co">🧬 Protein: AAC + DPC → 420D</div>
+    </div>
+
+    <div class="udown">↓ concat → 1454D ↓</div>
+
+    <div style="display:flex;align-items:center;gap:clamp(8px,1vw,16px);flex-wrap:wrap;justify-content:center">
+      <div><div class="ust">«model»</div><div class="ubox pill">Ridge</div></div>
+      <div><div class="ust">«model»</div><div class="ubox pill">Random Forest</div></div>
+      <div><div class="ust">«best»</div><div class="ubox pill gr">★ XGBoost</div></div>
+      <div><div class="ust">«model»</div><div class="ubox pill am">DeepDTA</div></div>
+      <div><div class="ust">«model»</div><div class="ubox pill am">GraphDTA</div></div>
+    </div>
+
+    <div class="udown">▼</div>
+
+    <div style="display:flex;align-items:center;gap:clamp(6px,.8vw,14px);justify-content:center">
+      <div><div class="ust">«component»</div><div class="ubox">📈 Evaluation</div></div>
+      <div class="uarr">──▶</div>
+      <div><div class="ust">«component»</div><div class="ubox">🧠 SHAP Explainability</div></div>
+    </div>
+
+    <div class="udown">▼</div>
+
+    <div style="display:flex;align-items:center;gap:clamp(6px,.8vw,14px);justify-content:center">
+      <div><div class="ust">«service»</div><div class="ubox gr">🔌 FastAPI Backend</div></div>
+      <div class="uarr">──▶</div>
+      <div><div class="ust">«interface»</div><div class="ubox gr">🖥️ Web Dashboard</div></div>
+    </div>
+
+  </div>
+</div>
+</div>
+</div>
+
+<!-- ═══ 10 · PROCESS FLOW ═══ -->
+<div class="slide">
+<div class="S">
+<div class="W">
+  <div class="lbl a1">Design</div>
+  <h2 class="a2">ML Process Flow — Activity Diagram</h2>
+  <div class="r a3" style="gap:clamp(24px,4vw,60px)">
+    <div class="col" style="display:flex;flex-direction:column;align-items:stretch;gap:clamp(4px,.6vh,10px)">
+      <div style="width:clamp(20px,2vw,28px);height:clamp(20px,2vw,28px);border-radius:50%;background:var(--green);align-self:center"></div>
+      <div class="udown">↓</div>
+      <div class="ubox" style="width:100%;justify-content:center">① Data Collection — KIBA</div>
+      <div class="udown">↓</div>
+      <div class="ubox" style="width:100%;justify-content:center">② Exploratory Data Analysis</div>
+      <div class="udown">↓</div>
+      <div class="ubox" style="width:100%;justify-content:center">③ Preprocessing & Cleaning</div>
+      <div class="udown">↓</div>
+      <div class="ubox am" style="width:100%;justify-content:center">④ Feature Engineering</div>
+      <div class="udown">↓</div>
+      <div class="ubox am" style="width:100%;justify-content:center">⑤ Train / Val / Test Split</div>
+    </div>
+    <div class="col" style="display:flex;flex-direction:column;align-items:stretch;gap:clamp(4px,.6vh,10px)">
+      <div class="ubox gr" style="width:100%;justify-content:center">⑥ Model Training (×7)</div>
+      <div class="udown">↓</div>
+      <div class="ubox gr" style="width:100%;justify-content:center">⑦ Hyperparameter Tuning</div>
+      <div class="udown">↓</div>
+      <div class="ubox co" style="width:100%;justify-content:center">⑧ Cold-Start Evaluation</div>
+      <div class="udown">↓</div>
+      <div class="ubox" style="width:100%;justify-content:center">⑨ SHAP Explainability</div>
+      <div class="udown">↓</div>
+      <div class="ubox gr" style="width:100%;justify-content:center">⑩ Deployment (API + Web)</div>
+      <div class="udown">↓</div>
+      <div style="width:clamp(20px,2vw,28px);height:clamp(20px,2vw,28px);border-radius:50%;border:3px solid var(--green);align-self:center;position:relative"><div style="width:60%;height:60%;border-radius:50%;background:var(--green);position:absolute;top:20%;left:20%"></div></div>
+    </div>
+  </div>
+</div>
+</div>
+</div>
+
+<!-- ═══ 11 · DATASET ═══ -->
+<div class="slide">
+<div class="S">
+<div class="W">
+  <div class="lbl a1">Implementation</div>
+  <h2 class="a2">Dataset & Feature Engineering</h2>
+  <div class="g4 a3">
+    <div class="stat p1"><div class="v">118,254</div><div class="l">Interactions</div></div>
+    <div class="stat am p2"><div class="v">2,111</div><div class="l">Drugs</div></div>
+    <div class="stat co p3"><div class="v">229</div><div class="l">Targets</div></div>
+    <div class="stat wm p4"><div class="v">0–17.2</div><div class="l">Score Range</div></div>
+  </div>
+  <div class="g2 a4">
+    <div class="card">
+      <h3>💊 Drug → 1,034D</h3>
+      <ul>
+        <li><b style="color:var(--warm)">10 descriptors</b> — MW, LogP, TPSA, HBD, HBA, rotatable bonds, aromatic rings, Csp3, heavy atoms, rings</li>
+        <li><b style="color:var(--warm)">1,024-bit Morgan FP</b> — circular substructure (ECFP4, radius=2)</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>🧬 Protein → 420D</h3>
+      <ul>
+        <li><b style="color:var(--warm)">AAC (20D)</b> — frequency of each amino acid</li>
+        <li><b style="color:var(--warm)">DPC (400D)</b> — frequency of amino acid pairs (20×20)</li>
+      </ul>
+    </div>
+  </div>
+  <p class="note a5" style="font-size:clamp(13px,1.1vw,16px);color:var(--tx)">Per pair: concat(drug₁₀₃₄, protein₄₂₀) = <b style="color:var(--warm)">1,454D input vector</b></p>
+</div>
+</div>
+</div>
+
+<!-- ═══ 12 · RESULTS ═══ -->
+<div class="slide">
+<div class="S">
+<div class="W">
+  <div class="lbl a1">Implementation</div>
+  <h2 class="a2">Model Comparison — RMSE (lower is better)</h2>
+  <div class="bars a3">
+    <div class="bar"><div class="bname" style="color:var(--green)">★ XGBoost Tuned</div><div class="btrack"><div class="bfill g" style="--w:50%;width:50%">0.421</div></div></div>
+    <div class="bar"><div class="bname">DeepDTA</div><div class="btrack"><div class="bfill a" style="--w:50.5%;width:50.5%">0.425</div></div></div>
+    <div class="bar"><div class="bname">GraphDTA</div><div class="btrack"><div class="bfill a" style="--w:51.2%;width:51.2%">0.430</div></div></div>
+    <div class="bar"><div class="bname">XGBoost</div><div class="btrack"><div class="bfill g" style="--w:51.7%;width:51.7%">0.435</div></div></div>
+    <div class="bar"><div class="bname">Random Forest</div><div class="btrack"><div class="bfill n" style="--w:58%;width:58%">0.487</div></div></div>
+    <div class="bar"><div class="bname">Ridge</div><div class="btrack"><div class="bfill c" style="--w:78%;width:78%">0.655</div></div></div>
+    <div class="bar"><div class="bname" style="color:var(--tx3)">Mean Predictor</div><div class="btrack"><div class="bfill n" style="--w:100%;width:100%">0.841</div></div></div>
+  </div>
+  <div class="g4 a4" style="margin-top:clamp(16px,2.5vh,28px)">
+    <div class="stat"><div class="v" style="font-size:clamp(22px,2.4vw,34px)">0.867</div><div class="l">Best Pearson r</div></div>
+    <div class="stat am"><div class="v" style="font-size:clamp(22px,2.4vw,34px)">0.750</div><div class="l">Best R²</div></div>
+    <div class="stat wm"><div class="v" style="font-size:clamp(22px,2.4vw,34px)">5.4 min</div><div class="l">Best Train Time</div></div>
+    <div class="stat co"><div class="v" style="font-size:clamp(22px,2.4vw,34px)">100×</div><div class="l">Faster than DL</div></div>
+  </div>
+</div>
+</div>
+</div>
+
+<!-- ═══ 13 · TUNING ═══ -->
+<div class="slide">
+<div class="S">
+<div class="W">
+  <div class="lbl a1">Implementation</div>
+  <h2 class="a2">Tuning & Cold-Start</h2>
+  <div class="g2 a3">
+    <div class="card">
+      <h3>⚙️ Optuna Tuning — 50 Trials</h3>
+      <table>
+        <thead><tr><th>Metric</th><th>Before</th><th>After</th><th>Δ</th></tr></thead>
+        <tr><td>RMSE</td><td style="color:var(--tx3)">0.435</td><td style="color:var(--green)"><b>0.421</b></td><td style="color:var(--green)">↓ 3.2%</td></tr>
+        <tr><td>Pearson</td><td style="color:var(--tx3)">0.857</td><td style="color:var(--green)"><b>0.867</b></td><td style="color:var(--green)">↑ +0.01</td></tr>
+        <tr><td>R²</td><td style="color:var(--tx3)">0.733</td><td style="color:var(--green)"><b>0.750</b></td><td style="color:var(--green)">↑ +0.017</td></tr>
+      </table>
+    </div>
+    <div class="card">
+      <h3>❄️ Cold-Start — XGBoost</h3>
+      <table>
+        <thead><tr><th>Split</th><th>RMSE</th><th>Pearson</th><th>Drop</th></tr></thead>
+        <tr><td>Random</td><td>0.435</td><td>0.857</td><td style="color:var(--tx3)">baseline</td></tr>
+        <tr><td>Cold-Drug</td><td>0.574</td><td>0.752</td><td style="color:var(--coral)">+32%</td></tr>
+        <tr><td>Cold-Target</td><td>0.593</td><td>0.652</td><td style="color:var(--coral)">+36%</td></tr>
+      </table>
+      <p class="note">Unseen proteins harder than unseen drugs — protein features generalize less</p>
+    </div>
+  </div>
+</div>
+</div>
+</div>
+
+<!-- ═══ 14 · SHAP ═══ -->
+<div class="slide">
+<div class="S">
+<div class="W">
+  <div class="lbl a1">Implementation</div>
+  <h2 class="a2">SHAP Explainability</h2>
+  <div class="r a3" style="align-items:stretch">
+    <div class="col">
+      <h3 style="font-size:clamp(14px,1.3vw,18px);color:var(--warm);margin-bottom:clamp(16px,2vh,24px)">Feature Category Importance</h3>
+      <div class="prow">
+        <div class="plbl">💊 Drug</div>
+        <div class="ptrk"><div class="pfll" style="width:67%;background:var(--gdim);color:var(--green)">~67%</div></div>
+      </div>
+      <div class="prow">
+        <div class="plbl">🧬 Protein</div>
+        <div class="ptrk"><div class="pfll" style="width:33%;background:var(--adim);color:var(--amber)">~33%</div></div>
+      </div>
+      <p class="note" style="margin-top:clamp(14px,2vh,24px)">Drug structural features dominate — molecular substructures determine binding pocket fit. Consistent with biochemical expectation.</p>
+    </div>
+    <div class="card" style="flex:1">
+      <h3>Key Findings</h3>
+      <ul>
+        <li><b style="color:var(--warm)">Morgan FP bits</b> — strongest predictors; specific substructures drive binding</li>
+        <li><b style="color:var(--warm)">LogP, MW, TPSA</b> — top descriptors; lipophilicity and size matter</li>
+        <li><b style="color:var(--warm)">Dipeptide composition</b> — main protein-side signal</li>
+        <li>Every prediction decomposable via waterfall plots</li>
+      </ul>
+      <p class="note">37 publication-ready figures generated</p>
+    </div>
+  </div>
+</div>
+</div>
+</div>
+
+<!-- ═══ 15 · REFERENCES ═══ -->
+<div class="slide">
+<div class="S">
+<div class="W">
+  <div class="lbl a1">References</div>
+  <h2 class="a2">IEEE Format</h2>
+  <div class="a3" style="overflow-y:auto;flex:1;width:100%;margin-top:16px;font-size:clamp(12px,1.1vw,16px);color:var(--tx);line-height:2.2">
+    <p>[1] H. Öztürk et al., "DeepDTA: deep drug–target binding affinity prediction," <em>Bioinformatics</em>, vol. 34, pp. i821–i829, 2018.</p>
+    <p>[2] T. Nguyen et al., "GraphDTA: predicting DTI with graph neural networks," <em>Bioinformatics</em>, vol. 37, pp. 1140–1147, 2021.</p>
+    <p>[3] J. Tang et al., "Making sense of large-scale kinase inhibitor bioactivity," <em>J. Chem. Inf. Model.</em>, vol. 54, pp. 735–743, 2014.</p>
+    <p>[4] T. Pahikkala et al., "Toward more realistic DTI predictions," <em>Brief. Bioinform.</em>, vol. 16, pp. 325–337, 2015.</p>
+    <p>[5] T. He et al., "SimBoost: predicting drug–target binding affinities," <em>J. Cheminform.</em>, vol. 9, p. 24, 2017.</p>
+    <p>[6] L. Chen et al., "TransformerCPI," <em>Bioinformatics</em>, vol. 36, pp. 4406–4414, 2020.</p>
+    <p>[7] I. Lee et al., "DeepConv-DTI," <em>PLOS Comput. Biol.</em>, vol. 15, e1007129, 2019.</p>
+    <p>[8] Z. Yang et al., "MGraphDTA," <em>Chem. Sci.</em>, vol. 13, pp. 816–833, 2022.</p>
+    <p>[9] Q. Zhao et al., "AttentionDTA," <em>IEEE/ACM Trans. CBB</em>, vol. 20, pp. 228–237, 2022.</p>
+    <p>[10] S. Lundberg, S. Lee, "A unified approach to interpreting model predictions," <em>NeurIPS</em>, pp. 4765–4774, 2017.</p>
+    <p style="margin-top:16px;color:var(--tx3)"><b style="color:var(--tx2)">Software:</b> [11] RDKit — rdkit.org &ensp; [12] PyG — pyg.org &ensp; [13] SHAP — shap.readthedocs.io</p>
+  </div>
+</div>
+</div>
+</div>
+
+<!-- ═══ 16 · THANK YOU ═══ -->
+<div class="slide title">
+<div class="S">
+  <div class="lbl a1">Phase 1 · 50% Complete</div>
+  <h1 class="a2">Thank You</h1>
+  <p class="sub a3" style="text-align:center;color:var(--tx2);font-size:clamp(18px,2vw,26px)">Questions & Discussion</p>
+  <p class="a4" style="margin-top:clamp(28px,5vh,50px);font-size:clamp(13px,1.2vw,17px);color:var(--tx3)">
+    💊 PharmaLens — Explainable AI for Drug–Target Interaction Prediction
+  </p>
+</div>
+</div>
+
+</div>
+
+<script>
+const S=document.querySelectorAll('.slide'),T=S.length;let c=0;
+function go(n){S[c].classList.remove('active');c=Math.max(0,Math.min(n,T-1));S[c].classList.add('active');document.getElementById('snum').textContent=`${c+1} / ${T}`;document.getElementById('pbar').style.width=((c+1)/T*100)+'%'}
+document.addEventListener('keydown',e=>{if(['ArrowRight','PageDown',' '].includes(e.key)){e.preventDefault();go(c+1)}if(['ArrowLeft','PageUp'].includes(e.key)){e.preventDefault();go(c-1)}if(e.key==='Home')go(0);if(e.key==='End')go(T-1)});
+let tx=0;document.addEventListener('touchstart',e=>tx=e.touches[0].clientX);document.addEventListener('touchend',e=>{let d=e.changedTouches[0].clientX-tx;if(d<-50)go(c+1);if(d>50)go(c-1)});
+go(0);
+</script>
+</body>
+</html>
