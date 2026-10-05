@@ -16,6 +16,7 @@ We built and compared 7 different models — from simple baselines to deep learn
 
 **KIBA Dataset** (Kinase Inhibitor BioActivity)
 
+
 - **118,254** drug-target interaction records
 - **2,111** unique drug molecules (represented as SMILES strings)
 - **229** unique protein targets (represented as amino acid sequences)

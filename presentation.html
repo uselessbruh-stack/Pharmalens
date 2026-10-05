@@ -259,23 +259,22 @@ td:first-child{font-weight:500;color:var(--warm)}
 <div class="W">
   <div class="lbl a1">Functional Requirements</div>
   <h2 class="a2">System Capabilities</h2>
-  <p class="a3 note" style="font-size:clamp(13px,1.1vw,16px);color:var(--tx)">Users: Researchers · Pharmacologists · Bioinformatics Students</p>
-  <div class="a4" style="overflow-y:auto;flex:1;width:100%">
+  <div class="a3" style="overflow-y:auto;flex:1;width:100%;margin-top:12px">
   <table>
-    <thead><tr><th>ID</th><th>Requirement</th><th>Description</th></tr></thead>
+    <thead><tr><th>ID</th><th>Requirement</th></tr></thead>
     <tbody>
-    <tr><td>FR-01</td><td>Dataset Loading</td><td>Load KIBA dataset, display statistics and distributions</td></tr>
-    <tr><td>FR-02</td><td>Preprocessing</td><td>Validate SMILES via RDKit, normalize sequences, generate splits</td></tr>
-    <tr><td>FR-03</td><td>Drug Features</td><td>10 molecular descriptors + 1024-bit Morgan fingerprint</td></tr>
-    <tr><td>FR-04</td><td>Protein Features</td><td>AAC (20D) + dipeptide composition (400D)</td></tr>
-    <tr><td>FR-05</td><td>Model Training</td><td>Train 7 models: Mean, Ridge, RF, XGBoost, DeepDTA, GraphDTA</td></tr>
-    <tr><td>FR-06</td><td>Evaluation</td><td>RMSE, MAE, Pearson, Spearman, R², CI on test set</td></tr>
-    <tr><td>FR-07</td><td>HP Tuning</td><td>Bayesian optimization via Optuna — 50 trials</td></tr>
-    <tr><td>FR-08</td><td>Cold-Start</td><td>Evaluate on unseen drugs and proteins separately</td></tr>
-    <tr><td>FR-09</td><td>Explainability</td><td>SHAP feature attribution, waterfall, dependence plots</td></tr>
-    <tr><td>FR-10</td><td>Prediction API</td><td>REST: SMILES + sequence → predicted binding score</td></tr>
-    <tr><td>FR-11</td><td>Batch Screening</td><td>Screen drug × target matrix, return ranked results</td></tr>
-    <tr><td>FR-12</td><td>Web Dashboard</td><td>Interactive UI for prediction, screening, comparison</td></tr>
+    <tr><td>FR-01</td><td>The system shall allow users to <b>input drug molecules</b> via SMILES string or by selecting from the KIBA dataset.</td></tr>
+    <tr><td>FR-02</td><td>The system shall allow users to <b>input protein targets</b> via amino acid sequence or by selecting from the dataset.</td></tr>
+    <tr><td>FR-03</td><td>The system shall <b>predict binding affinity scores</b> for a given drug–target pair using the trained ML model.</td></tr>
+    <tr><td>FR-04</td><td>The system shall <b>validate user inputs</b> (SMILES validity via RDKit, sequence format) and display appropriate error messages for invalid entries.</td></tr>
+    <tr><td>FR-05</td><td>The system shall perform <b>batch screening</b> across multiple drug × target combinations and return ranked results.</td></tr>
+    <tr><td>FR-06</td><td>The system shall provide <b>SHAP-based explanations</b> for each prediction, showing which molecular features contributed most.</td></tr>
+    <tr><td>FR-07</td><td>The system shall display <b>drug information</b> including molecular weight, LogP, TPSA, hydrogen bond donors/acceptors, and structural fingerprint details.</td></tr>
+    <tr><td>FR-08</td><td>The system shall allow users to <b>compare multiple ML models</b> (Ridge, RF, XGBoost, DeepDTA, GraphDTA) based on evaluation metrics.</td></tr>
+    <tr><td>FR-09</td><td>The system shall display <b>dataset exploration</b> views including score distributions, drug/target counts, and interaction statistics.</td></tr>
+    <tr><td>FR-10</td><td>The system shall expose a <b>REST API</b> (FastAPI) for programmatic access to prediction, screening, and explanation endpoints.</td></tr>
+    <tr><td>FR-11</td><td>The system shall provide a <b>web-based dashboard</b> for interactive prediction, screening, model comparison, and dataset exploration.</td></tr>
+    <tr><td>FR-12</td><td>The system shall display appropriate <b>disclaimers</b> indicating that predictions are computational and do not replace experimental lab validation.</td></tr>
     </tbody>
   </table>
   </div>
@@ -289,11 +288,26 @@ td:first-child{font-weight:500;color:var(--warm)}
 <div class="W">
   <div class="lbl a1">Non-Functional Requirements</div>
   <h2 class="a2">Quality Attributes</h2>
-  <div class="g2 a3">
-    <div class="card p1"><h3>⚡ Performance</h3><ul><li>Single prediction: <b style="color:var(--warm)">&lt; 100ms</b></li><li>200-pair screening: <b style="color:var(--warm)">&lt; 5 sec</b></li><li>XGBoost training: <b style="color:var(--warm)">&lt; 6 min</b></li></ul></div>
-    <div class="card p2"><h3>🔄 Reproducibility</h3><ul><li>Fixed random seed (42) across all experiments</li><li>Experiment tracker logs every run</li><li>Persisted train/val/test splits</li></ul></div>
-    <div class="card p3"><h3>🧩 Modularity</h3><ul><li>Separate packages: preprocessing, features, models, evaluation</li><li>Model registry with plug-and-play inference</li><li>Unified pipeline interface</li></ul></div>
-    <div class="card p4"><h3>🔍 Interpretability</h3><ul><li>SHAP explanation for every prediction</li><li>Drug vs protein feature category breakdown</li><li>Per-prediction waterfall decomposition</li></ul></div>
+  <div class="a3" style="overflow-y:auto;flex:1;width:100%;margin-top:12px">
+  <table>
+    <thead><tr><th>ID</th><th>Requirement</th></tr></thead>
+    <tbody>
+    <tr><td>NFR-01 — Performance</td><td>Single predictions shall be returned within <b>100 milliseconds</b>; batch screening of 200 pairs within <b>5 seconds</b>.</td></tr>
+    <tr><td>NFR-02 — Availability</td><td>The system should remain available and functional during normal operating hours with minimal downtime.</td></tr>
+    <tr><td>NFR-03 — Usability</td><td>The web interface should be <b>simple, intuitive, and responsive</b>, allowing users to submit predictions with minimal steps.</td></tr>
+    <tr><td>NFR-04 — Security</td><td>API endpoints shall be protected with appropriate <b>input sanitization and rate limiting</b> to prevent misuse.</td></tr>
+    <tr><td>NFR-05 — Accuracy</td><td>Predictions shall originate from models trained on the <b>validated KIBA benchmark dataset</b> with documented evaluation metrics.</td></tr>
+    <tr><td>NFR-06 — Reliability</td><td>The system should handle invalid SMILES, malformed sequences, and unexpected errors <b>without crashing</b>, returning appropriate error messages.</td></tr>
+    <tr><td>NFR-07 — Reproducibility</td><td>All experiments shall use <b>fixed random seeds (42)</b> and persisted train/val/test splits to ensure reproducible results.</td></tr>
+    <tr><td>NFR-08 — Scalability</td><td>The architecture should support an increase in drug records, protein targets, and API requests without major redesign.</td></tr>
+    <tr><td>NFR-09 — Modularity</td><td>The software shall use a <b>modular architecture</b> so that preprocessing, features, models, and evaluation can be independently maintained.</td></tr>
+    <tr><td>NFR-10 — Compatibility</td><td>The web application should work correctly on commonly used <b>modern browsers</b> (Chrome, Firefox, Edge).</td></tr>
+    <tr><td>NFR-11 — Responsiveness</td><td>The UI should adapt appropriately to <b>desktop and tablet screen sizes</b>.</td></tr>
+    <tr><td>NFR-12 — Interpretability</td><td>Every prediction shall be accompanied by a <b>SHAP-based explanation</b> so users can understand the reasoning behind the score.</td></tr>
+    <tr><td>NFR-13 — Extensibility</td><td>The system should allow future integration of <b>additional datasets, models, or drug databases</b> via the modular pipeline.</td></tr>
+    <tr><td>NFR-14 — Data Integrity</td><td>Model artifacts and dataset files should not be accidentally modified; <b>checksums and version tracking</b> shall be maintained.</td></tr>
+    </tbody>
+  </table>
   </div>
 </div>
 </div>
@@ -453,26 +467,105 @@ td:first-child{font-weight:500;color:var(--warm)}
 <div class="W">
   <div class="lbl a1">Implementation</div>
   <h2 class="a2">Tuning & Cold-Start</h2>
-  <div class="g2 a3">
+  <div class="g2 a3" style="align-items:stretch">
+
+    <!-- TUNING: Before vs After visual bars -->
     <div class="card">
       <h3>⚙️ Optuna Tuning — 50 Trials</h3>
-      <table>
-        <thead><tr><th>Metric</th><th>Before</th><th>After</th><th>Δ</th></tr></thead>
-        <tr><td>RMSE</td><td style="color:var(--tx3)">0.435</td><td style="color:var(--green)"><b>0.421</b></td><td style="color:var(--green)">↓ 3.2%</td></tr>
-        <tr><td>Pearson</td><td style="color:var(--tx3)">0.857</td><td style="color:var(--green)"><b>0.867</b></td><td style="color:var(--green)">↑ +0.01</td></tr>
-        <tr><td>R²</td><td style="color:var(--tx3)">0.733</td><td style="color:var(--green)"><b>0.750</b></td><td style="color:var(--green)">↑ +0.017</td></tr>
-      </table>
+      <div style="margin-top:clamp(12px,2vh,20px);display:flex;flex-direction:column;gap:clamp(14px,2vh,22px)">
+        <!-- RMSE -->
+        <div>
+          <div style="font:500 clamp(11px,1vw,14px) var(--mono);color:var(--tx2);margin-bottom:6px">RMSE ↓</div>
+          <div style="display:flex;align-items:center;gap:8px">
+            <div style="width:clamp(50px,5vw,70px);font-size:clamp(10px,.85vw,12px);color:var(--tx3);text-align:right">Before</div>
+            <div style="flex:1;height:clamp(22px,3vh,30px);background:#161616;border-radius:6px;overflow:hidden;border:1px solid var(--border)">
+              <div style="width:51.8%;height:100%;background:var(--cdim);border-radius:5px;display:flex;align-items:center;justify-content:flex-end;padding-right:8px;font:500 clamp(10px,.85vw,12px) var(--mono);color:var(--coral)">0.435</div>
+            </div>
+          </div>
+          <div style="display:flex;align-items:center;gap:8px;margin-top:4px">
+            <div style="width:clamp(50px,5vw,70px);font-size:clamp(10px,.85vw,12px);color:var(--green);text-align:right">After</div>
+            <div style="flex:1;height:clamp(22px,3vh,30px);background:#161616;border-radius:6px;overflow:hidden;border:1px solid var(--border)">
+              <div style="width:50.1%;height:100%;background:var(--gdim);border-radius:5px;display:flex;align-items:center;justify-content:flex-end;padding-right:8px;font:600 clamp(10px,.85vw,12px) var(--mono);color:var(--green)">0.421 ↓3.2%</div>
+            </div>
+          </div>
+        </div>
+        <!-- Pearson -->
+        <div>
+          <div style="font:500 clamp(11px,1vw,14px) var(--mono);color:var(--tx2);margin-bottom:6px">Pearson r ↑</div>
+          <div style="display:flex;align-items:center;gap:8px">
+            <div style="width:clamp(50px,5vw,70px);font-size:clamp(10px,.85vw,12px);color:var(--tx3);text-align:right">Before</div>
+            <div style="flex:1;height:clamp(22px,3vh,30px);background:#161616;border-radius:6px;overflow:hidden;border:1px solid var(--border)">
+              <div style="width:85.7%;height:100%;background:var(--adim);border-radius:5px;display:flex;align-items:center;justify-content:flex-end;padding-right:8px;font:500 clamp(10px,.85vw,12px) var(--mono);color:var(--amber)">0.857</div>
+            </div>
+          </div>
+          <div style="display:flex;align-items:center;gap:8px;margin-top:4px">
+            <div style="width:clamp(50px,5vw,70px);font-size:clamp(10px,.85vw,12px);color:var(--green);text-align:right">After</div>
+            <div style="flex:1;height:clamp(22px,3vh,30px);background:#161616;border-radius:6px;overflow:hidden;border:1px solid var(--border)">
+              <div style="width:86.7%;height:100%;background:var(--gdim);border-radius:5px;display:flex;align-items:center;justify-content:flex-end;padding-right:8px;font:600 clamp(10px,.85vw,12px) var(--mono);color:var(--green)">0.867 ↑+0.01</div>
+            </div>
+          </div>
+        </div>
+        <!-- R² -->
+        <div>
+          <div style="font:500 clamp(11px,1vw,14px) var(--mono);color:var(--tx2);margin-bottom:6px">R² ↑</div>
+          <div style="display:flex;align-items:center;gap:8px">
+            <div style="width:clamp(50px,5vw,70px);font-size:clamp(10px,.85vw,12px);color:var(--tx3);text-align:right">Before</div>
+            <div style="flex:1;height:clamp(22px,3vh,30px);background:#161616;border-radius:6px;overflow:hidden;border:1px solid var(--border)">
+              <div style="width:73.3%;height:100%;background:var(--adim);border-radius:5px;display:flex;align-items:center;justify-content:flex-end;padding-right:8px;font:500 clamp(10px,.85vw,12px) var(--mono);color:var(--amber)">0.733</div>
+            </div>
+          </div>
+          <div style="display:flex;align-items:center;gap:8px;margin-top:4px">
+            <div style="width:clamp(50px,5vw,70px);font-size:clamp(10px,.85vw,12px);color:var(--green);text-align:right">After</div>
+            <div style="flex:1;height:clamp(22px,3vh,30px);background:#161616;border-radius:6px;overflow:hidden;border:1px solid var(--border)">
+              <div style="width:75.0%;height:100%;background:var(--gdim);border-radius:5px;display:flex;align-items:center;justify-content:flex-end;padding-right:8px;font:600 clamp(10px,.85vw,12px) var(--mono);color:var(--green)">0.750 ↑+0.017</div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
+
+    <!-- COLD-START: Grouped vertical bar chart -->
     <div class="card">
-      <h3>❄️ Cold-Start — XGBoost</h3>
-      <table>
-        <thead><tr><th>Split</th><th>RMSE</th><th>Pearson</th><th>Drop</th></tr></thead>
-        <tr><td>Random</td><td>0.435</td><td>0.857</td><td style="color:var(--tx3)">baseline</td></tr>
-        <tr><td>Cold-Drug</td><td>0.574</td><td>0.752</td><td style="color:var(--coral)">+32%</td></tr>
-        <tr><td>Cold-Target</td><td>0.593</td><td>0.652</td><td style="color:var(--coral)">+36%</td></tr>
-      </table>
-      <p class="note">Unseen proteins harder than unseen drugs — protein features generalize less</p>
+      <h3>❄️ Cold-Start RMSE — XGBoost</h3>
+      <div style="display:flex;align-items:flex-end;justify-content:center;gap:clamp(20px,3vw,48px);margin-top:clamp(14px,2vh,24px);height:clamp(160px,22vh,260px);padding-bottom:28px;position:relative">
+        <!-- Y-axis labels -->
+        <div style="position:absolute;left:0;top:0;bottom:28px;display:flex;flex-direction:column;justify-content:space-between;font:400 clamp(9px,.75vw,11px) var(--mono);color:var(--tx3)">
+          <span>0.8</span><span>0.6</span><span>0.4</span><span>0.2</span><span>0.0</span>
+        </div>
+        <!-- Grid lines -->
+        <div style="position:absolute;left:30px;right:0;top:0;bottom:28px;display:flex;flex-direction:column;justify-content:space-between;pointer-events:none">
+          <div style="border-bottom:1px solid #1e1e1e;width:100%"></div>
+          <div style="border-bottom:1px solid #1e1e1e;width:100%"></div>
+          <div style="border-bottom:1px solid #1e1e1e;width:100%"></div>
+          <div style="border-bottom:1px solid #1e1e1e;width:100%"></div>
+          <div style="border-bottom:1px solid var(--border);width:100%"></div>
+        </div>
+        <!-- Bar group: Random -->
+        <div style="display:flex;flex-direction:column;align-items:center;gap:6px;z-index:2">
+          <div style="font:600 clamp(10px,.9vw,13px) var(--mono);color:var(--green)">0.435</div>
+          <div style="width:clamp(36px,4vw,56px);height:calc(0.435 / 0.8 * clamp(140px,20vh,230px));background:var(--gdim);border:1px solid var(--green2);border-radius:6px 6px 0 0;min-height:20px" title="Random: 0.435"></div>
+          <div style="font-size:clamp(10px,.9vw,13px);color:var(--tx)">Random</div>
+        </div>
+        <!-- Bar group: Cold-Drug -->
+        <div style="display:flex;flex-direction:column;align-items:center;gap:6px;z-index:2">
+          <div style="font:600 clamp(10px,.9vw,13px) var(--mono);color:var(--amber)">0.574</div>
+          <div style="width:clamp(36px,4vw,56px);height:calc(0.574 / 0.8 * clamp(140px,20vh,230px));background:var(--adim);border:1px solid var(--amber);border-radius:6px 6px 0 0;min-height:20px" title="Cold-Drug: 0.574"></div>
+          <div style="font-size:clamp(10px,.9vw,13px);color:var(--tx)">Cold-Drug</div>
+        </div>
+        <!-- Bar group: Cold-Target -->
+        <div style="display:flex;flex-direction:column;align-items:center;gap:6px;z-index:2">
+          <div style="font:600 clamp(10px,.9vw,13px) var(--mono);color:var(--coral)">0.593</div>
+          <div style="width:clamp(36px,4vw,56px);height:calc(0.593 / 0.8 * clamp(140px,20vh,230px));background:var(--cdim);border:1px solid var(--coral);border-radius:6px 6px 0 0;min-height:20px" title="Cold-Target: 0.593"></div>
+          <div style="font-size:clamp(10px,.9vw,13px);color:var(--tx)">Cold-Target</div>
+        </div>
+      </div>
+      <div style="display:flex;justify-content:center;gap:clamp(10px,2vw,24px);margin-top:8px">
+        <div style="font-size:clamp(10px,.9vw,13px);color:var(--coral)">▲ +32% drop</div>
+        <div style="font-size:clamp(10px,.9vw,13px);color:var(--coral)">▲ +36% drop</div>
+      </div>
+      <p class="note" style="text-align:center">Unseen proteins harder than unseen drugs</p>
     </div>
+
   </div>
 </div>
 </div>

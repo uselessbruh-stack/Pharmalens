@@ -1,0 +1,105 @@
+============================================================
+  PharmaLens — PENDING REQUIREMENTS (Not Yet Implemented)
+============================================================
+  Status as of: Phase-1 (50% implementation)
+  To be completed in: Phase-2
+============================================================
+
+
+FUNCTIONAL REQUIREMENTS — NOT YET ACHIEVED
+-------------------------------------------
+
+FR-04  Input Validation (Partial)
+       - SMILES validation via RDKit exists in notebooks
+       - NOT yet integrated into the web dashboard UI
+       - User-facing error messages for invalid inputs not implemented
+
+FR-05  Batch Screening
+       - Backend endpoint exists (FastAPI)
+       - Frontend UI for batch screening NOT built yet
+       - No CSV upload / download for batch results
+
+FR-06  SHAP Explanations in Web UI
+       - SHAP analysis done in notebooks (Notebook 12)
+       - NOT yet exposed via API endpoint
+       - No SHAP waterfall/summary plots rendered in the web dashboard
+
+FR-07  Drug Information Display
+       - Molecular descriptors computed during feature engineering
+       - NOT displayed as a "drug info card" in the web UI
+       - No molecule structure visualization
+
+FR-08  Model Comparison in Web UI
+       - All model results saved to CSV files
+       - NOT yet shown as an interactive comparison view in the dashboard
+       - No chart/graph for model comparison in the frontend
+
+FR-09  Dataset Exploration in Web UI
+       - EDA done in notebooks (Notebook 02)
+       - NOT available as an interactive exploration page in the dashboard
+       - No score distribution or drug/target count views in frontend
+
+FR-12  Disclaimers
+       - Not yet added to the web dashboard UI
+
+
+NON-FUNCTIONAL REQUIREMENTS — NOT YET ACHIEVED
+------------------------------------------------
+
+NFR-02  Availability
+        - Currently runs only locally (localhost)
+        - No deployment to cloud or production server
+        - No uptime monitoring
+
+NFR-04  Security
+        - No input sanitization on API endpoints
+        - No rate limiting configured
+        - No authentication/authorization
+
+NFR-08  Scalability
+        - Not tested under concurrent load
+        - No load balancing or caching
+        - Single-process Uvicorn server
+
+NFR-10  Compatibility
+        - Only tested on Chrome
+        - No cross-browser testing done (Firefox, Edge, Safari)
+
+NFR-11  Responsiveness
+        - Web dashboard not tested on tablet/mobile viewports
+        - May not render properly on smaller screens
+
+NFR-14  Data Integrity
+        - No checksums for model artifacts
+        - No version tracking system for models/datasets
+        - Model files are plain pickle/joblib with no integrity checks
+
+
+REQUIREMENTS THAT ARE ACHIEVED (Phase-1)
+-----------------------------------------
+
+FR-01  Drug input via SMILES           ✅ (Backend API)
+FR-02  Protein input via sequence      ✅ (Backend API)
+FR-03  Binding affinity prediction     ✅ (XGBoost model)
+FR-10  REST API (FastAPI)              ✅ (predict endpoint)
+FR-11  Web dashboard (basic)           ✅ (HTML/JS frontend)
+NFR-01  Performance (<100ms)           ✅ (XGBoost inference)
+NFR-03  Usability (basic)              ✅ (simple form UI)
+NFR-05  Accuracy (KIBA trained)        ✅ (documented metrics)
+NFR-06  Reliability (error handling)   ✅ (try/catch in API)
+NFR-07  Reproducibility (seed=42)      ✅ (all notebooks)
+NFR-09  Modularity                     ✅ (separate packages)
+NFR-12  Interpretability (SHAP)        ✅ (in notebooks, not web)
+NFR-13  Extensibility                  ✅ (modular pipeline)
+
+
+SUMMARY
+--------
+Phase-1 achieved:  ~50% of requirements
+Remaining for Phase-2:
+  - Full web dashboard with all features (FR-05 to FR-09, FR-12)
+  - SHAP explanations via API and rendered in UI
+  - Security hardening (NFR-04)
+  - Cross-browser testing (NFR-10, NFR-11)
+  - Deployment to production (NFR-02)
+  - Data integrity checks (NFR-14)
