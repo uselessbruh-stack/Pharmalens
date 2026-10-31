@@ -8,6 +8,10 @@
   --surface: #fff;
   --background: #f6f5ef;
 }
+.auth-shell { max-width: 540px; margin: 8vh auto; padding: 32px; background: var(--surface); border: 1px solid var(--line); }
+.auth-shell form, .auth-shell label { display: grid; gap: 10px; }
+.auth-shell form { gap: 18px; margin: 24px 0; }
+.auth-shell button { margin: 5px 8px 5px 0; }
 * {
   box-sizing: border-box;
 }

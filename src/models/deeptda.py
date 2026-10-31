@@ -212,6 +212,11 @@ class DeepDTA(nn.Module):
         drug_repr = self.encode_drug(drug_input)
         protein_repr = self.encode_protein(protein_input) if self.use_protein_cnn else None
 
+        return self.predict_representations(drug_repr, protein_repr, auxiliary)
+
+    def predict_representations(self, drug_repr, protein_repr=None, auxiliary=None):
+        """Shared prediction head used by serving and representation SHAP."""
+
         # Concatenate representations
         combined = (
             torch.cat([drug_repr, protein_repr], dim=1) if protein_repr is not None else drug_repr

@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { AccountButton } from "@/components/auth";
 import { usePathname } from "next/navigation";
 import {
   Activity,
@@ -55,6 +56,7 @@ const navigation = [
   { href: "/", label: "Overview", icon: LayoutDashboard },
   { href: "/predict", label: "Predict interaction", icon: Activity },
   { href: "/batch", label: "Batch predictions", icon: Rows3 },
+  { href: "/history", label: "My saved predictions", icon: Rows3 },
   { href: "/models", label: "Model registry", icon: Blocks },
   { href: "/datasets", label: "Datasets", icon: Database },
   { href: "/experiments", label: "Experiments", icon: FlaskConical },
@@ -164,6 +166,7 @@ export function Workspace({ children }: { children: React.ReactNode }) {
             {current}
           </div>
           <div className="topbar-actions">
+            <AccountButton />
             <span className="connection">
               <i className={state.connected ? "dot online" : "dot"} />
               {state.connected

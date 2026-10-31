@@ -1,3 +1,5 @@
+import { authorizationHeaders } from "@/lib/firebase";
+
 export type Model = {
   name: string;
   model_type: string;
@@ -68,9 +70,17 @@ export type Prediction = {
   };
   sequence_length: number;
   inference_time: number;
+  history_id?: string | null;
+  storage_warning?: string | null;
   shap_values?: {
     base_value: number;
     other_features_contribution: number;
+    method?: string;
+    scope?: string;
+    baseline?: string;
+    reconstructed_score?: number;
+    additivity_error?: number;
+    limitations?: string[];
     top_features: { feature: string; shap_value: number }[];
   };
 };
@@ -81,7 +91,7 @@ export async function api<T>(
   const response = await fetch(`/api${path}`, {
     cache: "no-store",
     ...options,
-    headers: { "Content-Type": "application/json", ...options.headers },
+    headers: { "Content-Type": "application/json", ...await authorizationHeaders(), ...options.headers },
   });
   const data = await response.json().catch(() => null);
   if (!response.ok) {

@@ -348,12 +348,17 @@ class GraphDTA(nn.Module):
         # Protein encoding via CNN
         protein_repr = self.protein_encoder(data.protein_input) if self.use_protein_cnn else None
 
+        return self.predict_representations(drug_repr, protein_repr, getattr(data, "auxiliary", None))
+
+    def predict_representations(self, drug_repr, protein_repr=None, auxiliary=None):
+        """Shared prediction head used by serving and representation SHAP."""
+
         # Fusion
         combined = (
             torch.cat([drug_repr, protein_repr], dim=1) if protein_repr is not None else drug_repr
         )
         if self.auxiliary_encoder is not None:
-            combined = torch.cat([combined, self.auxiliary_encoder(data.auxiliary)], dim=1)
+            combined = torch.cat([combined, self.auxiliary_encoder(auxiliary)], dim=1)
         for fc, dropout in zip(self.fc_layers, self.fc_dropouts):
             combined = F.relu(fc(combined))
             combined = dropout(combined)

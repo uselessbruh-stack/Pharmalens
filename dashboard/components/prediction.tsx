@@ -15,7 +15,7 @@ export function PredictionForm() {
   const [modelId, setModelId] = useState("");
   const [smiles, setSmiles] = useState("");
   const [sequence, setSequence] = useState("");
-  const [explain, setExplain] = useState(false);
+  const [explain, setExplain] = useState(true);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
   const [result, setResult] = useState<Prediction | null>(null);
@@ -33,7 +33,7 @@ export function PredictionForm() {
           ...scope(model),
           smiles: smiles.trim(),
           sequence: sequence.trim(),
-          explain: explain && model.model_type === "xgboost",
+          explain,
         }),
       });
       setResult(data);
@@ -113,11 +113,11 @@ export function PredictionForm() {
             <input
               type="checkbox"
               checked={explain}
-              disabled={busy || model?.model_type !== "xgboost"}
+              disabled={busy}
               onChange={(event) => setExplain(event.target.checked)}
             />
-            Include SHAP feature contributions{" "}
-            <span className="muted">XGBoost</span>
+            Include SHAP explanation{" "}
+            <span className="muted">Tree features or neural representation groups</span>
           </label>
           {error ? (
             <div className="notice warning" role="alert">
@@ -189,11 +189,14 @@ export function PredictionForm() {
               </dl>
               {result.shap_values ? (
                 <div className="explanation">
-                  <h3>Feature contributions</h3>
+                  <h3>{result.shap_values.method || "SHAP feature contributions"}</h3>
                   <p>
                     Contributions describe model behavior, not biological
                     causality.
                   </p>
+                  <p>{result.shap_values.scope}</p>
+                  <p className="muted">Baseline: {result.shap_values.baseline}</p>
+                  <p>Base score {number(result.shap_values.base_value)} + contributions = {number(result.shap_values.reconstructed_score)}. Reconstruction error: {number(result.shap_values.additivity_error, 7)}.</p>
                   {result.shap_values.top_features.map((feature) => (
                     <div key={feature.feature} className="feature-row">
                       <span className="mono">{feature.feature}</span>
@@ -207,8 +210,12 @@ export function PredictionForm() {
                       </strong>
                     </div>
                   ))}
+                  {result.shap_values.other_features_contribution !== 0 ? <p>Other features: {number(result.shap_values.other_features_contribution)}</p> : null}
+                  <ul>{result.shap_values.limitations?.map((text) => <li key={text}>{text}</li>)}</ul>
                 </div>
               ) : null}
+              {result.storage_warning ? <p role="alert" className="notice warning">{result.storage_warning}</p> : null}
+              {result.history_id ? <p>Saved to your private prediction history.</p> : null}
               <button
                 type="button"
                 className="button secondary"

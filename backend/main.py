@@ -8,18 +8,21 @@ import logging
 import os
 import sqlite3
 import time
+import uuid
+import hashlib
 from contextlib import asynccontextmanager
 from functools import lru_cache
 from pathlib import Path
 from typing import Optional
 
-from fastapi import FastAPI, HTTPException, Query
+from fastapi import Depends, FastAPI, HTTPException, Query, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel, Field
 
 from src.utils.serialization import json_safe
+from backend.firebase_service import authenticate, auth_mode, current_user, save_prediction
 
 # ─── Logging ───────────────────────────────────────────────────────────────────
 logging.basicConfig(
@@ -86,6 +89,44 @@ app.add_middleware(
 )
 
 
+@app.middleware("http")
+async def authenticate_request(request: Request, call_next):
+    if request.url.path not in {"/health", "/auth/config"} and request.method != "OPTIONS":
+        try:
+            request.state.user = authenticate(request.headers.get("authorization"))
+        except HTTPException as exc:
+            return JSONResponse({"detail": exc.detail}, status_code=exc.status_code, headers=exc.headers)
+        except Exception:
+            return JSONResponse({"detail": "Authentication configuration is invalid"}, status_code=503)
+    response = await call_next(request)
+    response.headers["Cache-Control"] = "no-store"
+    return response
+
+
+@app.get("/auth/config")
+def authentication_config():
+    return {"mode": auth_mode(), "requires_email_verification": True}
+
+
+@app.get("/account")
+def account(user=Depends(current_user)):
+    from backend.firebase_service import save_profile
+    try:
+        save_profile(user)
+    except Exception as exc:
+        raise HTTPException(503, "User database is unavailable") from exc
+    return user
+
+
+@app.get("/history")
+def saved_predictions(user=Depends(current_user), limit: int = Query(30, ge=1, le=100)):
+    from backend.firebase_service import prediction_history
+    try:
+        return {"predictions": prediction_history(user, limit), "local": user.get("local", False)}
+    except Exception as exc:
+        raise HTTPException(503, "Prediction history is unavailable") from exc
+
+
 # ─── Request / Response Models ─────────────────────────────────────────────────
 
 
@@ -119,6 +160,8 @@ class PredictionResponse(BaseModel):
     dataset: str
     dataset_version: str
     label: dict
+    history_id: Optional[str] = None
+    storage_warning: Optional[str] = None
 
 
 class BatchPairInput(PairInput):
@@ -279,22 +322,27 @@ def health_check():
 
 
 @app.post("/predict", response_model=PredictionResponse)
-def predict(request: PredictionRequest):
+def predict(request: PredictionRequest, user=Depends(current_user)):
     """Predict interaction score for a drug-target pair."""
     entry, selected = resolve_model(request)
-    if request.explain and entry.model_type != "xgboost":
-        raise HTTPException(
-            status_code=422, detail="SHAP explanations are supported for XGBoost only"
-        )
-
     try:
         result = selected.predict(request.smiles, request.sequence, explain=request.explain)
+        result.update(model_metadata(entry, selected))
+        result["artifact_sha256"] = entry.artifact_sha256
+        history_id, storage_warning = None, None
+        try:
+            history_id = save_prediction(user, json_safe(result), request.smiles, request.sequence)
+        except Exception:
+            logger.exception("Could not store prediction history")
+            storage_warning = "Prediction succeeded but could not be saved; download this result."
         return PredictionResponse(
             score=result["score"],
             smiles=result["smiles"],
             sequence_length=result.get("sequence_length", len(request.sequence)),
             inference_time=result["inference_time"],
             shap_values=result.get("shap_values"),
+            history_id=history_id,
+            storage_warning=storage_warning,
             **model_metadata(entry, selected),
         )
     except ValueError as e:
@@ -364,7 +412,7 @@ def execute_prediction_job(payload, progress):
                 {"row_id": index, "smiles": pair.smiles, "score": None, "error": str(exc)}
             )
     progress(len(request.pairs))
-    return json_safe(
+    result = json_safe(
         {
             "results": results,
             "total": len(results),
@@ -376,10 +424,15 @@ def execute_prediction_job(payload, progress):
             ],
         }
     )
+    from backend.firebase_service import save_batch
+    owner = payload.get("owner_uid", "local")
+    save_batch({"uid": owner, "local": owner == "local"}, payload.get("cloud_id", "local"),
+               {"status": "saving", "model_id": entry.name}, result)
+    return result
 
 
 @app.post("/jobs", status_code=202)
-def submit_prediction_job(request: BatchJobRequest):
+def submit_prediction_job(request: BatchJobRequest, user=Depends(current_user)):
     if request.ids is not None and (
         len(request.ids) != len(request.pairs) or any(len(value) > 200 for value in request.ids)
     ):
@@ -396,9 +449,16 @@ def submit_prediction_job(request: BatchJobRequest):
         "endpoint": entry.endpoint,
         "artifact_sha256": entry.artifact_sha256,
         "row_ids": request.ids or [""] * len(request.pairs),
+        "owner_uid": user["uid"],
+        "cloud_id": uuid.uuid4().hex,
     }
     try:
-        return job_store().submit(payload, request.idempotency_key)
+        # Namespace keys by the verified user, never by a client-provided UID.
+        key = hashlib.sha256((user["uid"] + "\0" + request.idempotency_key).encode()).hexdigest() if request.idempotency_key else None
+        # Stable metadata is required for idempotent resubmission.
+        if key:
+            payload["cloud_id"] = key
+        return job_store().submit(payload, key)
     except OverflowError as exc:
         raise HTTPException(status_code=429, detail=str(exc)) from exc
     except ValueError as exc:
@@ -406,12 +466,23 @@ def submit_prediction_job(request: BatchJobRequest):
 
 
 @app.get("/jobs")
-def recent_prediction_jobs(limit: int = Query(20, ge=1, le=100)):
-    return {"jobs": job_store().recent(limit)}
+def recent_prediction_jobs(limit: int = Query(20, ge=1, le=100), user=Depends(current_user)):
+    return {"jobs": job_store().recent(limit, owner_uid=user["uid"])}
+
+
+def owned_job(job_id, user):
+    try:
+        job = job_store().get(job_id)
+    except KeyError as exc:
+        raise HTTPException(404, "Prediction job not found") from exc
+    if job["owner_uid"] != user["uid"]:
+        raise HTTPException(404, "Prediction job not found")
+    return job
 
 
 @app.get("/jobs/{job_id}")
-def prediction_job_status(job_id: str):
+def prediction_job_status(job_id: str, user=Depends(current_user)):
+    owned_job(job_id, user)
     try:
         return job_store().get(job_id)
     except KeyError as exc:
@@ -419,7 +490,8 @@ def prediction_job_status(job_id: str):
 
 
 @app.get("/jobs/{job_id}/result")
-def prediction_job_result(job_id: str):
+def prediction_job_result(job_id: str, user=Depends(current_user)):
+    owned_job(job_id, user)
     try:
         job = job_store().get(job_id, include_result=True)
     except KeyError as exc:
@@ -430,7 +502,8 @@ def prediction_job_result(job_id: str):
 
 
 @app.post("/jobs/{job_id}/cancel")
-def cancel_prediction_job(job_id: str):
+def cancel_prediction_job(job_id: str, user=Depends(current_user)):
+    owned_job(job_id, user)
     try:
         return job_store().cancel(job_id)
     except KeyError as exc:
@@ -438,7 +511,8 @@ def cancel_prediction_job(job_id: str):
 
 
 @app.post("/jobs/{job_id}/retry", status_code=202)
-def retry_prediction_job(job_id: str):
+def retry_prediction_job(job_id: str, user=Depends(current_user)):
+    owned_job(job_id, user)
     try:
         return job_store().retry(job_id)
     except KeyError as exc:

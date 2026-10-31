@@ -176,6 +176,24 @@ class PharmaLensPipeline:
         result["score"] = result["score"] * self.target_scaler["scale"] + self.target_scaler["mean"]
         if not math.isfinite(result["score"]):
             raise ValueError("Model returned a non-finite score")
+        if explain and self.model_type in {"deeptda", "gnn"}:
+            from src.explainability.neural_shap import explain_neural
+
+            result["shap_values"] = explain_neural(self, smiles, sequence, result["score"])
+        elif explain and result.get("shap_values"):
+            explanation = result["shap_values"]
+            for feature in explanation["top_features"]:
+                feature["shap_value"] *= self.target_scaler["scale"]
+            explanation["base_value"] = explanation["base_value"] * self.target_scaler["scale"] + self.target_scaler["mean"]
+            explanation["other_features_contribution"] *= self.target_scaler["scale"]
+            explanation["reconstructed_score"] = explanation["reconstructed_score"] * self.target_scaler["scale"] + self.target_scaler["mean"]
+            explanation.update({
+                "method": "Tree SHAP", "scope": "Engineered input features",
+                "baseline": "Tree-path-dependent background of the trained booster",
+                "additivity_error": abs(explanation["reconstructed_score"] - result["score"]),
+                "limitations": ["Feature contributions describe model behavior, not biological causality.",
+                                "Fingerprint bits can collide; embedding dimensions are not named binding mechanisms."],
+            })
         result["label"] = self.label_contract.as_dict()
         result["inference_time"] = time.time() - t_start
         return result

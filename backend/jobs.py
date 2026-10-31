@@ -66,6 +66,9 @@ class BatchJobStore:
             db.execute(
                 "CREATE INDEX IF NOT EXISTS jobs_queue ON prediction_jobs(status, created_at)"
             )
+            if "owner_uid" not in {row[1] for row in db.execute("PRAGMA table_info(prediction_jobs)")}:
+                db.execute("ALTER TABLE prediction_jobs ADD COLUMN owner_uid TEXT NOT NULL DEFAULT 'local'")
+            db.execute("CREATE INDEX IF NOT EXISTS jobs_owner ON prediction_jobs(owner_uid,created_at)")
 
     @contextmanager
     def connection(self, transaction=False):
@@ -104,7 +107,7 @@ class BatchJobStore:
             if pending >= self.capacity:
                 raise OverflowError("Prediction queue is at capacity")
             db.execute(
-                "INSERT INTO prediction_jobs(id,request_key,payload,payload_hash,status,created_at,updated_at,total_rows,retry_of,attempts,scope) VALUES(?,?,?,?,?,?,?,?,?,?,?)",
+                "INSERT INTO prediction_jobs(id,request_key,payload,payload_hash,status,created_at,updated_at,total_rows,retry_of,attempts,scope,owner_uid) VALUES(?,?,?,?,?,?,?,?,?,?,?,?)",
                 (
                     job_id,
                     request_key,
@@ -123,12 +126,13 @@ class BatchJobStore:
                             if key in payload
                         }
                     ),
+                    payload.get("owner_uid", "local"),
                 ),
             )
         return self.get(job_id)
 
     def get(self, job_id, include_payload=False, include_result=False):
-        columns = "id,status,created_at,updated_at,total_rows,completed_rows,attempts,error,retry_of,cancel_requested,scope,(result IS NOT NULL) AS has_result"
+        columns = "id,status,created_at,updated_at,total_rows,completed_rows,attempts,error,retry_of,cancel_requested,scope,owner_uid,(result IS NOT NULL) AS has_result"
         if include_payload:
             columns += ",payload"
         if include_result:
@@ -151,6 +155,7 @@ class BatchJobStore:
                 "attempts",
                 "error",
                 "retry_of",
+                "owner_uid",
             ]
         }
         result.update(json.loads(row["scope"]))
@@ -162,13 +167,13 @@ class BatchJobStore:
             result["result"] = json.loads(row["result"]) if row["result"] else None
         return result
 
-    def recent(self, limit=20):
+    def recent(self, limit=20, owner_uid=None):
         with self.connection() as db:
             ids = [
                 row[0]
                 for row in db.execute(
-                    "SELECT id FROM prediction_jobs ORDER BY created_at DESC LIMIT ?",
-                    (min(max(limit, 1), 100),),
+                    "SELECT id FROM prediction_jobs " + ("WHERE owner_uid=? " if owner_uid is not None else "") + "ORDER BY created_at DESC LIMIT ?",
+                    ((owner_uid,) if owner_uid is not None else ()) + (min(max(limit, 1), 100),),
                 )
             ]
         return [self.get(job_id) for job_id in ids]
