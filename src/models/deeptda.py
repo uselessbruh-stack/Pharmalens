@@ -14,6 +14,21 @@ import torch.nn as nn
 import torch.nn.functional as F
 
 
+def masked_cnn_pool(embedded, token_ids, convolutions):
+    """Prevent convolution biases in padding positions from winning pooling."""
+    mask = token_ids.ne(0).unsqueeze(1)
+    if not mask.any(dim=-1).all():
+        raise ValueError("Every sequence must contain at least one encoded token")
+    x = embedded.permute(0, 2, 1)
+    for conv in convolutions:
+        x = F.relu(conv(x))
+        # Existing even-kernel layers add one right-hand output position.
+        if x.shape[-1] > mask.shape[-1]:
+            mask = F.pad(mask, (0, x.shape[-1] - mask.shape[-1]), value=False)
+        x = x.masked_fill(~mask, 0)
+    return x.masked_fill(~mask, float("-inf")).amax(dim=-1)
+
+
 class DeepDTA(nn.Module):
     """
     DeepDTA: CNN-based model for drug-target binding affinity prediction.
@@ -48,6 +63,12 @@ class DeepDTA(nn.Module):
         dropout: float = 0.2,
         drug_max_len: int = 100,
         protein_max_len: int = 1000,
+        mask_padding: bool = False,
+        deduplicate_proteins: bool = False,
+        auxiliary_dim: int = 0,
+        auxiliary_interactions: bool = False,
+        protein_embedding_cache=None,
+        use_protein_cnn: bool = True,
     ):
         super().__init__()
 
@@ -60,33 +81,55 @@ class DeepDTA(nn.Module):
 
         self.drug_max_len = drug_max_len
         self.protein_max_len = protein_max_len
+        self.mask_padding = mask_padding
+        self.deduplicate_proteins = deduplicate_proteins
+        self.auxiliary_encoder = None
+        self.protein_embedding_cache = protein_embedding_cache
+        self.use_protein_cnn = use_protein_cnn
+        if not use_protein_cnn and auxiliary_dim <= 1034:
+            raise ValueError("A protein feature branch is required when protein CNN is disabled")
+        if auxiliary_dim:
+            from src.models.auxiliary import AuxiliaryEncoder
+
+            self.auxiliary_encoder = AuxiliaryEncoder(
+                auxiliary_dim, interactions=auxiliary_interactions
+            )
 
         # Drug encoder
         self.drug_embedding = nn.Embedding(drug_vocab_size + 1, drug_embed_dim, padding_idx=0)
-        self.drug_convs = nn.ModuleList([
-            nn.Conv1d(
-                in_channels=drug_embed_dim if i == 0 else num_filters,
-                out_channels=num_filters,
-                kernel_size=drug_filter_sizes[i],
-                padding=drug_filter_sizes[i] // 2,
-            )
-            for i in range(len(drug_filter_sizes))
-        ])
+        self.drug_convs = nn.ModuleList(
+            [
+                nn.Conv1d(
+                    in_channels=drug_embed_dim if i == 0 else num_filters,
+                    out_channels=num_filters,
+                    kernel_size=drug_filter_sizes[i],
+                    padding=drug_filter_sizes[i] // 2,
+                )
+                for i in range(len(drug_filter_sizes))
+            ]
+        )
 
         # Protein encoder
-        self.protein_embedding = nn.Embedding(protein_vocab_size + 1, protein_embed_dim, padding_idx=0)
-        self.protein_convs = nn.ModuleList([
-            nn.Conv1d(
-                in_channels=protein_embed_dim if i == 0 else num_filters,
-                out_channels=num_filters,
-                kernel_size=protein_filter_sizes[i],
-                padding=protein_filter_sizes[i] // 2,
-            )
-            for i in range(len(protein_filter_sizes))
-        ])
+        self.protein_embedding = nn.Embedding(
+            protein_vocab_size + 1, protein_embed_dim, padding_idx=0
+        )
+        self.protein_convs = nn.ModuleList(
+            [
+                nn.Conv1d(
+                    in_channels=protein_embed_dim if i == 0 else num_filters,
+                    out_channels=num_filters,
+                    kernel_size=protein_filter_sizes[i],
+                    padding=protein_filter_sizes[i] // 2,
+                )
+                for i in range(len(protein_filter_sizes))
+            ]
+        )
 
         # Fully connected layers for combined representation
-        fc_input_dim = num_filters * 2  # drug + protein pooled outputs
+        fc_input_dim = num_filters * (2 if use_protein_cnn else 1) + (128 if auxiliary_dim else 0)
+        if not use_protein_cnn:
+            self.protein_embedding = None
+            self.protein_convs = nn.ModuleList()
         self.fc_layers = nn.ModuleList()
         self.fc_dropouts = nn.ModuleList()
 
@@ -112,12 +155,20 @@ class DeepDTA(nn.Module):
             "dropout": dropout,
             "drug_max_len": drug_max_len,
             "protein_max_len": protein_max_len,
+            "mask_padding": mask_padding,
+            "deduplicate_proteins": deduplicate_proteins,
+            "auxiliary_dim": auxiliary_dim,
+            "auxiliary_interactions": auxiliary_interactions,
+            "protein_embedding_cache": protein_embedding_cache,
+            "use_protein_cnn": use_protein_cnn,
         }
 
     def encode_drug(self, drug_input):
         """Encode drug SMILES through CNN."""
         # drug_input: (batch, drug_max_len) — integer indices
         x = self.drug_embedding(drug_input)  # (batch, seq_len, embed_dim)
+        if self.mask_padding:
+            return masked_cnn_pool(x, drug_input, self.drug_convs)
         x = x.permute(0, 2, 1)  # (batch, embed_dim, seq_len) for Conv1d
 
         for conv in self.drug_convs:
@@ -129,8 +180,16 @@ class DeepDTA(nn.Module):
 
     def encode_protein(self, protein_input):
         """Encode protein sequence through CNN."""
+        if self.deduplicate_proteins and protein_input.shape[0] > 1:
+            unique, inverse = torch.unique(protein_input, dim=0, return_inverse=True)
+            return self._encode_protein(unique)[inverse]
+        return self._encode_protein(protein_input)
+
+    def _encode_protein(self, protein_input):
         # protein_input: (batch, protein_max_len) — integer indices
         x = self.protein_embedding(protein_input)
+        if self.mask_padding:
+            return masked_cnn_pool(x, protein_input, self.protein_convs)
         x = x.permute(0, 2, 1)
 
         for conv in self.protein_convs:
@@ -139,7 +198,7 @@ class DeepDTA(nn.Module):
         x = F.adaptive_max_pool1d(x, 1).squeeze(-1)
         return x
 
-    def forward(self, drug_input, protein_input):
+    def forward(self, drug_input, protein_input, auxiliary=None):
         """
         Forward pass.
 
@@ -151,10 +210,14 @@ class DeepDTA(nn.Module):
             (batch, 1) predicted interaction scores
         """
         drug_repr = self.encode_drug(drug_input)
-        protein_repr = self.encode_protein(protein_input)
+        protein_repr = self.encode_protein(protein_input) if self.use_protein_cnn else None
 
         # Concatenate representations
-        combined = torch.cat([drug_repr, protein_repr], dim=1)
+        combined = (
+            torch.cat([drug_repr, protein_repr], dim=1) if protein_repr is not None else drug_repr
+        )
+        if self.auxiliary_encoder is not None:
+            combined = torch.cat([combined, self.auxiliary_encoder(auxiliary)], dim=1)
 
         # FC layers
         for fc, dropout in zip(self.fc_layers, self.fc_dropouts):

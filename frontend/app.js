@@ -79,18 +79,13 @@ function displayResult(data) {
     document.getElementById("result-smiles").textContent = data.smiles || "—";
     document.getElementById("result-seqlen").textContent = `${data.sequence_length} amino acids`;
 
-    // Binding strength classification (KIBA: lower = stronger)
+    // Output semantics come from the selected artifact's endpoint contract.
     const bindingEl = document.getElementById("result-binding");
-    if (score < 3) {
-        bindingEl.textContent = "Strong Binder";
-        bindingEl.className = "result-binding result-binding--strong";
-    } else if (score < 10) {
-        bindingEl.textContent = "Moderate Binder";
-        bindingEl.className = "result-binding result-binding--moderate";
-    } else {
-        bindingEl.textContent = "Weak / Non-Binder";
-        bindingEl.className = "result-binding result-binding--weak";
-    }
+    bindingEl.textContent = data.label?.higher_is_stronger === false
+        ? "Lower scores indicate stronger predicted binding"
+        : "Higher scores indicate stronger predicted binding";
+    bindingEl.className = "result-binding";
+    document.querySelector(".result-score-label").textContent = data.label?.label_name || "Affinity score";
 
     // SHAP explanation
     const shapSection = document.getElementById("shap-section");
@@ -188,30 +183,15 @@ function displayScreeningResults(data) {
 
     data.results.forEach((r, idx) => {
         const score = r.predicted_score;
-        let bindingClass = "";
-        let bindingText = "";
-
-        if (score !== null) {
-            if (score < 3) {
-                bindingClass = "result-binding--strong";
-                bindingText = "Strong";
-            } else if (score < 10) {
-                bindingClass = "result-binding--moderate";
-                bindingText = "Moderate";
-            } else {
-                bindingClass = "result-binding--weak";
-                bindingText = "Weak";
-            }
-        }
-
         const tr = document.createElement("tr");
-        tr.innerHTML = `
-            <td>${r.rank || idx + 1}</td>
-            <td>${r.drug_id}</td>
-            <td>${r.target_id}</td>
-            <td>${score !== null ? score.toFixed(4) : "Error"}</td>
-            <td><span class="${bindingClass}" style="font-weight:600">${bindingText}</span></td>
-        `;
+        [r.rank ?? "—", r.drug_id, r.target_id,
+            Number.isFinite(score) ? score.toFixed(4) : "Error",
+            Number.isFinite(score) ? (data.label?.label_name || "Affinity score") : (r.error || "Failed")
+        ].forEach((value) => {
+            const cell = document.createElement("td");
+            cell.textContent = String(value ?? "—");
+            tr.appendChild(cell);
+        });
         tbody.appendChild(tr);
     });
 
@@ -294,7 +274,8 @@ function displayModelTable(models) {
     }
 
     // Sort by RMSE
-    models.sort((a, b) => (a.rmse || 999) - (b.rmse || 999));
+    models = models.filter((model) => model.dataset === "KIBA" && model.split === "random");
+    models.sort((a, b) => (a.rmse ?? Infinity) - (b.rmse ?? Infinity));
 
     models.forEach((m, idx) => {
         const tr = document.createElement("tr");

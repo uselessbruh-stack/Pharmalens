@@ -1,0 +1,276 @@
+{
+  "scope": "Static source review and committed data/record audit; no model inference or retraining",
+  "dataset": {
+    "path": "data\\processed\\kiba_clean.csv",
+    "sha256": "3d2d60a2b7eb7d3c56ba55dbd43a800910c26ac6da9c6234e626b97b3afd9e80",
+    "rows": 118254,
+    "drug_ids": 2111,
+    "distinct_clean_smiles": 2065,
+    "target_ids": 229,
+    "distinct_sequences": 229,
+    "duplicate_identity_pair_rows": 648,
+    "nonfinite_scores": 0,
+    "drugs_over_100_characters": 44,
+    "targets_over_1000_residues": 44,
+    "interactions_with_truncated_drugs": 516,
+    "interactions_with_truncated_targets": 24103
+  },
+  "splits": {
+    "random": {
+      "sizes": {
+        "train": 94602,
+        "val": 11826,
+        "test": 11826
+      },
+      "overlap": {
+        "train_val": {
+          "drug_ids": 1877,
+          "target_ids": 224,
+          "smiles": 1847,
+          "sequences": 224,
+          "id_pairs": 0,
+          "identity_pairs": 95
+        },
+        "train_test": {
+          "drug_ids": 1864,
+          "target_ids": 226,
+          "smiles": 1836,
+          "sequences": 226,
+          "id_pairs": 0,
+          "identity_pairs": 90
+        },
+        "val_test": {
+          "drug_ids": 1678,
+          "target_ids": 221,
+          "smiles": 1661,
+          "sequences": 221,
+          "id_pairs": 0,
+          "identity_pairs": 17
+        }
+      }
+    },
+    "cold_drug": {
+      "sizes": {
+        "train": 95823,
+        "val": 11523,
+        "test": 10908
+      },
+      "overlap": {
+        "train_val": {
+          "drug_ids": 0,
+          "target_ids": 224,
+          "smiles": 3,
+          "sequences": 224,
+          "id_pairs": 0,
+          "identity_pairs": 48
+        },
+        "train_test": {
+          "drug_ids": 0,
+          "target_ids": 223,
+          "smiles": 8,
+          "sequences": 223,
+          "id_pairs": 0,
+          "identity_pairs": 106
+        },
+        "val_test": {
+          "drug_ids": 0,
+          "target_ids": 219,
+          "smiles": 1,
+          "sequences": 219,
+          "id_pairs": 0,
+          "identity_pairs": 11
+        }
+      }
+    },
+    "cold_target": {
+      "sizes": {
+        "train": 97948,
+        "val": 9069,
+        "test": 11237
+      },
+      "overlap": {
+        "train_val": {
+          "drug_ids": 1802,
+          "target_ids": 0,
+          "smiles": 1764,
+          "sequences": 0,
+          "id_pairs": 0,
+          "identity_pairs": 0
+        },
+        "train_test": {
+          "drug_ids": 1983,
+          "target_ids": 0,
+          "smiles": 1943,
+          "sequences": 0,
+          "id_pairs": 0,
+          "identity_pairs": 0
+        },
+        "val_test": {
+          "drug_ids": 1739,
+          "target_ids": 0,
+          "smiles": 1705,
+          "sequences": 0,
+          "id_pairs": 0,
+          "identity_pairs": 0
+        }
+      }
+    }
+  },
+  "recorded_random_results": [
+    {
+      "model": "XGBoost_Tuned",
+      "seed": 42,
+      "rmse": 0.4206,
+      "mae": 0.2624,
+      "ci": 0.8595,
+      "mse": 0.1769,
+      "training_time_sec": 326.3441159725189,
+      "n_samples": 11826
+    },
+    {
+      "model": "DeepDTA",
+      "seed": 42,
+      "rmse": 0.4249,
+      "mae": 0.247,
+      "ci": 0.8657,
+      "mse": 0.1806,
+      "training_time_sec": 29557.728141784668,
+      "n_samples": 11826
+    },
+    {
+      "model": "GraphDTA_GCN",
+      "seed": 42,
+      "rmse": 0.4303,
+      "mae": 0.2648,
+      "ci": 0.8561,
+      "mse": 0.1852,
+      "training_time_sec": 39954.900877952576,
+      "n_samples": 11826
+    },
+    {
+      "model": "XGBoost",
+      "seed": 42,
+      "rmse": 0.4346,
+      "mae": 0.2804,
+      "ci": 0.8497,
+      "mse": 0.1889,
+      "training_time_sec": 71.07736492156982,
+      "n_samples": 11826
+    },
+    {
+      "model": "RandomForest",
+      "seed": 42,
+      "rmse": 0.487,
+      "mae": 0.2933,
+      "ci": 0.8445,
+      "mse": 0.2371,
+      "training_time_sec": 1984.3,
+      "n_samples": 11826
+    },
+    {
+      "model": "Ridge",
+      "seed": 42,
+      "rmse": 0.6547,
+      "mae": 0.4475,
+      "ci": 0.7386,
+      "mse": 0.4286,
+      "training_time_sec": 1.3,
+      "n_samples": 11826
+    },
+    {
+      "model": "MeanPredictor",
+      "seed": 42,
+      "rmse": 0.841,
+      "mae": 0.5945,
+      "ci": 0.5,
+      "mse": 0.7074,
+      "training_time_sec": 0.0,
+      "n_samples": 11826
+    }
+  ],
+  "recorded_seeds": [
+    42
+  ],
+  "model_artifacts": [],
+  "python_dependencies_available": {
+    "numpy": false,
+    "pandas": false,
+    "torch": false,
+    "rdkit": false,
+    "xgboost": false,
+    "fastapi": false,
+    "pytest": false
+  },
+  "notebooks": [
+    {
+      "name": "01_dataset_exploration.ipynb",
+      "code_cells": 18,
+      "saved_errors": []
+    },
+    {
+      "name": "02_data_preprocessing.ipynb",
+      "code_cells": 12,
+      "saved_errors": []
+    },
+    {
+      "name": "03_drug_features.ipynb",
+      "code_cells": 12,
+      "saved_errors": []
+    },
+    {
+      "name": "04_protein_features.ipynb",
+      "code_cells": 7,
+      "saved_errors": []
+    },
+    {
+      "name": "05_baseline_models.ipynb",
+      "code_cells": 7,
+      "saved_errors": []
+    },
+    {
+      "name": "06_xgboost_model.ipynb",
+      "code_cells": 10,
+      "saved_errors": []
+    },
+    {
+      "name": "07_deeptda_model.ipynb",
+      "code_cells": 8,
+      "saved_errors": []
+    },
+    {
+      "name": "08_gnn_model.ipynb",
+      "code_cells": 9,
+      "saved_errors": []
+    },
+    {
+      "name": "09_model_comparison.ipynb",
+      "code_cells": 7,
+      "saved_errors": []
+    },
+    {
+      "name": "10_hyperparameter_tuning.ipynb",
+      "code_cells": 5,
+      "saved_errors": []
+    },
+    {
+      "name": "11_cold_start_evaluation.ipynb",
+      "code_cells": 6,
+      "saved_errors": []
+    },
+    {
+      "name": "12_xai_analysis.ipynb",
+      "code_cells": 7,
+      "saved_errors": []
+    },
+    {
+      "name": "13_batch_screening.ipynb",
+      "code_cells": 7,
+      "saved_errors": []
+    },
+    {
+      "name": "14_final_evaluation.ipynb",
+      "code_cells": 5,
+      "saved_errors": []
+    }
+  ]
+}

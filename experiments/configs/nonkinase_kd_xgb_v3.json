@@ -1,0 +1,22 @@
+{
+  "dataset": "NonKinaseBroad",
+  "dataset_version": "202610_v3",
+  "endpoint": "Kd",
+  "input": "data/processed/prepared/nonkinase_kd_202610_v3/Kd.csv",
+  "preprocessing_version": "standardized_v1",
+  "model": "xgboost",
+  "model_params": {
+    "n_estimators": 1800,
+    "max_depth": 9,
+    "learning_rate": 0.03,
+    "early_stopping_rounds": 60,
+    "n_jobs": 4
+  },
+  "split": "random",
+  "split_seed": 42,
+  "seed": 42,
+  "training": {
+    "threads": 4
+  },
+  "smoke": false
+}

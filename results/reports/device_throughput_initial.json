@@ -1,0 +1,29 @@
+{
+  "results": [
+    {
+      "device": "cpu",
+      "batch_size": 128,
+      "seconds_per_step": 0.030134120001457633,
+      "pairs_per_second": 4247.676719738571
+    },
+    {
+      "device": "cpu",
+      "batch_size": 512,
+      "seconds_per_step": 0.13187158000073396,
+      "pairs_per_second": 3882.5651440374822
+    },
+    {
+      "device": "xpu",
+      "batch_size": 128,
+      "seconds_per_step": 0.015550940000684932,
+      "pairs_per_second": 8231.013687556013
+    },
+    {
+      "device": "xpu",
+      "batch_size": 512,
+      "seconds_per_step": 0.03607826000079513,
+      "pairs_per_second": 14191.37175652917
+    }
+  ],
+  "limitations": "Synthetic inputs; current concurrent machine workload; throughput only, not affinity performance"
+}

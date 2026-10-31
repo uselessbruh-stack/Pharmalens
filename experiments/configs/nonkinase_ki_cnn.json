@@ -1,0 +1,33 @@
+{
+  "dataset": "NonKinasePanel",
+  "dataset_version": "202610_v1",
+  "endpoint": "Ki",
+  "input": "data/processed/prepared/nonkinase_ki_202610_v1/Ki.csv",
+  "preprocessing_version": "standardized_v1",
+  "model": "deeptda",
+  "model_params": {
+    "drug_max_len": 150,
+    "protein_max_len": 1500,
+    "drug_embed_dim": 64,
+    "protein_embed_dim": 64,
+    "num_filters": 64,
+    "fc_dims": [
+      512,
+      256
+    ],
+    "dropout": 0.2,
+    "mask_padding": true
+  },
+  "split": "random",
+  "split_seed": 42,
+  "seed": 42,
+  "training": {
+    "threads": 4,
+    "epochs": 100,
+    "patience": 15,
+    "batch_size": 64,
+    "learning_rate": 0.001,
+    "weight_decay": 0.0001
+  },
+  "smoke": false
+}

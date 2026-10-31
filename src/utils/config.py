@@ -181,11 +181,10 @@ def setup_logging(name: str = "pharmalens", level: int = logging.INFO) -> loggin
 # ==============================================================================
 
 def save_json(data: dict, path: Path):
-    """Save a dictionary as JSON."""
-    path = Path(path)
-    path.parent.mkdir(parents=True, exist_ok=True)
-    with open(path, "w", encoding="utf-8") as f:
-        json.dump(data, f, indent=2, default=str)
+    """Persist scientific records atomically as standards-compliant JSON."""
+    from src.data.acquisition import atomic_json
+    from src.utils.serialization import json_safe
+    atomic_json(path, json_safe(data))
 
 
 def load_json(path: Path) -> dict:

@@ -1,0 +1,15 @@
+{
+  "dataset": "KIBA",
+  "dataset_version": "identity_v2",
+  "endpoint": "KIBA",
+  "input": "data/processed/kiba_clean.csv",
+  "preprocessing_version": "legacy_v1",
+  "model": "xgboost",
+  "model_params": {"n_estimators": 1000, "max_depth": 7, "learning_rate": 0.05, "early_stopping_rounds": 40, "n_jobs": 4},
+  "split": "random",
+  "split_manifest": "data/processed/datasets/kiba_identity_v2/splits/manifest.json",
+  "split_seed": 42,
+  "seed": 42,
+  "training": {"threads": 4},
+  "smoke": false
+}

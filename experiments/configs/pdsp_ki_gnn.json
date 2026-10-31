@@ -1,0 +1,14 @@
+{
+  "dataset": "BindingDB_PDSPKi",
+  "dataset_version": "202610_prepared_v1",
+  "endpoint": "Ki",
+  "input": "data/processed/prepared/bindingdb_pdsp_202610_v1/Ki.csv",
+  "preprocessing_version": "standardized_v1",
+  "model": "gnn",
+  "model_params": {"gnn_type": "gcn", "protein_max_len": 1500, "gnn_hidden_dim": 128, "gnn_output_dim": 128, "protein_embed_dim": 64, "protein_num_filters": 64, "fc_dims": [512, 256], "dropout": 0.2},
+  "split": "random",
+  "split_seed": 42,
+  "seed": 42,
+  "training": {"threads": 4, "epochs": 100, "patience": 15, "batch_size": 64, "learning_rate": 0.0005, "weight_decay": 0.0001},
+  "smoke": false
+}

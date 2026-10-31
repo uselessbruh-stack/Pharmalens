@@ -1,0 +1,17 @@
+{
+  "source_sha256": "e265d729db86ce986602c35ba35417270eec00295876ae587e0e172e3b9759e6",
+  "jobs": [
+    {
+      "id": "nonkinase_kd_xgb_v3",
+      "config": "experiments\\configs\\nonkinase_kd_xgb_v3.json",
+      "config_sha256": "a1b9d82b530b82c2f06c2d3aee930f65a482c9f9e62e4558c1fc1df5cd47048f",
+      "output": "experiments/runs/nonkinase_kd_xgb_v3_seed42"
+    },
+    {
+      "id": "nonkinase_ki_xgb_v3",
+      "config": "experiments\\configs\\nonkinase_ki_xgb_v3.json",
+      "config_sha256": "4930b7d3ed217bd2e0763dd0dfbff2bf6be2b3144c907b2f5d1e19406039a993",
+      "output": "experiments/runs/nonkinase_ki_xgb_v3_seed42"
+    }
+  ]
+}

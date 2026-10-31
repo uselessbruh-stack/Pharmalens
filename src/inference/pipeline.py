@@ -6,14 +6,16 @@ and produces interaction scores with optional SHAP explanations.
 """
 
 import logging
-import pickle
+import math
 import time
 from pathlib import Path
-from typing import Optional, Union
+from typing import TYPE_CHECKING, Optional
 
 import numpy as np
 
 logger = logging.getLogger("pharmalens.inference")
+if TYPE_CHECKING:
+    import pandas as pd
 
 
 class PharmaLensPipeline:
@@ -30,7 +32,14 @@ class PharmaLensPipeline:
         results = pipeline.batch_predict(smiles_list, sequence_list)
     """
 
-    def __init__(self, model, model_type: str = "xgboost"):
+    def __init__(
+        self,
+        model,
+        model_type: str = "xgboost",
+        endpoint: str = "KIBA",
+        preprocessing_version="legacy_v1",
+        target_scaler=None,
+    ):
         """
         Args:
             model: Trained model instance.
@@ -38,10 +47,35 @@ class PharmaLensPipeline:
         """
         self.model = model
         self.model_type = model_type
+        from src.data.labels import CONTRACTS
+
+        if endpoint not in CONTRACTS:
+            raise ValueError(f"Unsupported prediction endpoint: {endpoint}")
+        self.label_contract = CONTRACTS[endpoint]
+        if preprocessing_version not in {"legacy_v1", "standardized_v1"}:
+            raise ValueError("Unsupported preprocessing version")
+        self.preprocessing_version = preprocessing_version
+        self.target_scaler = target_scaler or {"mean": 0.0, "scale": 1.0}
+        if (
+            not all(math.isfinite(float(self.target_scaler[key])) for key in ("mean", "scale"))
+            or self.target_scaler["scale"] <= 0
+        ):
+            raise ValueError("Target scaler must have a finite mean and positive finite scale")
         self._shap_explainer = None
+        self.embedding_store = None
+        if getattr(model, "protein_embedding_cache", None):
+            from src.features.protein_embeddings import load_store
+
+            self.embedding_store = load_store(model.protein_embedding_cache)
 
     @classmethod
-    def from_pretrained(cls, model_path: str, model_type: str = "xgboost"):
+    def from_pretrained(
+        cls,
+        model_path: str,
+        model_type: str = "xgboost",
+        endpoint: str = "KIBA",
+        preprocessing_version="legacy_v1",
+    ):
         """
         Load a trained model and create a pipeline.
 
@@ -53,16 +87,21 @@ class PharmaLensPipeline:
             PharmaLensPipeline instance.
         """
         model_path = Path(model_path)
+        target_scaler = None
 
         if model_type == "xgboost":
             from src.models.xgboost_model import XGBoostDTI
+
             model = XGBoostDTI()
             model.load(model_path)
 
         elif model_type == "deeptda":
             import torch
+
             from src.models.deeptda import DeepDTA
-            checkpoint = torch.load(model_path, map_location="cpu")
+
+            checkpoint = torch.load(model_path, map_location="cpu", weights_only=True)
+            target_scaler = checkpoint.get("target_scaler")
             config = checkpoint.get("config", {})
             model = DeepDTA(**config)
             model.load_state_dict(checkpoint["model_state_dict"])
@@ -70,8 +109,11 @@ class PharmaLensPipeline:
 
         elif model_type == "gnn":
             import torch
+
             from src.models.gnn_model import GraphDTA
-            checkpoint = torch.load(model_path, map_location="cpu")
+
+            checkpoint = torch.load(model_path, map_location="cpu", weights_only=True)
+            target_scaler = checkpoint.get("target_scaler")
             config = checkpoint.get("config", {})
             model = GraphDTA(**config)
             model.load_state_dict(checkpoint["model_state_dict"])
@@ -81,7 +123,26 @@ class PharmaLensPipeline:
             raise ValueError(f"Unknown model type: {model_type}")
 
         logger.info(f"Loaded {model_type} model from {model_path}")
-        return cls(model, model_type)
+        return cls(model, model_type, endpoint, preprocessing_version, target_scaler)
+
+    def _clean_smiles(self, smiles):
+        if self.preprocessing_version == "standardized_v1":
+            from src.data.preparation import clean_molecule
+
+            return clean_molecule(smiles)
+        from src.preprocessing.drug_preprocessor import validate_and_clean_smiles
+
+        return validate_and_clean_smiles(smiles)
+
+    def _clean_sequence(self, sequence):
+        if self.preprocessing_version == "standardized_v1":
+            from src.data.preparation import AA
+
+            cleaned = "".join(sequence.split()).upper()
+            return cleaned if 10 <= len(cleaned) <= 10000 and set(cleaned) <= AA else None
+        from src.preprocessing.protein_preprocessor import validate_and_clean_sequence
+
+        return validate_and_clean_sequence(sequence)
 
     def predict(
         self,
@@ -112,6 +173,10 @@ class PharmaLensPipeline:
         else:
             raise ValueError(f"Unknown model type: {self.model_type}")
 
+        result["score"] = result["score"] * self.target_scaler["scale"] + self.target_scaler["mean"]
+        if not math.isfinite(result["score"]):
+            raise ValueError("Model returned a non-finite score")
+        result["label"] = self.label_contract.as_dict()
         result["inference_time"] = time.time() - t_start
         return result
 
@@ -130,8 +195,8 @@ class PharmaLensPipeline:
         Returns:
             List of result dicts.
         """
-        assert len(smiles_list) == len(sequence_list), \
-            "smiles_list and sequence_list must have the same length"
+        if not smiles_list or len(smiles_list) != len(sequence_list):
+            raise ValueError("Nonempty SMILES and sequence lists must have the same length")
 
         results = []
         for smiles, sequence in zip(smiles_list, sequence_list):
@@ -140,11 +205,13 @@ class PharmaLensPipeline:
                 results.append(result)
             except Exception as e:
                 logger.warning(f"Failed prediction for {smiles[:30]}...: {e}")
-                results.append({
-                    "score": None,
-                    "error": str(e),
-                    "smiles": smiles,
-                })
+                results.append(
+                    {
+                        "score": None,
+                        "error": str(e),
+                        "smiles": smiles,
+                    }
+                )
 
         return results
 
@@ -169,6 +236,13 @@ class PharmaLensPipeline:
         """
         import pandas as pd
 
+        if not smiles_list or not sequence_list:
+            raise ValueError("Screening requires at least one molecule and one protein")
+        if drug_ids is not None and len(drug_ids) != len(smiles_list):
+            raise ValueError("drug_ids must match the number of molecules")
+        if target_ids is not None and len(target_ids) != len(sequence_list):
+            raise ValueError("target_ids must match the number of proteins")
+
         if drug_ids is None:
             drug_ids = [f"drug_{i}" for i in range(len(smiles_list))]
         if target_ids is None:
@@ -179,25 +253,37 @@ class PharmaLensPipeline:
             for j, (seq, tid) in enumerate(zip(sequence_list, target_ids)):
                 try:
                     pred = self.predict(smiles, seq)
-                    results.append({
-                        "drug_id": did,
-                        "target_id": tid,
-                        "smiles": smiles,
-                        "predicted_score": pred["score"],
-                        "inference_time": pred["inference_time"],
-                    })
+                    results.append(
+                        {
+                            "drug_id": did,
+                            "target_id": tid,
+                            "smiles": smiles,
+                            "predicted_score": pred["score"],
+                            "inference_time": pred["inference_time"],
+                        }
+                    )
                 except Exception as e:
-                    results.append({
-                        "drug_id": did,
-                        "target_id": tid,
-                        "smiles": smiles,
-                        "predicted_score": None,
-                        "error": str(e),
-                    })
+                    results.append(
+                        {
+                            "drug_id": did,
+                            "target_id": tid,
+                            "smiles": smiles,
+                            "predicted_score": None,
+                            "error": str(e),
+                        }
+                    )
 
         df = pd.DataFrame(results)
-        df = df.sort_values("predicted_score", ascending=True)
-        df["rank"] = range(1, len(df) + 1)
+        df = df.sort_values(
+            "predicted_score",
+            ascending=not self.label_contract.higher_is_stronger,
+            na_position="last",
+        )
+        df["rank"] = (
+            df["predicted_score"]
+            .rank(method="first", ascending=not self.label_contract.higher_is_stronger)
+            .astype("Int64")
+        )
         return df
 
     # =========================================================================
@@ -208,17 +294,15 @@ class PharmaLensPipeline:
         """XGBoost prediction with optional SHAP."""
         from src.features.drug_features import get_drug_feature_vector
         from src.features.protein_features import get_protein_feature_vector
-        from src.preprocessing.drug_preprocessor import validate_and_clean_smiles
-        from src.preprocessing.protein_preprocessor import validate_and_clean_sequence
 
         # Preprocess
-        clean_smiles = validate_and_clean_smiles(smiles)
+        clean_smiles = self._clean_smiles(smiles)
         if clean_smiles is None:
             raise ValueError(f"Invalid SMILES: {smiles}")
 
-        clean_seq = validate_and_clean_sequence(sequence)
+        clean_seq = self._clean_sequence(sequence)
         if clean_seq is None:
-            raise ValueError(f"Invalid protein sequence")
+            raise ValueError("Invalid protein sequence")
 
         # Extract features
         drug_fv = get_drug_feature_vector(clean_smiles)
@@ -226,6 +310,8 @@ class PharmaLensPipeline:
             raise ValueError(f"Failed to compute drug features for: {clean_smiles}")
 
         prot_fv = get_protein_feature_vector(clean_seq)
+        if self.embedding_store:
+            prot_fv = np.concatenate([prot_fv, self.embedding_store.get(clean_seq)])
 
         # Concatenate and predict
         combined = np.concatenate([drug_fv, prot_fv]).reshape(1, -1)
@@ -246,27 +332,29 @@ class PharmaLensPipeline:
     def _predict_deeptda(self, smiles: str, sequence: str) -> dict:
         """DeepDTA prediction."""
         import torch
+
         from src.features.drug_features import encode_smiles
         from src.features.protein_features import encode_sequence
-        from src.preprocessing.drug_preprocessor import validate_and_clean_smiles
-        from src.preprocessing.protein_preprocessor import validate_and_clean_sequence
 
-        clean_smiles = validate_and_clean_smiles(smiles)
+        clean_smiles = self._clean_smiles(smiles)
         if clean_smiles is None:
             raise ValueError(f"Invalid SMILES: {smiles}")
 
-        clean_seq = validate_and_clean_sequence(sequence)
+        clean_seq = self._clean_sequence(sequence)
         if clean_seq is None:
-            raise ValueError(f"Invalid protein sequence")
+            raise ValueError("Invalid protein sequence")
 
-        drug_enc = encode_smiles(clean_smiles, max_length=100)
-        prot_enc = encode_sequence(clean_seq, max_length=1000)
+        drug_enc = encode_smiles(clean_smiles, max_length=self.model.drug_max_len)
+        prot_enc = encode_sequence(clean_seq, max_length=self.model.protein_max_len)
 
         drug_tensor = torch.tensor(drug_enc, dtype=torch.long).unsqueeze(0)
         prot_tensor = torch.tensor(prot_enc, dtype=torch.long).unsqueeze(0)
+        device = next(self.model.parameters()).device
+        drug_tensor, prot_tensor = drug_tensor.to(device), prot_tensor.to(device)
+        auxiliary = self._neural_auxiliary(clean_smiles, clean_seq, device)
 
         with torch.no_grad():
-            score = float(self.model(drug_tensor, prot_tensor).item())
+            score = float(self.model(drug_tensor, prot_tensor, auxiliary).item())
 
         return {
             "score": score,
@@ -277,34 +365,40 @@ class PharmaLensPipeline:
     def _predict_gnn(self, smiles: str, sequence: str) -> dict:
         """GNN prediction."""
         import torch
-        from torch_geometric.data import Data, Batch
+        from torch_geometric.data import Batch, Data
+
         from src.features.mol_graph import smiles_to_graph
         from src.features.protein_features import encode_sequence
-        from src.preprocessing.drug_preprocessor import validate_and_clean_smiles
-        from src.preprocessing.protein_preprocessor import validate_and_clean_sequence
 
-        clean_smiles = validate_and_clean_smiles(smiles)
+        clean_smiles = self._clean_smiles(smiles)
         if clean_smiles is None:
             raise ValueError(f"Invalid SMILES: {smiles}")
 
-        clean_seq = validate_and_clean_sequence(sequence)
+        clean_seq = self._clean_sequence(sequence)
         if clean_seq is None:
-            raise ValueError(f"Invalid protein sequence")
+            raise ValueError("Invalid protein sequence")
 
         graph = smiles_to_graph(clean_smiles)
         if graph is None:
             raise ValueError(f"Failed to convert SMILES to graph: {clean_smiles}")
 
-        prot_enc = encode_sequence(clean_seq, max_length=1000)
+        prot_enc = encode_sequence(
+            clean_seq, max_length=self.model.config.get("protein_max_len", 1000)
+        )
 
         data = Data(
             x=torch.tensor(graph["node_features"], dtype=torch.float),
             edge_index=torch.tensor(graph["edge_index"], dtype=torch.long),
+            edge_attr=torch.tensor(graph["edge_features"], dtype=torch.float),
             protein_input=torch.tensor(prot_enc, dtype=torch.long).unsqueeze(0),
         )
+        auxiliary = self._neural_auxiliary(clean_smiles, clean_seq, "cpu")
+        if auxiliary is not None:
+            data.auxiliary = auxiliary
 
         batch = Batch.from_data_list([data])
         batch.protein_input = data.protein_input
+        batch = batch.to(next(self.model.parameters()).device)
 
         with torch.no_grad():
             score = float(self.model(batch).item())
@@ -316,9 +410,26 @@ class PharmaLensPipeline:
             "num_atoms": graph["num_atoms"],
         }
 
+    def _neural_auxiliary(self, smiles, sequence, device):
+        if getattr(self.model, "auxiliary_encoder", None) is None:
+            return None
+        import torch
+        from src.features.drug_features import get_drug_feature_vector
+        from src.features.protein_features import get_protein_feature_vector
+
+        features = np.concatenate(
+            [get_drug_feature_vector(smiles), get_protein_feature_vector(sequence)]
+        )
+        if self.embedding_store:
+            features = np.concatenate([features, self.embedding_store.get(sequence)])
+        if not np.isfinite(features).all():
+            raise ValueError("Non-finite hybrid model features")
+        return torch.tensor(features, dtype=torch.float32, device=device).unsqueeze(0)
+
     def _compute_shap(self, X: np.ndarray) -> dict:
         """Compute SHAP values for XGBoost."""
         import shap
+
         from src.features.drug_features import get_feature_names
         from src.features.protein_features import get_protein_feature_names
 
@@ -327,20 +438,26 @@ class PharmaLensPipeline:
 
         sv = self._shap_explainer.shap_values(X)[0]
         feature_names = get_feature_names() + get_protein_feature_names()
+        if self.embedding_store:
+            feature_names += [f"esm2_layer6_mean_{index}" for index in range(320)]
 
         # Top 10 contributing features
         top_idx = np.argsort(np.abs(sv))[::-1][:10]
         top_features = []
         for idx in top_idx:
             name = feature_names[idx] if idx < len(feature_names) else f"feature_{idx}"
-            top_features.append({
-                "feature": name,
-                "shap_value": float(sv[idx]),
-                "feature_value": float(X[0, idx]),
-                "direction": "positive" if sv[idx] > 0 else "negative",
-            })
+            top_features.append(
+                {
+                    "feature": name,
+                    "shap_value": float(sv[idx]),
+                    "feature_value": float(X[0, idx]),
+                    "direction": "positive" if sv[idx] > 0 else "negative",
+                }
+            )
 
         return {
             "base_value": float(self._shap_explainer.expected_value),
             "top_features": top_features,
+            "other_features_contribution": float(sv.sum() - sv[top_idx].sum()),
+            "reconstructed_score": float(self._shap_explainer.expected_value + sv.sum()),
         }

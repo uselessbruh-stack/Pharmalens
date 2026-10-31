@@ -18,6 +18,7 @@ logger = logging.getLogger("pharmalens.features.drug")
 # Molecular Descriptors
 # ==============================================================================
 
+
 def compute_molecular_descriptors(smiles: str) -> Optional[dict]:
     """
     Compute physicochemical descriptors for a single molecule.
@@ -41,7 +42,7 @@ def compute_molecular_descriptors(smiles: str) -> Optional[dict]:
         dict of descriptor values, or None if molecule is invalid.
     """
     from rdkit import Chem
-    from rdkit.Chem import Descriptors, Lipinski, rdMolDescriptors
+    from rdkit.Chem import Descriptors
 
     mol = Chem.MolFromSmiles(smiles)
     if mol is None:
@@ -95,7 +96,10 @@ def compute_descriptors_batch(smiles_list: list[str]) -> pd.DataFrame:
 # Molecular Fingerprints
 # ==============================================================================
 
-def compute_morgan_fingerprint(smiles: str, radius: int = 2, n_bits: int = 1024) -> Optional[np.ndarray]:
+
+def compute_morgan_fingerprint(
+    smiles: str, radius: int = 2, n_bits: int = 1024
+) -> Optional[np.ndarray]:
     """
     Compute Morgan (circular) fingerprint for a molecule.
 
@@ -111,13 +115,13 @@ def compute_morgan_fingerprint(smiles: str, radius: int = 2, n_bits: int = 1024)
         np.ndarray of shape (n_bits,) with 0/1 values, or None if invalid.
     """
     from rdkit import Chem
-    from rdkit.Chem import AllChem
+    from rdkit.Chem import rdFingerprintGenerator
 
     mol = Chem.MolFromSmiles(smiles)
     if mol is None:
         return None
 
-    fp = AllChem.GetMorganFingerprintAsBitVect(mol, radius, nBits=n_bits)
+    fp = rdFingerprintGenerator.GetMorganGenerator(radius=radius, fpSize=n_bits).GetFingerprint(mol)
     return np.array(fp, dtype=np.int8)
 
 
@@ -186,16 +190,68 @@ def compute_maccs_keys(smiles: str) -> Optional[np.ndarray]:
 
 # Character set for SMILES encoding
 SMILES_CHARSET = {
-    '#': 1, '%': 2, '(': 3, ')': 4, '+': 5, '-': 6, '.': 7,
-    '/': 8, '0': 9, '1': 10, '2': 11, '3': 12, '4': 13, '5': 14,
-    '6': 15, '7': 16, '8': 17, '9': 18, '=': 19, '@': 20,
-    'A': 21, 'B': 22, 'C': 23, 'F': 24, 'G': 25, 'H': 26,
-    'I': 27, 'K': 28, 'L': 29, 'M': 30, 'N': 31, 'O': 32,
-    'P': 33, 'R': 34, 'S': 35, 'T': 36, 'V': 37, 'W': 38,
-    'X': 39, 'Y': 40, 'Z': 41, '[': 42, '\\': 43, ']': 44,
-    'a': 45, 'b': 46, 'c': 47, 'd': 48, 'e': 49, 'f': 50,
-    'g': 51, 'h': 52, 'i': 53, 'l': 54, 'm': 55, 'n': 56,
-    'o': 57, 'p': 58, 'r': 59, 's': 60, 't': 61, 'u': 62,
+    "#": 1,
+    "%": 2,
+    "(": 3,
+    ")": 4,
+    "+": 5,
+    "-": 6,
+    ".": 7,
+    "/": 8,
+    "0": 9,
+    "1": 10,
+    "2": 11,
+    "3": 12,
+    "4": 13,
+    "5": 14,
+    "6": 15,
+    "7": 16,
+    "8": 17,
+    "9": 18,
+    "=": 19,
+    "@": 20,
+    "A": 21,
+    "B": 22,
+    "C": 23,
+    "F": 24,
+    "G": 25,
+    "H": 26,
+    "I": 27,
+    "K": 28,
+    "L": 29,
+    "M": 30,
+    "N": 31,
+    "O": 32,
+    "P": 33,
+    "R": 34,
+    "S": 35,
+    "T": 36,
+    "V": 37,
+    "W": 38,
+    "X": 39,
+    "Y": 40,
+    "Z": 41,
+    "[": 42,
+    "\\": 43,
+    "]": 44,
+    "a": 45,
+    "b": 46,
+    "c": 47,
+    "d": 48,
+    "e": 49,
+    "f": 50,
+    "g": 51,
+    "h": 52,
+    "i": 53,
+    "l": 54,
+    "m": 55,
+    "n": 56,
+    "o": 57,
+    "p": 58,
+    "r": 59,
+    "s": 60,
+    "t": 61,
+    "u": 62,
 }
 
 
@@ -237,6 +293,7 @@ def encode_smiles_batch(smiles_list: list[str], max_length: int = 100) -> np.nda
 # Combined Drug Feature Vector
 # ==============================================================================
 
+
 def get_drug_feature_vector(
     smiles: str,
     include_descriptors: bool = True,
@@ -268,10 +325,16 @@ def get_drug_feature_vector(
             return None
         # Ordered list of descriptor values (excluding smiles key)
         desc_values = [
-            desc["molecular_weight"], desc["heavy_atom_count"],
-            desc["ring_count"], desc["hbd"], desc["hba"],
-            desc["rotatable_bonds"], desc["tpsa"], desc["logp"],
-            desc["num_aromatic_rings"], desc["fraction_csp3"],
+            desc["molecular_weight"],
+            desc["heavy_atom_count"],
+            desc["ring_count"],
+            desc["hbd"],
+            desc["hba"],
+            desc["rotatable_bonds"],
+            desc["tpsa"],
+            desc["logp"],
+            desc["num_aromatic_rings"],
+            desc["fraction_csp3"],
         ]
         features.extend(desc_values)
 
@@ -286,13 +349,22 @@ def get_drug_feature_vector(
 
 # Descriptor names for feature importance interpretation
 DESCRIPTOR_NAMES = [
-    "molecular_weight", "heavy_atom_count", "ring_count",
-    "hbd", "hba", "rotatable_bonds", "tpsa", "logp",
-    "num_aromatic_rings", "fraction_csp3",
+    "molecular_weight",
+    "heavy_atom_count",
+    "ring_count",
+    "hbd",
+    "hba",
+    "rotatable_bonds",
+    "tpsa",
+    "logp",
+    "num_aromatic_rings",
+    "fraction_csp3",
 ]
 
 
-def get_feature_names(include_descriptors: bool = True, include_fingerprints: bool = True, fp_bits: int = 1024) -> list[str]:
+def get_feature_names(
+    include_descriptors: bool = True, include_fingerprints: bool = True, fp_bits: int = 1024
+) -> list[str]:
     """Get feature names for the combined drug feature vector."""
     names = []
     if include_descriptors:

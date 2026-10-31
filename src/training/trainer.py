@@ -10,6 +10,7 @@ Generic training loop for PyTorch models with:
 """
 
 import logging
+import math
 import time
 from pathlib import Path
 from typing import Optional
@@ -35,6 +36,8 @@ class EarlyStopping:
         self.early_stop = False
 
     def __call__(self, score):
+        if not math.isfinite(float(score)):
+            raise ValueError("Early stopping requires a finite validation score")
         if self.best_score is None:
             self.best_score = score
             return False
@@ -83,6 +86,7 @@ class Trainer:
         early_stopping_patience: int = 20,
         checkpoint_dir: Optional[Path] = None,
         model_name: str = "model",
+        target_scaler=None,
     ):
         self.model = model
         self.optimizer = optimizer
@@ -90,6 +94,7 @@ class Trainer:
         self.device = device or torch.device("cpu")
         self.scheduler = scheduler
         self.model_name = model_name
+        self.target_scaler = target_scaler
 
         self.model.to(self.device)
 
@@ -109,6 +114,22 @@ class Trainer:
         self.best_model_state = None
         self.total_training_time = 0
 
+    def _forward_batch(self, batch):
+        if hasattr(batch, "y"):
+            batch = batch.to(self.device)
+            predictions, scores = self.model(batch), batch.y
+        elif isinstance(batch, (tuple, list)) and len(batch) in (3, 4):
+            *inputs, scores = (tensor.to(self.device) for tensor in batch)
+            predictions = self.model(*inputs)
+        else:
+            raise ValueError(f"Unexpected batch format: {type(batch)}")
+        predictions, scores = predictions.reshape(-1), scores.reshape(-1)
+        if predictions.shape != scores.shape or not scores.numel():
+            raise ValueError("Prediction and label shapes must match and be nonempty")
+        if not torch.isfinite(predictions).all() or not torch.isfinite(scores).all():
+            raise ValueError("Non-finite predictions or labels")
+        return predictions, scores
+
     def train_epoch(self, train_loader: DataLoader) -> float:
         """Run one training epoch."""
         self.model.train()
@@ -117,32 +138,25 @@ class Trainer:
 
         for batch in train_loader:
             # Handle different batch formats (DeepDTA vs GNN)
-            if len(batch) == 3:
-                # DeepDTA: (drug, protein, score)
-                drug, protein, scores = batch
-                drug = drug.to(self.device)
-                protein = protein.to(self.device)
-                scores = scores.to(self.device)
-                predictions = self.model(drug, protein)
-            elif hasattr(batch, 'y'):
-                # PyG batch (GNN)
-                batch = batch.to(self.device)
-                predictions = self.model(batch)
-                scores = batch.y.squeeze()
-            else:
-                raise ValueError(f"Unexpected batch format: {type(batch)}")
+            predictions, scores = self._forward_batch(batch)
 
             loss = self.criterion(predictions, scores)
+            if not torch.isfinite(loss):
+                raise ValueError("Non-finite training loss")
 
             self.optimizer.zero_grad()
             loss.backward()
-            torch.nn.utils.clip_grad_norm_(self.model.parameters(), max_norm=5.0)
+            torch.nn.utils.clip_grad_norm_(
+                self.model.parameters(), max_norm=5.0, error_if_nonfinite=True
+            )
             self.optimizer.step()
 
-            total_loss += loss.item()
-            n_batches += 1
+            total_loss += loss.item() * scores.numel()
+            n_batches += scores.numel()
 
-        return total_loss / max(n_batches, 1)
+        if not n_batches:
+            raise ValueError("Training loader is empty")
+        return total_loss / n_batches
 
     @torch.no_grad()
     def validate(self, val_loader: DataLoader) -> tuple:
@@ -154,27 +168,20 @@ class Trainer:
         all_true = []
 
         for batch in val_loader:
-            if len(batch) == 3:
-                drug, protein, scores = batch
-                drug = drug.to(self.device)
-                protein = protein.to(self.device)
-                scores = scores.to(self.device)
-                predictions = self.model(drug, protein)
-            elif hasattr(batch, 'y'):
-                batch = batch.to(self.device)
-                predictions = self.model(batch)
-                scores = batch.y.squeeze()
-            else:
-                raise ValueError(f"Unexpected batch format")
+            predictions, scores = self._forward_batch(batch)
 
             loss = self.criterion(predictions, scores)
-            total_loss += loss.item()
-            n_batches += 1
+            if not torch.isfinite(loss):
+                raise ValueError("Non-finite validation loss")
+            total_loss += loss.item() * scores.numel()
+            n_batches += scores.numel()
 
             all_preds.append(predictions.cpu().numpy())
             all_true.append(scores.cpu().numpy())
 
-        avg_loss = total_loss / max(n_batches, 1)
+        if not n_batches:
+            raise ValueError("Validation loader is empty")
+        avg_loss = total_loss / n_batches
         all_preds = np.concatenate(all_preds)
         all_true = np.concatenate(all_true)
 
@@ -199,6 +206,8 @@ class Trainer:
         Returns:
             dict: Training history.
         """
+        if epochs < 1:
+            raise ValueError("epochs must be positive")
         logger.info(f"Starting training: {self.model_name} for {epochs} epochs")
         t_total_start = time.time()
 
@@ -228,9 +237,27 @@ class Trainer:
             # Save best model
             if val_loss < self.best_val_loss:
                 self.best_val_loss = val_loss
-                self.best_model_state = {k: v.cpu().clone() for k, v in self.model.state_dict().items()}
+                self.best_model_state = {
+                    k: v.cpu().clone() for k, v in self.model.state_dict().items()
+                }
                 if self.checkpoint_dir:
                     self._save_checkpoint(epoch)
+            if self.checkpoint_dir:
+                from src.data.acquisition import atomic_json
+
+                atomic_json(
+                    self.checkpoint_dir / "progress.json",
+                    {
+                        "status": "running",
+                        "epoch": epoch,
+                        "max_epochs": epochs,
+                        "train_loss": train_loss,
+                        "val_loss": val_loss,
+                        "best_val_loss": self.best_val_loss,
+                        "target_scaler": self.target_scaler,
+                        "loss_space": "normalized_target" if self.target_scaler else "model_output",
+                    },
+                )
 
             # Logging
             if verbose and (epoch % 10 == 0 or epoch == 1):
@@ -247,11 +274,27 @@ class Trainer:
 
             # Early stopping
             if self.early_stopping(val_loss):
-                logger.info(f"  Early stopping at epoch {epoch} (patience={self.early_stopping.patience})")
+                logger.info(
+                    f"  Early stopping at epoch {epoch} (patience={self.early_stopping.patience})"
+                )
                 print(f"  Early stopping at epoch {epoch}")
                 break
 
         self.total_training_time = time.time() - t_total_start
+        if self.checkpoint_dir:
+            from src.data.acquisition import atomic_json
+
+            atomic_json(
+                self.checkpoint_dir / "progress.json",
+                {
+                    "status": "complete",
+                    "epochs_completed": len(self.history["epoch"]),
+                    "best_val_loss": self.best_val_loss,
+                    "target_scaler": self.target_scaler,
+                    "training_seconds": self.total_training_time,
+                    "loss_space": "normalized_target" if self.target_scaler else "model_output",
+                },
+            )
 
         # Restore best model
         if self.best_model_state:
@@ -271,13 +314,17 @@ class Trainer:
         if self.checkpoint_dir:
             self.checkpoint_dir.mkdir(parents=True, exist_ok=True)
             path = self.checkpoint_dir / f"{self.model_name}_best.pt"
-            torch.save({
-                "epoch": epoch,
-                "model_state_dict": self.model.state_dict(),
-                "optimizer_state_dict": self.optimizer.state_dict(),
-                "val_loss": self.best_val_loss,
-                "config": getattr(self.model, "config", {}),
-            }, path)
+            torch.save(
+                {
+                    "epoch": epoch,
+                    "model_state_dict": self.model.state_dict(),
+                    "optimizer_state_dict": self.optimizer.state_dict(),
+                    "val_loss": self.best_val_loss,
+                    "config": getattr(self.model, "config", {}),
+                    "target_scaler": self.target_scaler,
+                },
+                path,
+            )
 
     def save_history(self, path: Path):
         """Save training history to CSV."""
@@ -292,17 +339,33 @@ class Trainer:
         import matplotlib.pyplot as plt
 
         fig, ax = plt.subplots(figsize=(10, 5))
-        ax.plot(self.history["epoch"], self.history["train_loss"],
-                label="Train Loss", color="#6366F1", linewidth=2)
-        ax.plot(self.history["epoch"], self.history["val_loss"],
-                label="Val Loss", color="#EF4444", linewidth=2)
+        ax.plot(
+            self.history["epoch"],
+            self.history["train_loss"],
+            label="Train Loss",
+            color="#6366F1",
+            linewidth=2,
+        )
+        ax.plot(
+            self.history["epoch"],
+            self.history["val_loss"],
+            label="Val Loss",
+            color="#EF4444",
+            linewidth=2,
+        )
 
         # Mark best epoch
         best_epoch_idx = np.argmin(self.history["val_loss"])
         best_epoch = self.history["epoch"][best_epoch_idx]
         best_loss = self.history["val_loss"][best_epoch_idx]
-        ax.scatter([best_epoch], [best_loss], color="#10B981", s=100, zorder=5,
-                   label=f"Best (epoch {best_epoch}, loss={best_loss:.4f})")
+        ax.scatter(
+            [best_epoch],
+            [best_loss],
+            color="#10B981",
+            s=100,
+            zorder=5,
+            label=f"Best (epoch {best_epoch}, loss={best_loss:.4f})",
+        )
 
         ax.set_xlabel("Epoch")
         ax.set_ylabel("Loss (MSE)")

@@ -4,6 +4,18 @@
 
 MCA Final-Year Research Project
 
+## Current implementation phases
+
+The expanded research benchmark is complete: 57 trained runs across corrected KIBA, broad non-kinase Ki/Kd and 11 supported family cohorts, followed by validation-locked held-out evaluation. The non-kinase data contains 309,685 Ki and 21,219 Kd observations across 1,638 distinct proteins. Family views overlap their broad datasets; they are not independent external sources.
+
+On corrected KIBA, held-out RMSE is **0.3689 for hybrid GINE + ESM-2**, **0.3730 for hybrid CNN + ESM-2**, and **0.4189 for XGBoost + ESM-2**. Broad non-kinase Ki GNN RMSE is **0.7519**, versus **0.7633** for boosting. Gains vary by task; the complete [benchmark table](results/reports/final_benchmark_v1.md) includes weaker neural results too. These are identity-grouped random-split results, not proof of cold-target or external validity.
+
+The Next.js dashboard selects a compatible validation default, exposes all registered alternatives, and displays separate validation/test results. Saved CSV batch jobs support progress, cancellation, bounded retries, history and result recovery after refresh. Start with [dashboard setup](docs/DASHBOARD.md), [pipeline commands](docs/DATA_PIPELINE.md), and [research details](docs/RESEARCH_EXPANSION.md). Artifacts, datasets and the local job database are ignored by Git and must be archived separately.
+
+This is a verified local research implementation. Deployment authentication, capacity testing and additional generalization protocols remain release work.
+
+See the [project summary](docs/PROJECT_SUMMARY.md) or [Word report](docs/PharmaLens_Project_Summary.docx) for the original system, completed changes, dataset counts, methods, results and the recommendation on endpoint-specific models.
+
 ---
 
 ## Overview
@@ -35,7 +47,7 @@ Rank & Prioritize Candidates
 - **Cold-Start Evaluation** — Tests generalization to unseen drugs and unseen targets
 - **Explainable AI** — SHAP, Integrated Gradients, GNNExplainer
 - **Batch Screening** — Screen many drug–protein combinations and rank results
-- **Research Dashboard** — Interactive React + FastAPI application
+- **Research Dashboard** — Next.js/TypeScript + FastAPI workspace; legacy HTML retained
 
 ---
 
@@ -82,7 +94,9 @@ python -m venv venv
 venv\Scripts\activate  # Windows
 
 # Install dependencies
-pip install -r requirements.txt
+pip install torch==2.15.0+cpu --index-url https://download.pytorch.org/whl/cpu
+pip install -r requirements-foundation.lock
+# Optional notebook dependencies: requirements.txt (not the tested runtime lock)
 
 # For Intel Arc GPU acceleration (optional):
 # pip install intel-extension-for-pytorch
@@ -91,17 +105,23 @@ pip install -r requirements.txt
 ### Quick Start
 
 ```bash
-# 1. Download the KIBA dataset
-python -m src.data.download
+# 1. Inspect/download the new broad and non-kinase sources
+python scripts/download_datasets.py --dry-run
+python scripts/download_datasets.py
 
-# 2. Run Jupyter notebooks in order
-jupyter lab notebooks/
+# 2. Follow docs/DATA_PIPELINE.md to prepare, curate and train
+python scripts/train_model.py --config experiments/configs/nonkinase_ki_xgboost.json --output experiments/runs/my_nonkinase_xgb
 
 # 3. Start the backend API (after model training)
 uvicorn backend.main:app --reload
 
-# 4. Start the frontend (after backend setup)
-cd frontend && npm install && npm run dev
+# 4. Start the new Next.js workspace (Node 24 / pnpm 11.25.0)
+cd dashboard
+pnpm install --frozen-lockfile
+pnpm build
+pnpm start
+# Open http://localhost:3000; see docs/DASHBOARD.md.
+# Legacy frontend remains at http://localhost:8000/.
 ```
 
 ---
@@ -131,6 +151,8 @@ cd frontend && npm install && npm run dev
 
 - **Primary:** KIBA (Kinase Inhibitor BioActivity)
 - **Secondary:** Davis (optional)
+- **New acquisition:** BindingDB article/PDSP snapshots (Ki/Kd preparation), optional full BindingDB
+- **Non-kinase starter panel:** ChEMBL GPCR, protease, nuclear-receptor, channel, transporter and enzyme observations
 
 ---
 

@@ -5,7 +5,6 @@ Handles cleaning, deduplication, and transformation of interaction scores.
 """
 
 import logging
-from typing import Optional
 
 import numpy as np
 import pandas as pd
@@ -128,6 +127,8 @@ def transform_scores(
     df: pd.DataFrame,
     score_col: str = "score",
     dataset_name: str = "kiba",
+    source_unit: str = "nM",
+    already_transformed: bool = False,
 ) -> pd.DataFrame:
     """
     Apply dataset-specific score transformations.
@@ -146,19 +147,15 @@ def transform_scores(
     df = df.copy()
 
     if dataset_name.lower() == "davis":
-        # Check if already transformed (scores > 0 and < ~15 suggest already log-transformed)
-        max_score = df[score_col].max()
-        if max_score > 100:
-            # Likely raw Kd values in nM — transform
-            logger.info("  Applying -log10(Kd/1e9) transformation for Davis")
-            # Kd values: replace 0 with small value to avoid log(0)
-            df[score_col] = df[score_col].clip(lower=1e-10)
-            df[score_col] = -np.log10(df[score_col] / 1e9)
-        else:
-            logger.info("  Davis scores appear already transformed, skipping")
+        from src.data.labels import concentration_to_p
+
+        if not already_transformed:
+            df[score_col] = df[score_col].map(lambda value: concentration_to_p(value, source_unit))
 
     elif dataset_name.lower() == "kiba":
         logger.info("  KIBA scores: no transformation needed")
+    else:
+        raise ValueError("Use an explicit endpoint contract to transform this dataset")
 
     return df
 
@@ -208,18 +205,24 @@ def preprocess_interactions(
     report["steps"].append({"step": "remove_missing_scores", "removed": n_missing})
 
     # Step 2: Duplicates
-    df, n_dupes = remove_duplicate_interactions(df, drug_col, target_col, score_col, dedupe_strategy)
-    report["steps"].append({"step": "remove_duplicates", "removed": n_dupes, "strategy": dedupe_strategy})
+    df, n_dupes = remove_duplicate_interactions(
+        df, drug_col, target_col, score_col, dedupe_strategy
+    )
+    report["steps"].append(
+        {"step": "remove_duplicates", "removed": n_dupes, "strategy": dedupe_strategy}
+    )
 
     # Step 3: Outliers
     outlier_mask = detect_outliers(df, score_col, outlier_sigma)
     n_outliers = int(outlier_mask.sum())
-    report["steps"].append({
-        "step": "outlier_detection",
-        "n_outliers": n_outliers,
-        "sigma": outlier_sigma,
-        "removed": n_outliers if remove_outliers else 0,
-    })
+    report["steps"].append(
+        {
+            "step": "outlier_detection",
+            "n_outliers": n_outliers,
+            "sigma": outlier_sigma,
+            "removed": n_outliers if remove_outliers else 0,
+        }
+    )
     if remove_outliers and n_outliers > 0:
         df = df[~outlier_mask].reset_index(drop=True)
         logger.info(f"  Removed {n_outliers} outlier interactions")

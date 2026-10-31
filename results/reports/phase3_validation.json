@@ -1,0 +1,378 @@
+{
+  "date": "2026-10-30",
+  "phase": "3 completed initial experiments; 4 functional dashboard foundation",
+  "checks": {
+    "pytest": {
+      "passed": 66,
+      "failures": 0,
+      "warnings": 2,
+      "junit": "results/reports/phase3_tests.xml",
+      "environment_note": "Sandbox temporary-directory creation failed; approved run outside sandbox passed."
+    },
+    "pip_check": "passed",
+    "next_typecheck": "passed",
+    "next_production_build": "passed",
+    "git_diff_check": "passed",
+    "remote_ci": "configured_not_run"
+  },
+  "data": {
+    "chembl_raw_observations": 54917,
+    "chembl_prepared_ki": 23443,
+    "chembl_prepared_kd": 893,
+    "nonkinase_ki_observations": 27870,
+    "nonkinase_ki_unique_pairs": 22305,
+    "nonkinase_ki_families": 6,
+    "configured_accessions": 18,
+    "not_exhaustive_database": true
+  },
+  "runs": {
+    "kiba_identity_v2_xgb_seed42": {
+      "status": "validation_complete",
+      "data_sha256": "3d2d60a2b7eb7d3c56ba55dbd43a800910c26ac6da9c6234e626b97b3afd9e80",
+      "source_sha256": "82051aa62458df9c3fb01a2200313802ea65f3cfd6949c2546c21d01221d8b1d",
+      "split_membership": {
+        "train": {
+          "rows": 94605,
+          "sha256": "e350acdb50f84e6035e568ae7d70d92ad477670a78631acc4f3d2fd9d71acd1b"
+        },
+        "val": {
+          "rows": 11827,
+          "sha256": "50a67903ae0fc114afb0dbb0dbfba30ebd04dd6e573d1c357cd3756965ad1ab4"
+        },
+        "test": {
+          "rows": 11822,
+          "sha256": "016c696044a338a6fd073ef04623d4da907a0aaceae2a4863e410b17ced6bb12"
+        }
+      },
+      "validation_metrics": {
+        "rmse": 0.4632863257686516,
+        "mae": 0.2984754461728819,
+        "mse": 0.21463421964421717,
+        "pearson": 0.8381028674006085,
+        "pearson_pvalue": 0.0,
+        "spearman": 0.8201291271528511,
+        "spearman_pvalue": 0.0,
+        "r2": 0.6960471285207055,
+        "ci": 0.8398960723103635,
+        "ci_method": "exact_fenwick",
+        "n_samples": 11827
+      },
+      "test_metrics": null,
+      "serving_parity": {
+        "verified": true,
+        "first_validation_score": 11.482590675354004
+      },
+      "training_and_evaluation_seconds": 152.27150499999698,
+      "artifact": {
+        "path": "model.json",
+        "sha256": "5b2913cefb20d6c1ce296236209c7db0195dafbf5fbb1e5f4fdd44c34425c380"
+      },
+      "target_scaler": null,
+      "hit_iteration_budget": null
+    },
+    "nonkinase_ki_xgb_final_seed42": {
+      "status": "validation_complete",
+      "data_sha256": "1965691400bf0b41388c5448e3447e8f05165987921d9867aca387df334889ea",
+      "source_sha256": "377bc658ad3c092b33677598914f21808e7bb318ab2897954dfb1854108bcc88",
+      "split_membership": {
+        "train": {
+          "rows": 22194,
+          "sha256": "2a94d0b01bea044c2c6a0e3f5cad8791265ec965d47c3c0e71a07da980b8285e"
+        },
+        "val": {
+          "rows": 2872,
+          "sha256": "2872f500cf3783f02d483e543e2fba5538b87b2a84d450bf08956eb994b90f16"
+        },
+        "test": {
+          "rows": 2804,
+          "sha256": "7c6c555ad21b639f8c6522fe4dc1487b700c0e99401d5a7b66280f3ea5e398e0"
+        }
+      },
+      "validation_metrics": {
+        "rmse": 0.808863392615717,
+        "mae": 0.6121617008588264,
+        "mse": 0.6542599879138076,
+        "pearson": 0.8124567112010145,
+        "pearson_pvalue": 0.0,
+        "spearman": 0.8098836485774591,
+        "spearman_pvalue": 0.0,
+        "r2": 0.6521811039974559,
+        "ci": 0.8108312134587247,
+        "ci_method": "exact_fenwick",
+        "n_samples": 2872
+      },
+      "test_metrics": null,
+      "serving_parity": {
+        "verified": true,
+        "first_validation_score": 8.476767539978027
+      },
+      "training_and_evaluation_seconds": 46.6399425999989,
+      "artifact": {
+        "path": "model.json",
+        "sha256": "2adbd14a1d09b37f1a350321ec62d5d7113d3f8cb706dd172dc2b577b21aaa43"
+      },
+      "target_scaler": {
+        "mean": 0.0,
+        "scale": 1.0
+      },
+      "hit_iteration_budget": true
+    },
+    "nonkinase_ki_xgb_final_seed123": {
+      "status": "validation_complete",
+      "data_sha256": "1965691400bf0b41388c5448e3447e8f05165987921d9867aca387df334889ea",
+      "source_sha256": "377bc658ad3c092b33677598914f21808e7bb318ab2897954dfb1854108bcc88",
+      "split_membership": {
+        "train": {
+          "rows": 22194,
+          "sha256": "2a94d0b01bea044c2c6a0e3f5cad8791265ec965d47c3c0e71a07da980b8285e"
+        },
+        "val": {
+          "rows": 2872,
+          "sha256": "2872f500cf3783f02d483e543e2fba5538b87b2a84d450bf08956eb994b90f16"
+        },
+        "test": {
+          "rows": 2804,
+          "sha256": "7c6c555ad21b639f8c6522fe4dc1487b700c0e99401d5a7b66280f3ea5e398e0"
+        }
+      },
+      "validation_metrics": {
+        "rmse": 0.8114266519781486,
+        "mae": 0.6103633472425087,
+        "mse": 0.6584132115404675,
+        "pearson": 0.8106771586534353,
+        "pearson_pvalue": 0.0,
+        "spearman": 0.8082097293953886,
+        "spearman_pvalue": 0.0,
+        "r2": 0.6499731596276912,
+        "ci": 0.8102690166412686,
+        "ci_method": "exact_fenwick",
+        "n_samples": 2872
+      },
+      "test_metrics": null,
+      "serving_parity": {
+        "verified": true,
+        "first_validation_score": 8.504619598388672
+      },
+      "training_and_evaluation_seconds": 47.90825360000599,
+      "artifact": {
+        "path": "model.json",
+        "sha256": "e23def29285bcc94674a3854997280d8626f4feb59b1ab4803008ee11005e8af"
+      },
+      "target_scaler": {
+        "mean": 0.0,
+        "scale": 1.0
+      },
+      "hit_iteration_budget": true
+    },
+    "nonkinase_ki_xgb_final_seed456": {
+      "status": "validation_complete",
+      "data_sha256": "1965691400bf0b41388c5448e3447e8f05165987921d9867aca387df334889ea",
+      "source_sha256": "377bc658ad3c092b33677598914f21808e7bb318ab2897954dfb1854108bcc88",
+      "split_membership": {
+        "train": {
+          "rows": 22194,
+          "sha256": "2a94d0b01bea044c2c6a0e3f5cad8791265ec965d47c3c0e71a07da980b8285e"
+        },
+        "val": {
+          "rows": 2872,
+          "sha256": "2872f500cf3783f02d483e543e2fba5538b87b2a84d450bf08956eb994b90f16"
+        },
+        "test": {
+          "rows": 2804,
+          "sha256": "7c6c555ad21b639f8c6522fe4dc1487b700c0e99401d5a7b66280f3ea5e398e0"
+        }
+      },
+      "validation_metrics": {
+        "rmse": 0.8079627883894663,
+        "mae": 0.6101641060298201,
+        "mse": 0.6528038674220815,
+        "pearson": 0.8133148765635374,
+        "pearson_pvalue": 0.0,
+        "spearman": 0.8099019004556306,
+        "spearman_pvalue": 0.0,
+        "r2": 0.6529552094467189,
+        "ci": 0.8109644164627742,
+        "ci_method": "exact_fenwick",
+        "n_samples": 2872
+      },
+      "test_metrics": null,
+      "serving_parity": {
+        "verified": true,
+        "first_validation_score": 8.518487930297852
+      },
+      "training_and_evaluation_seconds": 44.60991679999279,
+      "artifact": {
+        "path": "model.json",
+        "sha256": "4c1ae687f6ea5cafb6a3af4ea99b6e129b4ad163e1ca49902c373cf36e70b49c"
+      },
+      "target_scaler": {
+        "mean": 0.0,
+        "scale": 1.0
+      },
+      "hit_iteration_budget": true
+    },
+    "nonkinase_ki_cnn_pilot_seed42": {
+      "status": "validation_complete",
+      "data_sha256": "1965691400bf0b41388c5448e3447e8f05165987921d9867aca387df334889ea",
+      "source_sha256": "377bc658ad3c092b33677598914f21808e7bb318ab2897954dfb1854108bcc88",
+      "split_membership": {
+        "train": {
+          "rows": 22194,
+          "sha256": "2a94d0b01bea044c2c6a0e3f5cad8791265ec965d47c3c0e71a07da980b8285e"
+        },
+        "val": {
+          "rows": 2872,
+          "sha256": "2872f500cf3783f02d483e543e2fba5538b87b2a84d450bf08956eb994b90f16"
+        },
+        "test": {
+          "rows": 2804,
+          "sha256": "7c6c555ad21b639f8c6522fe4dc1487b700c0e99401d5a7b66280f3ea5e398e0"
+        }
+      },
+      "validation_metrics": {
+        "rmse": 0.8534004200457586,
+        "mae": 0.625161220323819,
+        "mse": 0.7282922769342772,
+        "pearson": 0.7857792687515643,
+        "pearson_pvalue": 0.0,
+        "spearman": 0.7805360080274094,
+        "spearman_pvalue": 0.0,
+        "r2": 0.6128239225843792,
+        "ci": 0.7982023058569252,
+        "ci_method": "exact_fenwick",
+        "n_samples": 2872
+      },
+      "test_metrics": null,
+      "serving_parity": {
+        "verified": true,
+        "first_validation_score": 7.5336766368066
+      },
+      "training_and_evaluation_seconds": 2040.2896290999925,
+      "artifact": {
+        "path": "model_best.pt",
+        "sha256": "bb3a88bd211458285888495c55dc33db8d8382ce871868c8b4bf216688c42df8"
+      },
+      "target_scaler": {
+        "mean": 7.046547917135798,
+        "scale": 1.344651888936119
+      },
+      "hit_iteration_budget": null
+    },
+    "nonkinase_ki_gine_pilot_seed42": {
+      "status": "validation_complete",
+      "data_sha256": "1965691400bf0b41388c5448e3447e8f05165987921d9867aca387df334889ea",
+      "source_sha256": "377bc658ad3c092b33677598914f21808e7bb318ab2897954dfb1854108bcc88",
+      "split_membership": {
+        "train": {
+          "rows": 22194,
+          "sha256": "2a94d0b01bea044c2c6a0e3f5cad8791265ec965d47c3c0e71a07da980b8285e"
+        },
+        "val": {
+          "rows": 2872,
+          "sha256": "2872f500cf3783f02d483e543e2fba5538b87b2a84d450bf08956eb994b90f16"
+        },
+        "test": {
+          "rows": 2804,
+          "sha256": "7c6c555ad21b639f8c6522fe4dc1487b700c0e99401d5a7b66280f3ea5e398e0"
+        }
+      },
+      "validation_metrics": {
+        "rmse": 0.861573403447202,
+        "mae": 0.6541526425269651,
+        "mse": 0.7423087295275952,
+        "pearson": 0.7822164782243448,
+        "pearson_pvalue": 0.0,
+        "spearman": 0.7747502357601704,
+        "spearman_pvalue": 0.0,
+        "r2": 0.605372470322374,
+        "ci": 0.7946275597865352,
+        "ci_method": "exact_fenwick",
+        "n_samples": 2872
+      },
+      "test_metrics": null,
+      "serving_parity": {
+        "verified": true,
+        "first_validation_score": 9.452001796315379
+      },
+      "training_and_evaluation_seconds": 1932.1144800000038,
+      "artifact": {
+        "path": "model_best.pt",
+        "sha256": "22f0e00459041bfccea512cac313c33542c82bbf94e6e08de9afa5ec71c78842"
+      },
+      "target_scaler": {
+        "mean": 7.046547917135798,
+        "scale": 1.344651888936119
+      },
+      "hit_iteration_budget": null
+    }
+  },
+  "http": {
+    "health": {
+      "status": "healthy",
+      "model_loaded": true,
+      "model_name": "xgboost",
+      "uptime": 2.1349353790283203
+    },
+    "static_files": {
+      "/": {
+        "nonempty": true
+      },
+      "/app.js": {
+        "nonempty": true
+      },
+      "/style.css": {
+        "nonempty": true
+      }
+    },
+    "status": "passed",
+    "actual_artifacts": 4,
+    "concurrent_requests": 16,
+    "concurrent_workers": 4,
+    "http_request_latency_seconds_p50": 0.01311435000388883,
+    "http_request_latency_seconds_p95": 0.03668942499280092,
+    "prediction_parity": true,
+    "partial_failure_json": true,
+    "production_registry_modified": false,
+    "browser_verified": false,
+    "limitations": "Local concurrent smoke test, not a capacity benchmark or browser-rendering test"
+  },
+  "browser": {
+    "single_prediction": {
+      "model": "nonkinase-validation-xgb",
+      "score": 8.476767539978027,
+      "label": "pKi",
+      "status": "passed"
+    },
+    "csv_upload_and_batch": {
+      "rows": 2,
+      "successes": 1,
+      "failures": 1,
+      "identifier_preservation": "passed",
+      "export_inspected": "passed"
+    },
+    "model_catalog": "all four local models visible; three compatible non-kinase alternatives",
+    "viewport_checks": [
+      {
+        "width": 390,
+        "height": 844,
+        "result": "navigation and table scroll within containers"
+      }
+    ],
+    "console_errors_observed": 0,
+    "limitations": "Functional checks, not exhaustive accessibility or capacity certification"
+  },
+  "registration": {
+    "registry": "models/registry.json",
+    "registered_models": 4,
+    "defaults": "XGBoost per dataset/release/endpoint; fixed seed 42",
+    "status": "provisional validation candidates; no final research champion"
+  },
+  "remaining": [
+    "matched HPO budgets and repeated neural seeds",
+    "scaffold/homology/family/publication holdouts",
+    "replicate disagreement and uncertainty",
+    "locked held-out final evaluation",
+    "durable batch jobs and worker concurrency",
+    "deployment authentication and operations"
+  ]
+}

@@ -1,0 +1,45 @@
+{
+  "dataset": "NonKinase_transporter",
+  "dataset_version": "202610_v3",
+  "endpoint": "Ki",
+  "input": "data/processed/prepared/family_affinity_202610_v3/transporter_ki/Ki.csv",
+  "preprocessing_version": "standardized_v1",
+  "model": "gnn",
+  "model_params": {
+    "protein_max_len": 1500,
+    "protein_embed_dim": 32,
+    "fc_dims": [
+      512,
+      256
+    ],
+    "dropout": 0.1,
+    "mask_padding": true,
+    "deduplicate_proteins": true,
+    "auxiliary_dim": 1774,
+    "auxiliary_interactions": true,
+    "use_protein_cnn": false,
+    "gnn_type": "gine",
+    "gnn_hidden_dim": 128,
+    "gnn_output_dim": 128,
+    "protein_num_filters": 32
+  },
+  "seed": 42,
+  "split": "random",
+  "split_seed": 42,
+  "smoke": false,
+  "training": {
+    "threads": 2,
+    "device": "xpu",
+    "epochs": 120,
+    "patience": 15,
+    "batch_size": 128,
+    "learning_rate": 0.0005,
+    "weight_decay": 0.0001,
+    "normalize_targets": true
+  },
+  "protein_embedding_cache": {
+    "manifest": "C:\\Users\\abhij\\Documents\\projects\\pharmalens\\data\\processed\\features\\esm2_affinity_202610_v1\\manifest.json",
+    "sha256": "6fc771b5a1dc79ca198401a0dd57cf16838fd7ee7d0129af36618e03c7c352ca",
+    "regression_sha256": "8f7a4557d57713b97ba0e484303007efb7230d25299c0ac47a0a1b12a87bbb9d"
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "source_sha256": "e265d729db86ce986602c35ba35417270eec00295876ae587e0e172e3b9759e6",
+  "selection": "validation only; fixed split; all trials retained",
+  "jobs": [
+    {
+      "id": "nonkinase_ki_xgb_search0",
+      "config": "experiments\\configs\\nonkinase_ki_xgb_search0.json",
+      "config_sha256": "e0bc4a306ba335bebd6d4315abb6cc7021323dcd636d45722cfa241d0d09c6c7",
+      "output": "experiments/runs/nonkinase_ki_xgb_search0_seed42"
+    },
+    {
+      "id": "nonkinase_ki_xgb_search1",
+      "config": "experiments\\configs\\nonkinase_ki_xgb_search1.json",
+      "config_sha256": "92a3eb05e6e5859da142ee74980af863ab704952254d7bc2c48c46bd0a3c1f54",
+      "output": "experiments/runs/nonkinase_ki_xgb_search1_seed42"
+    },
+    {
+      "id": "nonkinase_ki_xgb_search2",
+      "config": "experiments\\configs\\nonkinase_ki_xgb_search2.json",
+      "config_sha256": "2dab2313872a8bc7e56bdfd34dd38793cd89d7656592b62fc96f7486e4d46562",
+      "output": "experiments/runs/nonkinase_ki_xgb_search2_seed42"
+    }
+  ]
+}

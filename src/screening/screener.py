@@ -7,7 +7,6 @@ High-level screening API for drug candidate prioritization.
 import logging
 from typing import Optional
 
-import numpy as np
 import pandas as pd
 
 logger = logging.getLogger("pharmalens.screening")
@@ -55,86 +54,47 @@ class DrugScreener:
         Returns:
             DataFrame ranked by predicted binding score.
         """
-        if drug_ids is None:
-            drug_ids = [f"drug_{i}" for i in range(len(smiles_list))]
-        if target_ids is None:
-            target_ids = [f"target_{i}" for i in range(len(sequence_list))]
-
-        results = []
-        total = len(smiles_list) * len(sequence_list)
-        logger.info(f"Screening {len(smiles_list)} drugs × {len(sequence_list)} targets = {total} combinations")
-
-        for i, (smiles, did) in enumerate(zip(smiles_list, drug_ids)):
-            for j, (seq, tid) in enumerate(zip(sequence_list, target_ids)):
-                try:
-                    pred = self.pipeline.predict(smiles, seq)
-                    results.append({
-                        "drug_id": did,
-                        "target_id": tid,
-                        "smiles": smiles[:60],
-                        "predicted_score": pred["score"],
-                        "inference_time_ms": pred["inference_time"] * 1000,
-                    })
-                except Exception as e:
-                    results.append({
-                        "drug_id": did,
-                        "target_id": tid,
-                        "smiles": smiles[:60],
-                        "predicted_score": None,
-                        "error": str(e),
-                    })
-
-        df = pd.DataFrame(results)
-        df = df.sort_values("predicted_score", ascending=True, na_position="last")
-        df["rank"] = range(1, len(df) + 1)
-
-        # Classify binding strength
-        df["binding_class"] = df["predicted_score"].apply(self._classify_binding)
-
-        # Add SHAP for top hits if requested
+        # One ranking implementation keeps endpoint direction and failures aligned.
+        df = self.pipeline.screen(smiles_list, sequence_list, drug_ids, target_ids)
+        df["inference_time_ms"] = (
+            df.get("inference_time", pd.Series(index=df.index, dtype=float)) * 1000
+        )
+        df["binding_class"] = "unclassified"
         if explain_top_n > 0 and self.pipeline.model_type == "xgboost":
-            df = self._add_explanations(df, smiles_list, sequence_list,
-                                        drug_ids, target_ids, explain_top_n)
-
-        logger.info(f"Screening complete: {len(df)} results, {df['predicted_score'].notna().sum()} successful")
+            resolved_drugs = (
+                drug_ids if drug_ids is not None else [f"drug_{i}" for i in range(len(smiles_list))]
+            )
+            resolved_targets = (
+                target_ids
+                if target_ids is not None
+                else [f"target_{i}" for i in range(len(sequence_list))]
+            )
+            df = self._add_explanations(
+                df, smiles_list, sequence_list, resolved_drugs, resolved_targets, explain_top_n
+            )
         return df
 
-    @staticmethod
-    def _classify_binding(score):
-        """Classify binding strength based on KIBA score."""
-        if score is None or np.isnan(score):
-            return "unknown"
-        if score < 3:
-            return "strong"
-        elif score < 10:
-            return "moderate"
-        else:
-            return "weak"
-
-    def _add_explanations(self, df, smiles_list, sequence_list,
-                          drug_ids, target_ids, top_n):
+    def _add_explanations(self, df, smiles_list, sequence_list, drug_ids, target_ids, top_n):
         """Add SHAP explanations for top N hits."""
-        top_rows = df.head(top_n)
+        top_rows = df[df["predicted_score"].notna()].head(top_n)
 
         smiles_dict = dict(zip(drug_ids, smiles_list))
         seq_dict = dict(zip(target_ids, sequence_list))
 
-        explanations = []
-        for _, row in top_rows.iterrows():
+        df["shap_explanation"] = pd.Series([None] * len(df), index=df.index, dtype=object)
+        for index, row in top_rows.iterrows():
             try:
                 smiles = smiles_dict.get(row["drug_id"], "")
                 seq = seq_dict.get(row["target_id"], "")
                 result = self.pipeline.predict(smiles, seq, explain=True)
-                explanations.append(result.get("shap_values", {}))
+                df.at[index, "shap_explanation"] = result.get("shap_values", {})
             except Exception:
-                explanations.append({})
-
-        df.loc[df.index[:top_n], "shap_explanation"] = explanations
+                df.at[index, "shap_explanation"] = {}
         return df
 
     def get_top_hits(self, results_df: pd.DataFrame, n: int = 10) -> pd.DataFrame:
         """Get top N strongest predicted binders."""
-        return results_df.head(n)
+        return results_df[results_df["predicted_score"].notna()].head(n)
 
     def generate_report(self, results_df: pd.DataFrame) -> dict:
         """Generate a summary report of screening results."""
@@ -152,5 +112,7 @@ class DrugScreener:
                 "median": float(valid["predicted_score"].median()),
             },
             "binding_distribution": valid["binding_class"].value_counts().to_dict(),
-            "top_5_hits": valid.head(5)[["drug_id", "target_id", "predicted_score", "binding_class"]].to_dict("records"),
+            "top_5_hits": valid.head(5)[
+                ["drug_id", "target_id", "predicted_score", "binding_class"]
+            ].to_dict("records"),
         }

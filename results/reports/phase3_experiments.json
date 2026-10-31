@@ -1,0 +1,452 @@
+{
+  "scope": "Validation summaries grouped by data, split, code and model contract",
+  "groups": [
+    {
+      "contract_id": "84b9274d2f25fcfc3ffb3240e6b5d85ba48c1a21b8bdae79ac13c480b67a4d8a",
+      "contract": {
+        "data_sha256": "3d2d60a2b7eb7d3c56ba55dbd43a800910c26ac6da9c6234e626b97b3afd9e80",
+        "dataset": "KIBA",
+        "dataset_version": "identity_v2",
+        "endpoint": "KIBA",
+        "model": "xgboost",
+        "model_params": {
+          "early_stopping_rounds": 40,
+          "learning_rate": 0.05,
+          "max_depth": 7,
+          "n_estimators": 1000,
+          "n_jobs": 4
+        },
+        "source_sha256": "82051aa62458df9c3fb01a2200313802ea65f3cfd6949c2546c21d01221d8b1d",
+        "split": "random",
+        "split_seed": 42,
+        "training": {
+          "threads": 4
+        },
+        "validation_membership_sha256": "50a67903ae0fc114afb0dbb0dbfba30ebd04dd6e573d1c357cd3756965ad1ab4"
+      },
+      "model_seeds": [
+        42
+      ],
+      "runs": [
+        "kiba_identity_v2_xgb_seed42"
+      ],
+      "validation_metrics": {
+        "rmse": {
+          "mean": 0.4632863257686516,
+          "sample_std": null
+        },
+        "mae": {
+          "mean": 0.2984754461728819,
+          "sample_std": null
+        },
+        "ci": {
+          "mean": 0.8398960723103635,
+          "sample_std": null
+        },
+        "pearson": {
+          "mean": 0.8381028674006085,
+          "sample_std": null
+        },
+        "r2": {
+          "mean": 0.6960471285207055,
+          "sample_std": null
+        }
+      },
+      "replicates": 1,
+      "all_serving_parity_passed": true,
+      "test_evaluations": 0,
+      "iteration_budget_reached": []
+    },
+    {
+      "contract_id": "dd0c990f1a606417d952fb039d4c13446a32e3b443e981b1bf3ff64073608f71",
+      "contract": {
+        "data_sha256": "1965691400bf0b41388c5448e3447e8f05165987921d9867aca387df334889ea",
+        "dataset": "NonKinasePanel",
+        "dataset_version": "202610_v1",
+        "endpoint": "Ki",
+        "model": "deeptda",
+        "model_params": {
+          "deduplicate_proteins": true,
+          "dropout": 0.2,
+          "drug_embed_dim": 64,
+          "drug_max_len": 150,
+          "fc_dims": [
+            512,
+            256
+          ],
+          "mask_padding": true,
+          "num_filters": 64,
+          "protein_embed_dim": 64,
+          "protein_max_len": 1500
+        },
+        "source_sha256": "377bc658ad3c092b33677598914f21808e7bb318ab2897954dfb1854108bcc88",
+        "split": "random",
+        "split_seed": 42,
+        "training": {
+          "batch_size": 64,
+          "epochs": 40,
+          "learning_rate": 0.001,
+          "normalize_targets": true,
+          "patience": 8,
+          "threads": 4,
+          "weight_decay": 0.0001
+        },
+        "validation_membership_sha256": "2872f500cf3783f02d483e543e2fba5538b87b2a84d450bf08956eb994b90f16"
+      },
+      "model_seeds": [
+        42
+      ],
+      "runs": [
+        "nonkinase_ki_cnn_pilot_seed42"
+      ],
+      "validation_metrics": {
+        "rmse": {
+          "mean": 0.8534004200457586,
+          "sample_std": null
+        },
+        "mae": {
+          "mean": 0.625161220323819,
+          "sample_std": null
+        },
+        "ci": {
+          "mean": 0.7982023058569252,
+          "sample_std": null
+        },
+        "pearson": {
+          "mean": 0.7857792687515643,
+          "sample_std": null
+        },
+        "r2": {
+          "mean": 0.6128239225843792,
+          "sample_std": null
+        }
+      },
+      "replicates": 1,
+      "all_serving_parity_passed": true,
+      "test_evaluations": 0,
+      "iteration_budget_reached": []
+    },
+    {
+      "contract_id": "048a3e63ccfa337859aac7e12ed377668a751329ca25f95eb87384af09a892cd",
+      "contract": {
+        "data_sha256": "1965691400bf0b41388c5448e3447e8f05165987921d9867aca387df334889ea",
+        "dataset": "NonKinasePanel",
+        "dataset_version": "202610_v1",
+        "endpoint": "Ki",
+        "model": "gnn",
+        "model_params": {
+          "deduplicate_proteins": true,
+          "dropout": 0.2,
+          "fc_dims": [
+            512,
+            256
+          ],
+          "gnn_hidden_dim": 128,
+          "gnn_output_dim": 128,
+          "gnn_type": "gine",
+          "mask_padding": true,
+          "protein_embed_dim": 64,
+          "protein_max_len": 1500,
+          "protein_num_filters": 64
+        },
+        "source_sha256": "377bc658ad3c092b33677598914f21808e7bb318ab2897954dfb1854108bcc88",
+        "split": "random",
+        "split_seed": 42,
+        "training": {
+          "batch_size": 64,
+          "epochs": 40,
+          "learning_rate": 0.0005,
+          "normalize_targets": true,
+          "patience": 8,
+          "threads": 4,
+          "weight_decay": 0.0001
+        },
+        "validation_membership_sha256": "2872f500cf3783f02d483e543e2fba5538b87b2a84d450bf08956eb994b90f16"
+      },
+      "model_seeds": [
+        42
+      ],
+      "runs": [
+        "nonkinase_ki_gine_pilot_seed42"
+      ],
+      "validation_metrics": {
+        "rmse": {
+          "mean": 0.861573403447202,
+          "sample_std": null
+        },
+        "mae": {
+          "mean": 0.6541526425269651,
+          "sample_std": null
+        },
+        "ci": {
+          "mean": 0.7946275597865352,
+          "sample_std": null
+        },
+        "pearson": {
+          "mean": 0.7822164782243448,
+          "sample_std": null
+        },
+        "r2": {
+          "mean": 0.605372470322374,
+          "sample_std": null
+        }
+      },
+      "replicates": 1,
+      "all_serving_parity_passed": true,
+      "test_evaluations": 0,
+      "iteration_budget_reached": []
+    },
+    {
+      "contract_id": "ae84fb1f17417b44a529a4cb2d45b911b80c2a9b4c9c927c86e4af9233a6f1ac",
+      "contract": {
+        "data_sha256": "1965691400bf0b41388c5448e3447e8f05165987921d9867aca387df334889ea",
+        "dataset": "NonKinasePanel",
+        "dataset_version": "202610_v1",
+        "endpoint": "Ki",
+        "model": "xgboost",
+        "model_params": {
+          "early_stopping_rounds": 30,
+          "learning_rate": 0.05,
+          "max_depth": 7,
+          "n_estimators": 500,
+          "n_jobs": 4
+        },
+        "source_sha256": "377bc658ad3c092b33677598914f21808e7bb318ab2897954dfb1854108bcc88",
+        "split": "random",
+        "split_seed": 42,
+        "training": {
+          "threads": 4
+        },
+        "validation_membership_sha256": "2872f500cf3783f02d483e543e2fba5538b87b2a84d450bf08956eb994b90f16"
+      },
+      "model_seeds": [
+        42,
+        123,
+        456
+      ],
+      "runs": [
+        "nonkinase_ki_xgb_final_seed123",
+        "nonkinase_ki_xgb_final_seed42",
+        "nonkinase_ki_xgb_final_seed456"
+      ],
+      "validation_metrics": {
+        "rmse": {
+          "mean": 0.8094176109944441,
+          "sample_std": 0.001797207903593421
+        },
+        "mae": {
+          "mean": 0.6108963847103851,
+          "sample_std": 0.0011003149466576288
+        },
+        "ci": {
+          "mean": 0.8106882155209224,
+          "sample_std": 0.000369095564318041
+        },
+        "pearson": {
+          "mean": 0.8121495821393291,
+          "sample_std": 0.001345412627678675
+        },
+        "r2": {
+          "mean": 0.6517031576906219,
+          "sample_std": 0.0015474106710737538
+        }
+      },
+      "replicates": 3,
+      "all_serving_parity_passed": true,
+      "test_evaluations": 0,
+      "iteration_budget_reached": [
+        "nonkinase_ki_xgb_final_seed123",
+        "nonkinase_ki_xgb_final_seed42",
+        "nonkinase_ki_xgb_final_seed456"
+      ]
+    },
+    {
+      "contract_id": "385b1860da54d1c69bcd4419b29fa62d600da0a54e857404095296cc6d1c4ad9",
+      "contract": {
+        "data_sha256": "1965691400bf0b41388c5448e3447e8f05165987921d9867aca387df334889ea",
+        "dataset": "NonKinasePanel",
+        "dataset_version": "202610_v1",
+        "endpoint": "Ki",
+        "model": "xgboost",
+        "model_params": {
+          "early_stopping_rounds": 30,
+          "learning_rate": 0.05,
+          "max_depth": 7,
+          "n_estimators": 500,
+          "n_jobs": 4
+        },
+        "source_sha256": "a6bc8be44a268481b3cff2388323417eb85b104326b79ef409509ca009031c37",
+        "split": "random",
+        "split_seed": 42,
+        "training": {
+          "threads": 4
+        },
+        "validation_membership_sha256": "2872f500cf3783f02d483e543e2fba5538b87b2a84d450bf08956eb994b90f16"
+      },
+      "model_seeds": [
+        42
+      ],
+      "runs": [
+        "nonkinase_ki_xgb_seed42"
+      ],
+      "validation_metrics": {
+        "rmse": {
+          "mean": 0.808863392615717,
+          "sample_std": null
+        },
+        "mae": {
+          "mean": 0.6121617008588264,
+          "sample_std": null
+        },
+        "ci": {
+          "mean": 0.8108312134587247,
+          "sample_std": null
+        },
+        "pearson": {
+          "mean": 0.8124567112010145,
+          "sample_std": null
+        },
+        "r2": {
+          "mean": 0.6521811039974559,
+          "sample_std": null
+        }
+      },
+      "replicates": 1,
+      "all_serving_parity_passed": true,
+      "test_evaluations": 0,
+      "iteration_budget_reached": [
+        "nonkinase_ki_xgb_seed42"
+      ]
+    },
+    {
+      "contract_id": "aaa448231bf3e3d5144b92ebf398af880b2b3a28cac22d3e8ad4b35068055669",
+      "contract": {
+        "data_sha256": "65d1ddd2d1cd4624c7a384c08ce8b3058a6b547447da5883d066911c8c004ad3",
+        "dataset": "BindingDB_PDSPKi",
+        "dataset_version": "202610_prepared_v1",
+        "endpoint": "Ki",
+        "model": "xgboost",
+        "model_params": {
+          "early_stopping_rounds": 30,
+          "learning_rate": 0.05,
+          "max_depth": 7,
+          "n_estimators": 500,
+          "n_jobs": 4
+        },
+        "source_sha256": "9714cc0446aa113ec153784bca04ce47d8dabd6b50c4954f9a36ceb872d03a6c",
+        "split": "random",
+        "split_seed": 42,
+        "training": {
+          "threads": 4
+        },
+        "validation_membership_sha256": "f8f148e923ddfdb9a8f9d757d7f1a7e40d3dcda08382b658668bd4641b76f307"
+      },
+      "model_seeds": [
+        123,
+        456
+      ],
+      "runs": [
+        "pdsp_ki_xgb_seed123",
+        "pdsp_ki_xgb_seed456"
+      ],
+      "validation_metrics": {
+        "rmse": {
+          "mean": 0.9126690580149559,
+          "sample_std": 0.005693093450607544
+        },
+        "mae": {
+          "mean": 0.7180054172327098,
+          "sample_std": 0.0029541508376730577
+        },
+        "ci": {
+          "mean": 0.7734848493647182,
+          "sample_std": 0.00137655798766202
+        },
+        "pearson": {
+          "mean": 0.7442837827705577,
+          "sample_std": 0.0040292192662452694
+        },
+        "r2": {
+          "mean": 0.5469139296824768,
+          "sample_std": 0.005652456678310899
+        }
+      },
+      "replicates": 2,
+      "all_serving_parity_passed": true,
+      "test_evaluations": 0,
+      "iteration_budget_reached": [
+        "pdsp_ki_xgb_seed123"
+      ]
+    },
+    {
+      "contract_id": "be0273a07e2f7c2ada0873b1d7f92681fedd88bd3f3b2d4011c56e35405d48b4",
+      "contract": {
+        "data_sha256": "65d1ddd2d1cd4624c7a384c08ce8b3058a6b547447da5883d066911c8c004ad3",
+        "dataset": "BindingDB_PDSPKi",
+        "dataset_version": "202610_prepared_v1",
+        "endpoint": "Ki",
+        "model": "xgboost",
+        "model_params": {
+          "early_stopping_rounds": 30,
+          "learning_rate": 0.05,
+          "max_depth": 7,
+          "n_estimators": 500,
+          "n_jobs": 4
+        },
+        "source_sha256": "82051aa62458df9c3fb01a2200313802ea65f3cfd6949c2546c21d01221d8b1d",
+        "split": "random",
+        "split_seed": 42,
+        "training": {
+          "threads": 4
+        },
+        "validation_membership_sha256": "f8f148e923ddfdb9a8f9d757d7f1a7e40d3dcda08382b658668bd4641b76f307"
+      },
+      "model_seeds": [
+        42
+      ],
+      "runs": [
+        "pdsp_ki_xgb_seed42"
+      ],
+      "validation_metrics": {
+        "rmse": {
+          "mean": 0.9115353306309391,
+          "sample_std": null
+        },
+        "mae": {
+          "mean": 0.7148143586042967,
+          "sample_std": null
+        },
+        "ci": {
+          "mean": 0.7744646107067406,
+          "sample_std": null
+        },
+        "pearson": {
+          "mean": 0.7448335437914844,
+          "sample_std": null
+        },
+        "r2": {
+          "mean": 0.5480476802831773,
+          "sample_std": null
+        }
+      },
+      "replicates": 1,
+      "all_serving_parity_passed": true,
+      "test_evaluations": 0,
+      "iteration_budget_reached": []
+    }
+  ],
+  "smoke_checks_excluded_from_model_ranking": [
+    {
+      "run": "nonkinase_ki_cnn_smoke_seed42",
+      "status": "smoke_complete",
+      "serving_parity": true
+    },
+    {
+      "run": "nonkinase_ki_gine_smoke_seed42",
+      "status": "smoke_complete",
+      "serving_parity": true
+    }
+  ],
+  "primary_model_selected": false,
+  "limitations": "Seed variation is not a confidence interval or proof of architecture superiority; different label scales and splits are not ranked together"
+}

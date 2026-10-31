@@ -1,0 +1,37 @@
+{
+  "dataset": "NonKinasePanel",
+  "dataset_version": "202610_v1",
+  "endpoint": "Ki",
+  "input": "data/processed/prepared/nonkinase_ki_202610_v1/Ki.csv",
+  "preprocessing_version": "standardized_v1",
+  "model": "gnn",
+  "model_params": {
+    "gnn_type": "gine",
+    "protein_max_len": 1500,
+    "gnn_hidden_dim": 128,
+    "gnn_output_dim": 128,
+    "protein_embed_dim": 64,
+    "protein_num_filters": 32,
+    "fc_dims": [
+      512,
+      256
+    ],
+    "dropout": 0.1,
+    "mask_padding": true,
+    "deduplicate_proteins": true,
+    "auxiliary_dim": 1454
+  },
+  "split": "random",
+  "split_seed": 42,
+  "seed": 42,
+  "training": {
+    "threads": 4,
+    "epochs": 160,
+    "patience": 20,
+    "batch_size": 64,
+    "learning_rate": 0.0005,
+    "weight_decay": 0.0001,
+    "normalize_targets": true
+  },
+  "smoke": false
+}

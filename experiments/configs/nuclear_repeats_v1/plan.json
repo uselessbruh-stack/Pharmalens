@@ -1,0 +1,79 @@
+{
+  "source_sha256": "0a1c1fac04cdd4adcdbc6374e88f1b5b7dadcc89594292636535c79c06081884",
+  "jobs": [
+    {
+      "id": "nuclear_receptor_kd_random_xgboost_seed123",
+      "config": "experiments/configs/nuclear_repeats_v1/nuclear_receptor_kd_random_xgboost_seed123.json",
+      "config_sha256": "261f1fe25beba771223e0cc7b74c4515df5796b87924a63eb9c642f45e980fc4",
+      "output": "experiments/runs/nuclear_repeats_v1_nuclear_receptor_kd_random_xgboost_seed123"
+    },
+    {
+      "id": "nuclear_receptor_kd_random_xgboost_seed456",
+      "config": "experiments/configs/nuclear_repeats_v1/nuclear_receptor_kd_random_xgboost_seed456.json",
+      "config_sha256": "caa7f2b3ced4cda1f267c6e1d64d1679309ca7c095a969711efea5d0e7f1bbe6",
+      "output": "experiments/runs/nuclear_repeats_v1_nuclear_receptor_kd_random_xgboost_seed456"
+    },
+    {
+      "id": "nuclear_receptor_kd_random_deeptda_seed123",
+      "config": "experiments/configs/nuclear_repeats_v1/nuclear_receptor_kd_random_deeptda_seed123.json",
+      "config_sha256": "78142c2389067b34da1655963a93e42a2da7957ac5943471d65e58c717dc10b2",
+      "output": "experiments/runs/nuclear_repeats_v1_nuclear_receptor_kd_random_deeptda_seed123"
+    },
+    {
+      "id": "nuclear_receptor_kd_random_deeptda_seed456",
+      "config": "experiments/configs/nuclear_repeats_v1/nuclear_receptor_kd_random_deeptda_seed456.json",
+      "config_sha256": "d5299f6b1f231bfd35b3cde7bce8dbd08f707b6b3ead395c96c0c84b6940ba64",
+      "output": "experiments/runs/nuclear_repeats_v1_nuclear_receptor_kd_random_deeptda_seed456"
+    },
+    {
+      "id": "nuclear_receptor_kd_random_gnn_seed123",
+      "config": "experiments/configs/nuclear_repeats_v1/nuclear_receptor_kd_random_gnn_seed123.json",
+      "config_sha256": "3a06d9573eda7a1fdc8b3ec3e620edc8b75eda8d64e7bf0cb6012a37783463bc",
+      "output": "experiments/runs/nuclear_repeats_v1_nuclear_receptor_kd_random_gnn_seed123"
+    },
+    {
+      "id": "nuclear_receptor_kd_random_gnn_seed456",
+      "config": "experiments/configs/nuclear_repeats_v1/nuclear_receptor_kd_random_gnn_seed456.json",
+      "config_sha256": "2b1c324982d3844aba4c967ddbb24f0ba673158cb8edc2c32b0d5f31ff232260",
+      "output": "experiments/runs/nuclear_repeats_v1_nuclear_receptor_kd_random_gnn_seed456"
+    },
+    {
+      "id": "nuclear_receptor_ki_random_xgboost_seed123",
+      "config": "experiments/configs/nuclear_repeats_v1/nuclear_receptor_ki_random_xgboost_seed123.json",
+      "config_sha256": "10549313928d13a24dd40a483b7d8de279be1622075ce26c999958d8744afd2e",
+      "output": "experiments/runs/nuclear_repeats_v1_nuclear_receptor_ki_random_xgboost_seed123"
+    },
+    {
+      "id": "nuclear_receptor_ki_random_xgboost_seed456",
+      "config": "experiments/configs/nuclear_repeats_v1/nuclear_receptor_ki_random_xgboost_seed456.json",
+      "config_sha256": "fd068c711018809d6be5d229a608b866dd4e04c8cf550357f38d3b2061c26018",
+      "output": "experiments/runs/nuclear_repeats_v1_nuclear_receptor_ki_random_xgboost_seed456"
+    },
+    {
+      "id": "nuclear_receptor_ki_random_deeptda_seed123",
+      "config": "experiments/configs/nuclear_repeats_v1/nuclear_receptor_ki_random_deeptda_seed123.json",
+      "config_sha256": "11f3035e2628b09ddc6b5994741e3e705ae506daadbda3db9a266d4f139be2ea",
+      "output": "experiments/runs/nuclear_repeats_v1_nuclear_receptor_ki_random_deeptda_seed123"
+    },
+    {
+      "id": "nuclear_receptor_ki_random_deeptda_seed456",
+      "config": "experiments/configs/nuclear_repeats_v1/nuclear_receptor_ki_random_deeptda_seed456.json",
+      "config_sha256": "c32ca9b0183dda962113fcd102e77f37adc20cdd954a069df02521e2e9e8129e",
+      "output": "experiments/runs/nuclear_repeats_v1_nuclear_receptor_ki_random_deeptda_seed456"
+    },
+    {
+      "id": "nuclear_receptor_ki_random_gnn_seed123",
+      "config": "experiments/configs/nuclear_repeats_v1/nuclear_receptor_ki_random_gnn_seed123.json",
+      "config_sha256": "36c89e901a6c14c1598293ce4036a4be0a0f2cc97256bce9fbf68bf966667f71",
+      "output": "experiments/runs/nuclear_repeats_v1_nuclear_receptor_ki_random_gnn_seed123"
+    },
+    {
+      "id": "nuclear_receptor_ki_random_gnn_seed456",
+      "config": "experiments/configs/nuclear_repeats_v1/nuclear_receptor_ki_random_gnn_seed456.json",
+      "config_sha256": "676899bbf49f46e604e408dfebb0f9eb124271c2c2f53ca10b6acdb018a11205",
+      "output": "experiments/runs/nuclear_repeats_v1_nuclear_receptor_ki_random_gnn_seed456"
+    }
+  ],
+  "test_evaluation_requested": false,
+  "selection": "repeat all three architectures for both nuclear receptor endpoints, with fixed split and original settings"
+}

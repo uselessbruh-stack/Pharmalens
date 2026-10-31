@@ -1,0 +1,206 @@
+{
+  "datasets": [
+    {
+      "file": "C:\\Users\\abhij\\Documents\\projects\\pharmalens\\data\\processed\\prepared\\nonkinase_ki_202610_v3\\Ki.csv",
+      "sha256": "f0bcd19ca1dabaf6e1c108f453bde336c94f10a34627f643d1b08cd69319e515",
+      "endpoint": [
+        "Ki"
+      ],
+      "observations": 309685,
+      "molecules": 143035,
+      "proteins": 995,
+      "unique_pairs": 244344,
+      "repeated_pairs": 33138,
+      "repeated_pairs_spread_over_half_log_unit": 7889,
+      "repeated_pairs_spread_over_one_log_unit": 4687,
+      "within_pair_rms_dispersion": 0.2441518735883491,
+      "dispersion_interpretation": "Descriptive all-data inconsistency for predictors using only molecule/protein identities; not a trained or held-out baseline",
+      "missing_publication_fraction": 0.26948027834735294,
+      "protein_rows_above_1500_residues": 1264,
+      "smiles_rows_above_200_characters": 4270,
+      "families": [
+        {
+          "family": "gpcr",
+          "observations": 165822,
+          "molecules": 76037,
+          "proteins": 188,
+          "label_quantiles": {
+            "0.0": 0.0,
+            "0.01": 4.42021640338319,
+            "0.5": 7.1938200260161125,
+            "0.99": 10.045757490560675,
+            "1.0": 14.449771646944907
+          }
+        },
+        {
+          "family": "ion_channel",
+          "observations": 13938,
+          "molecules": 8609,
+          "proteins": 62,
+          "label_quantiles": {
+            "0.0": 1.0,
+            "0.01": 4.033254246293166,
+            "0.5": 7.309803919971486,
+            "0.99": 10.769551078621726,
+            "1.0": 12.0
+          }
+        },
+        {
+          "family": "nuclear_receptor",
+          "observations": 7591,
+          "molecules": 4226,
+          "proteins": 29,
+          "label_quantiles": {
+            "0.0": 0.7569619513137056,
+            "0.01": 4.581698708680254,
+            "0.5": 7.259637310505756,
+            "0.99": 10.0,
+            "1.0": 11.316052869248487
+          }
+        },
+        {
+          "family": "other_enzyme",
+          "observations": 73333,
+          "molecules": 30775,
+          "proteins": 503,
+          "label_quantiles": {
+            "0.0": -0.053078443483419946,
+            "0.01": 1.9611573723365834,
+            "0.5": 6.910094888560602,
+            "0.99": 9.953430607170587,
+            "1.0": 13.853871964321762
+          }
+        },
+        {
+          "family": "protease",
+          "observations": 39797,
+          "molecules": 21139,
+          "proteins": 144,
+          "label_quantiles": {
+            "0.0": 0.0,
+            "0.01": 3.3829242931241192,
+            "0.5": 7.0,
+            "0.99": 10.3767507096021,
+            "1.0": 12.455931955649724
+          }
+        },
+        {
+          "family": "transporter",
+          "observations": 9204,
+          "molecules": 4756,
+          "proteins": 69,
+          "label_quantiles": {
+            "0.0": 0.48999999999950106,
+            "0.01": 2.008773924307505,
+            "0.5": 6.769551078621726,
+            "0.99": 9.55284196865778,
+            "1.0": 11.045757490560675
+          }
+        }
+      ],
+      "data_filtered_or_labels_changed": false,
+      "limitations": "Assays, constructs, publication reuse and source selection require further review; repeated observations are not independent evidence"
+    },
+    {
+      "file": "C:\\Users\\abhij\\Documents\\projects\\pharmalens\\data\\processed\\prepared\\nonkinase_kd_202610_v3\\Kd.csv",
+      "sha256": "98cecca326526874bc57bdc6894422c9db9e110e1fc46acb31221faae688930b",
+      "endpoint": [
+        "Kd"
+      ],
+      "observations": 21219,
+      "molecules": 10007,
+      "proteins": 1134,
+      "unique_pairs": 15952,
+      "repeated_pairs": 3601,
+      "repeated_pairs_spread_over_half_log_unit": 2372,
+      "repeated_pairs_spread_over_one_log_unit": 2064,
+      "within_pair_rms_dispersion": 0.6252763400444951,
+      "dispersion_interpretation": "Descriptive all-data inconsistency for predictors using only molecule/protein identities; not a trained or held-out baseline",
+      "missing_publication_fraction": 0.38635185447005044,
+      "protein_rows_above_1500_residues": 555,
+      "smiles_rows_above_200_characters": 1011,
+      "families": [
+        {
+          "family": "gpcr",
+          "observations": 3223,
+          "molecules": 1758,
+          "proteins": 128,
+          "label_quantiles": {
+            "0.0": 0.45345733652186837,
+            "0.01": 2.014410340726415,
+            "0.5": 7.6252516539898965,
+            "0.99": 10.826813731587727,
+            "1.0": 12.0
+          }
+        },
+        {
+          "family": "ion_channel",
+          "observations": 566,
+          "molecules": 431,
+          "proteins": 59,
+          "label_quantiles": {
+            "0.0": 1.9665762445130506,
+            "0.01": 2.3869470461839692,
+            "0.5": 6.315169470310851,
+            "0.99": 9.544630512642435,
+            "1.0": 10.503070351926786
+          }
+        },
+        {
+          "family": "nuclear_receptor",
+          "observations": 2910,
+          "molecules": 2168,
+          "proteins": 33,
+          "label_quantiles": {
+            "0.0": -0.5430742350335329,
+            "0.01": 4.301029995663981,
+            "0.5": 7.698970004336019,
+            "0.99": 10.221848749616356,
+            "1.0": 11.522878745280337
+          }
+        },
+        {
+          "family": "other_enzyme",
+          "observations": 12853,
+          "molecules": 4467,
+          "proteins": 784,
+          "label_quantiles": {
+            "0.0": 0.34678748622465605,
+            "0.01": 2.9977194453163194,
+            "0.5": 6.853871964321762,
+            "0.99": 11.008509808141,
+            "1.0": 13.721246399047171
+          }
+        },
+        {
+          "family": "protease",
+          "observations": 1332,
+          "molecules": 1058,
+          "proteins": 83,
+          "label_quantiles": {
+            "0.0": 0.6020599913279625,
+            "0.01": 2.1568391342616136,
+            "0.5": 6.385287076039653,
+            "0.99": 10.958607314841775,
+            "1.0": 12.0
+          }
+        },
+        {
+          "family": "transporter",
+          "observations": 335,
+          "molecules": 176,
+          "proteins": 47,
+          "label_quantiles": {
+            "0.0": 1.7634780045833294,
+            "0.01": 4.235266683309062,
+            "0.5": 6.549750891680639,
+            "0.99": 9.477458164047984,
+            "1.0": 9.886056647693163
+          }
+        }
+      ],
+      "data_filtered_or_labels_changed": false,
+      "limitations": "Assays, constructs, publication reuse and source selection require further review; repeated observations are not independent evidence"
+    }
+  ]
+}

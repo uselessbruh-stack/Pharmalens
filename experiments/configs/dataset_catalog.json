@@ -1,0 +1,202 @@
+{
+  "schema_version": 1,
+  "updated_on": "2026-10-31",
+  "status": "expanded_ki_kd_benchmark_trained_and_heldout_evaluated",
+  "notes": "Full pinned BindingDB snapshot prepared into non-kinase Ki/Kd tasks; 11 supported family/endpoint views; 57 new benchmark runs and validation-locked held-out evaluation. Source/assay dependence and harder generalization controls remain explicit.",
+  "primary_scope": "small_molecule_protein_binding_affinity",
+  "primary_endpoints": [
+    "Ki",
+    "Kd"
+  ],
+  "primary_regression_admission": {
+    "relation": "=",
+    "positive_finite_numeric_value": true,
+    "explicit_units_required": true,
+    "molecule_identity_required": true,
+    "exact_target_sequence_required": true,
+    "endpoint_specific_models_or_heads": true,
+    "kinase_exclusion_requires_curated_family_mapping": true
+  },
+  "sources": [
+    {
+      "id": "chembl",
+      "role": "primary_family_panel_training",
+      "status": "starter_activity_panel_and_human_family_reference_catalog_verified",
+      "url": "https://chembl.gitbook.io/chembl-interface-documentation/frequently-asked-questions/chembl-data-questions",
+      "filters": {
+        "assay_type": "B",
+        "target_type": "SINGLE PROTEIN",
+        "confidence_score": 9
+      },
+      "release": "ChEMBL_37"
+    },
+    {
+      "id": "bindingdb",
+      "role": "primary_broad_affinity_training",
+      "status": "full_snapshot_downloaded_and_nonkinase_ki_kd_prepared",
+      "url": "https://www.bindingdb.org/rwd/bind/chemsearch/marvin/Download.jsp",
+      "release": "202610"
+    },
+    {
+      "id": "gtopdb",
+      "role": "curated_check_after_overlap_removal",
+      "status": "planned",
+      "url": "https://www.guidetopharmacology.org/download.jsp",
+      "access": "permitted_versioned_export_or_registered_api_key",
+      "release": null
+    },
+    {
+      "id": "gpcrdb",
+      "role": "specialist_annotation_and_optional_activity_slice",
+      "status": "planned",
+      "url": "https://docs.gpcrdb.org/ligands.html",
+      "independent_of_primary_sources": false,
+      "release": null
+    },
+    {
+      "id": "lit_pcba",
+      "role": "optional_separate_screening_benchmark",
+      "status": "planned",
+      "url": "https://lab.drugdesign.unistra.fr/datasets/lit-pcba/",
+      "task": "assay_activity_classification",
+      "require_assay_context_review": true,
+      "release": null
+    },
+    {
+      "id": "pdbbind",
+      "role": "optional_later_structure_experiment",
+      "status": "planned",
+      "url": "https://pdbbind-plus.org.cn/",
+      "access": "release_specific_terms_and_access_required",
+      "release": null
+    }
+  ],
+  "non_kinase_panels": [
+    {
+      "id": "gpcr_binding",
+      "family": "GPCR",
+      "primary_sources": [
+        "chembl",
+        "bindingdb"
+      ],
+      "annotation_sources": [
+        "gpcrdb",
+        "gtopdb"
+      ],
+      "endpoints": [
+        "Ki",
+        "Kd"
+      ],
+      "task": "binding_affinity_regression",
+      "status": "trained_and_heldout_evaluated_for_supported_endpoints"
+    },
+    {
+      "id": "protease_binding",
+      "family": "Protease",
+      "primary_sources": [
+        "chembl",
+        "bindingdb"
+      ],
+      "endpoints": [
+        "Ki",
+        "Kd"
+      ],
+      "exclude_unresolved_covalent_or_kinetic_endpoints": true,
+      "task": "binding_affinity_regression",
+      "status": "trained_and_heldout_evaluated_for_supported_endpoints"
+    },
+    {
+      "id": "nuclear_receptor_binding",
+      "family": "Nuclear receptor",
+      "primary_sources": [
+        "chembl",
+        "bindingdb"
+      ],
+      "endpoints": [
+        "Ki",
+        "Kd"
+      ],
+      "exclude_transcriptional_response_labels": true,
+      "task": "binding_affinity_regression",
+      "status": "trained_and_heldout_evaluated_for_supported_endpoints"
+    },
+    {
+      "id": "ion_channel_binding",
+      "family": "Ion channel",
+      "primary_sources": [
+        "chembl",
+        "bindingdb"
+      ],
+      "endpoints": [
+        "Ki",
+        "Kd"
+      ],
+      "exclude_unresolved_multisubunit_targets": true,
+      "exclude_functional_block_labels": true,
+      "task": "binding_affinity_regression",
+      "status": "trained_and_heldout_evaluated_for_supported_endpoints"
+    },
+    {
+      "id": "transporter_binding",
+      "family": "Transporter",
+      "primary_sources": [
+        "chembl",
+        "bindingdb"
+      ],
+      "endpoints": [
+        "Ki",
+        "Kd"
+      ],
+      "exclude_uptake_activity_labels": true,
+      "task": "binding_affinity_regression",
+      "status": "trained_and_heldout_evaluated_for_supported_endpoints",
+      "coverage_note": "Ki trained; Kd has 335 observations, below fixed 500-row cohort criterion"
+    },
+    {
+      "id": "other_enzyme_binding",
+      "family": "Other non-kinase enzyme",
+      "primary_sources": [
+        "chembl",
+        "bindingdb"
+      ],
+      "endpoints": [
+        "Ki",
+        "Kd"
+      ],
+      "exclude_families": [
+        "Kinase",
+        "Protease"
+      ],
+      "task": "binding_affinity_regression",
+      "status": "trained_and_heldout_evaluated_for_supported_endpoints"
+    }
+  ],
+  "required_quality_outputs": [
+    "source_release_checksums",
+    "source_terms_and_citations",
+    "row_exclusion_ledger",
+    "identity_and_source_overlap_ledger",
+    "family_endpoint_coverage",
+    "replicate_disagreement",
+    "censored_value_counts",
+    "sequence_and_smiles_truncation",
+    "frozen_split_manifests"
+  ],
+  "planned_split_protocols": [
+    "identity_grouped_random",
+    "cold_drug",
+    "cold_target",
+    "strict_cold_both",
+    "scaffold_holdout",
+    "sequence_cluster_holdout",
+    "family_holdout"
+  ],
+  "default_model_scope": [
+    "dataset_version",
+    "endpoint",
+    "intended_use"
+  ],
+  "model_selection_partition": "validation",
+  "implementation_guide": "docs/DATA_PIPELINE.md",
+  "benchmark_report": "results/reports/final_benchmark_v1.json"
+}

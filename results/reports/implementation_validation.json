@@ -1,0 +1,179 @@
+{
+  "date": "2026-10-30",
+  "scope": "Phase 1 acquisition/preparation and Phase 2 reliability foundation; not production certification or model-accuracy evidence",
+  "sources": [
+    {
+      "file": "BindingDB_BindingDB_Articles_202610_tsv.zip",
+      "status": "verified",
+      "bytes": 18271888,
+      "sha256": "727383bac35beed6bc5c55c40dfbd58ba023fa97a7f27dc1a61440c1ad54a2b7",
+      "publisher_md5_checked": true,
+      "url": "https://www.bindingdb.org/rwd/bind/downloads/BindingDB_BindingDB_Articles_202610_tsv.zip"
+    },
+    {
+      "file": "BindingDB_PDSPKi_202610_tsv.zip",
+      "status": "verified",
+      "bytes": 5590095,
+      "sha256": "f1b0672220d6582cae903d89b4b190a1355c79445f3bd252dd68e27d7974afee",
+      "publisher_md5_checked": false,
+      "url": "https://www.bindingdb.org/rwd/bind/downloads/BindingDB_PDSPKi_202610_tsv.zip"
+    },
+    {
+      "source": "ChEMBL",
+      "release": "ChEMBL_37",
+      "status": "sample",
+      "scope": "curated_accession_panel_not_all_family_targets",
+      "families": [
+        "gpcr",
+        "protease",
+        "nuclear_receptor",
+        "ion_channel",
+        "transporter",
+        "other_enzyme"
+      ],
+      "observations": 150,
+      "sha256": "ec86e20a40f8ee445454b7255a2ed12d9a8be975e5de497d44754376168fb6f0"
+    }
+  ],
+  "prepared": {
+    "bindingdb_articles_202610_v1": {
+      "counts": {
+        "source_endpoint_observations": 28439,
+        "Ki": 21486,
+        "Kd": 2424
+      },
+      "excluded": {
+        "censored_measurement": 3530,
+        "invalid_or_ambiguous_sequence": 70,
+        "duplicate_source_record": 40,
+        "unresolved_or_multichain_target": 745,
+        "invalid_smiles": 121,
+        "missing_smiles": 23
+      },
+      "family_counts": {
+        "unclassified": 23910
+      },
+      "source_sha256": "727383bac35beed6bc5c55c40dfbd58ba023fa97a7f27dc1a61440c1ad54a2b7",
+      "outputs": {
+        "Ki": {
+          "path": "Ki.csv",
+          "sha256": "d08bccade00a3fa2ac2cee50e5bd212540527ee1789fed237d8cccfefa148f90"
+        },
+        "Kd": {
+          "path": "Kd.csv",
+          "sha256": "c8b0fb080af6b1a53afc01af9dc5082ecac4cd9c68aaf9d898cd185418412cbe"
+        }
+      }
+    },
+    "bindingdb_pdsp_202610_v1": {
+      "counts": {
+        "source_endpoint_observations": 27715,
+        "Ki": 22094
+      },
+      "excluded": {
+        "censored_measurement": 5495,
+        "invalid_smiles": 105,
+        "unresolved_or_multichain_target": 21
+      },
+      "family_counts": {
+        "unclassified": 22094
+      },
+      "source_sha256": "f1b0672220d6582cae903d89b4b190a1355c79445f3bd252dd68e27d7974afee",
+      "outputs": {
+        "Ki": {
+          "path": "Ki.csv",
+          "sha256": "65d1ddd2d1cd4624c7a384c08ce8b3058a6b547447da5883d066911c8c004ad3"
+        },
+        "Kd": {
+          "path": "Kd.csv",
+          "sha256": "74fa022f5295741688e9bd62156b27d85dbf11368e37839691d3db07747b1e67"
+        }
+      }
+    },
+    "chembl_six_family_sample_v1": {
+      "counts": {
+        "source_endpoint_observations": 150,
+        "Ki": 31
+      },
+      "excluded": {
+        "not_high_confidence_binding": 119
+      },
+      "family_counts": {
+        "gpcr": 2,
+        "nuclear_receptor": 19,
+        "ion_channel": 10
+      },
+      "source_sha256": "ec86e20a40f8ee445454b7255a2ed12d9a8be975e5de497d44754376168fb6f0",
+      "outputs": {
+        "Ki": {
+          "path": "Ki.csv",
+          "sha256": "bf79169e3ce284e66b47ada4dc9799005b0bd45395cf798f9cce0702d8d76ae2"
+        },
+        "Kd": {
+          "path": "Kd.csv",
+          "sha256": "74fa022f5295741688e9bd62156b27d85dbf11368e37839691d3db07747b1e67"
+        }
+      }
+    }
+  },
+  "corrected_kiba_splits": {
+    "input_sha256": "3d2d60a2b7eb7d3c56ba55dbd43a800910c26ac6da9c6234e626b97b3afd9e80",
+    "seed": 42,
+    "historical_metrics_valid_for_these_splits": false,
+    "partitions": {
+      "random": {
+        "train": 94605,
+        "val": 11827,
+        "test": 11822,
+        "excluded_cross_block_rows": 0
+      },
+      "cold_drug": {
+        "train": 95697,
+        "val": 12160,
+        "test": 10397,
+        "excluded_cross_block_rows": 0
+      },
+      "cold_target": {
+        "train": 96342,
+        "val": 10992,
+        "test": 10920,
+        "excluded_cross_block_rows": 0
+      },
+      "cold_both": {
+        "train": 75246,
+        "val": 1156,
+        "test": 1239,
+        "excluded_cross_block_rows": 40613
+      }
+    }
+  },
+  "limitations": [
+    "ChEMBL integration uses a bounded sample, not the full 18-target starter panel",
+    "BindingDB family annotations remain unclassified until curated mapping; cross-source and assay-context review pending",
+    "No new trained research champion, Next.js migration or durable job queue in this phase"
+  ],
+  "tests": {
+    "tests": 43,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "report": "results/reports/foundation_tests.xml",
+    "description": "Offline synthetic-model and data-integrity/API regression suite"
+  },
+  "additional_checks": {
+    "dependency_consistency": "pip check passed",
+    "python_syntax": "compileall passed",
+    "legacy_frontend_syntax": "bundled Node --check passed",
+    "git_whitespace": "git diff --check passed",
+    "targeted_ruff": "passed",
+    "live_final_chembl_check": "5 GPCR observations; manifest c55e053ddb8c completed",
+    "browser_validation": "not performed; Next.js migration not implemented",
+    "github_ci": "configured; not executed remotely"
+  },
+  "environment": {
+    "python": "3.12.10",
+    "platform": "Windows x64",
+    "torch": "2.15.0+cpu",
+    "foundation_lock_matches_installed_environment": true
+  }
+}

@@ -38,6 +38,7 @@ class DTIDataset(Dataset):
         target_encoding_dict: dict,
         drug_max_len: int = 100,
         target_max_len: int = 1000,
+        auxiliary=None,
     ):
         self.drug_ids = list(drug_ids)
         self.target_ids = list(target_ids)
@@ -46,12 +47,15 @@ class DTIDataset(Dataset):
         self.target_encoding_dict = target_encoding_dict
         self.drug_max_len = drug_max_len
         self.target_max_len = target_max_len
+        self.auxiliary = auxiliary
 
         # Filter to valid entries only
         self.valid_indices = []
         for i in range(len(self.drug_ids)):
-            if self.drug_ids[i] in self.drug_encoding_dict and \
-               self.target_ids[i] in self.target_encoding_dict:
+            if (
+                self.drug_ids[i] in self.drug_encoding_dict
+                and self.target_ids[i] in self.target_encoding_dict
+            ):
                 self.valid_indices.append(i)
 
     def __len__(self):
@@ -74,12 +78,25 @@ class DTIDataset(Dataset):
         drug_tensor[:drug_len] = torch.tensor(drug_enc[:drug_len], dtype=torch.long)
         target_tensor[:target_len] = torch.tensor(target_enc[:target_len], dtype=torch.long)
 
+        if self.auxiliary is not None:
+            return (
+                drug_tensor,
+                target_tensor,
+                torch.as_tensor(self.auxiliary[real_idx], dtype=torch.float),
+                torch.tensor(score, dtype=torch.float),
+            )
         return drug_tensor, target_tensor, torch.tensor(score, dtype=torch.float)
 
 
-def create_encoding_dicts(df, smiles_col='smiles', seq_col='sequence',
-                          drug_id_col='drug_id', target_id_col='target_id',
-                          drug_max_len=100, target_max_len=1000):
+def create_encoding_dicts(
+    df,
+    smiles_col="smiles",
+    seq_col="sequence",
+    drug_id_col="drug_id",
+    target_id_col="target_id",
+    drug_max_len=100,
+    target_max_len=1000,
+):
     """
     Create encoding dictionaries from a DataFrame.
 

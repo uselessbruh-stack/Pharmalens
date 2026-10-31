@@ -1,0 +1,7 @@
+{
+  "cached_gpu_vs_cpu_parity": true,
+  "max_absolute_difference": 1.9073486328125e-06,
+  "unseen_sequence_finite": true,
+  "network_used_at_inference": false,
+  "proteins_cached": 1638
+}

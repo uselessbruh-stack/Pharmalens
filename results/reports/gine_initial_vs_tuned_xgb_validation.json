@@ -1,0 +1,23 @@
+{
+  "reference_run": "nonkinase_ki_xgb_search2_seed42",
+  "candidate_run": "nonkinase_ki_gine_pilot_seed42",
+  "rows": 2872,
+  "target_groups": 16,
+  "draws": 2000,
+  "seed": 2026,
+  "candidate_minus_reference_rmse": 0.10112415976144074,
+  "conditional_target_bootstrap_95_percentile_interval": [
+    0.0721334148978921,
+    0.13319301684187815
+  ],
+  "source_hashes": [
+    "e265d729db86ce986602c35ba35417270eec00295876ae587e0e172e3b9759e6",
+    "377bc658ad3c092b33677598914f21808e7bb318ab2897954dfb1854108bcc88"
+  ],
+  "prediction_file_hashes": [
+    "baa34087934c43b0979b154d66e14a4cd413c32266db2e36e888b0eb8d8cb1fb",
+    "3206ae366372599cac4e0869243f4a0a1a8a4db2c87ecef7d5bfc6be8beb4d4e"
+  ],
+  "scope": "validation only; negative differences favor candidate",
+  "limitations": "Conditional on this validation set; does not correct tuning/selection bias or measure initialization uncertainty; not final test evidence"
+}

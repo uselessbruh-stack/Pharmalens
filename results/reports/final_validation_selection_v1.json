@@ -1,0 +1,949 @@
+{
+  "created_at": "2026-10-31T01:39:10.870594+00:00",
+  "selection_policy": "Lowest mean validation RMSE across available initialization seeds; seed 42 is the fixed serving representative, never best-seed selection",
+  "test_used_for_selection": false,
+  "candidates": {
+    "original_panel_xgboost_esm_v1_seed42": {
+      "directory": "C:\\Users\\abhij\\Documents\\projects\\pharmalens\\experiments\\runs\\original_panel_xgboost_esm_v1_seed42",
+      "report_sha256": "1a25f90b028cfd84247b2bc42e3a25728c4ecd7c52329873902ab360f7c0f762",
+      "artifact_sha256": "7ba50e6ed136cad47b9958b5905f1d299b1c0e6840771283aa487a73a447764d"
+    },
+    "original_panel_deeptda_esm_v1_seed42": {
+      "directory": "C:\\Users\\abhij\\Documents\\projects\\pharmalens\\experiments\\runs\\original_panel_deeptda_esm_v1_seed42",
+      "report_sha256": "3a80feda976d89e374d2f61fff338c20e25b9564e144d87b121b0f2c66063c51",
+      "artifact_sha256": "ffc5e38fefab01be165243bd68ad87888cabee532d31860f92e99b741c91d916"
+    },
+    "original_panel_gnn_esm_v1_seed42": {
+      "directory": "C:\\Users\\abhij\\Documents\\projects\\pharmalens\\experiments\\runs\\original_panel_gnn_esm_v1_seed42",
+      "report_sha256": "e249c9777bf7731646cae69ec2ad7cbad05b5b1f96659eb72c0e600d1fb3e7f3",
+      "artifact_sha256": "0bdc98ebc02abbbbaa5d886875b3ef3f3543d90739b5eaa917682189ae6971d0"
+    },
+    "expanded_esm_matrix_v1_ion_channel_kd_random_xgboost_seed42": {
+      "directory": "C:\\Users\\abhij\\Documents\\projects\\pharmalens\\experiments\\runs\\expanded_esm_matrix_v1_ion_channel_kd_random_xgboost_seed42",
+      "report_sha256": "a062bcece8af7be4ea584d0cef093ca776e0f36760e638737de2b92dfd16e2dc",
+      "artifact_sha256": "40c285547fd90a04b30de0afd426bcc6e71d43edef3465d908c31040921becc7"
+    },
+    "expanded_esm_matrix_v1_ion_channel_kd_random_deeptda_seed42": {
+      "directory": "C:\\Users\\abhij\\Documents\\projects\\pharmalens\\experiments\\runs\\expanded_esm_matrix_v1_ion_channel_kd_random_deeptda_seed42",
+      "report_sha256": "35b3dfe851f5c46b7a520e3fe156a48440e5c16a2b90975431f2dd60da17e6c1",
+      "artifact_sha256": "2ef8b05814f0e2fd8c42ba792307920fbf5f234fdcb234411e3709da9b6ce41f"
+    },
+    "expanded_esm_matrix_v1_ion_channel_kd_random_gnn_seed42": {
+      "directory": "C:\\Users\\abhij\\Documents\\projects\\pharmalens\\experiments\\runs\\expanded_esm_matrix_v1_ion_channel_kd_random_gnn_seed42",
+      "report_sha256": "dbff2694a8632b8e06ee1bea17bb48942cdcd5a481823c77039851e15420239b",
+      "artifact_sha256": "6cd11f6c70979f54f36af33d1bae7f1078aeeb8f143d473c6b6902213abb5e3a"
+    },
+    "expanded_esm_matrix_v1_protease_kd_random_xgboost_seed42": {
+      "directory": "C:\\Users\\abhij\\Documents\\projects\\pharmalens\\experiments\\runs\\expanded_esm_matrix_v1_protease_kd_random_xgboost_seed42",
+      "report_sha256": "0e3416ab84b6c01d5ec5eb1375b92e31a8e2ac0d615e03c19e1d8a0c70a91853",
+      "artifact_sha256": "440b4234b814cb46f7d5827c2ca938662308d94551253327932ae36b1b91819b"
+    },
+    "expanded_esm_matrix_v1_protease_kd_random_deeptda_seed42": {
+      "directory": "C:\\Users\\abhij\\Documents\\projects\\pharmalens\\experiments\\runs\\expanded_esm_matrix_v1_protease_kd_random_deeptda_seed42",
+      "report_sha256": "4572d6819f4326df459385aa983a5fc3f236740baaa53a30ba42e1e53a2d8354",
+      "artifact_sha256": "7e9025f9bf38e47535d066ceff2e48a122e58d90bb3e089041b50a44079bc013"
+    },
+    "expanded_esm_matrix_v1_protease_kd_random_gnn_seed42": {
+      "directory": "C:\\Users\\abhij\\Documents\\projects\\pharmalens\\experiments\\runs\\expanded_esm_matrix_v1_protease_kd_random_gnn_seed42",
+      "report_sha256": "cbc2167c091ad4aa86334d7067a334d8b443aa130f47513d8b2516eb7d770c4f",
+      "artifact_sha256": "3a4fc6e943fe21384ab00a76c8b06484ab53580dfe37e83cb018dd47183f2e77"
+    },
+    "expanded_esm_matrix_v1_nuclear_receptor_kd_random_xgboost_seed42": {
+      "directory": "C:\\Users\\abhij\\Documents\\projects\\pharmalens\\experiments\\runs\\expanded_esm_matrix_v1_nuclear_receptor_kd_random_xgboost_seed42",
+      "report_sha256": "e98a5a07ff26936091515f7b92960fa5128e564d9741cecea2ff60c6522241d1",
+      "artifact_sha256": "5a9273c2ed6ebea6b1d0ab746827cd63eb4671383e3dd226b87d139aa2734d75"
+    },
+    "expanded_esm_matrix_v1_nuclear_receptor_kd_random_deeptda_seed42": {
+      "directory": "C:\\Users\\abhij\\Documents\\projects\\pharmalens\\experiments\\runs\\expanded_esm_matrix_v1_nuclear_receptor_kd_random_deeptda_seed42",
+      "report_sha256": "f9a89a15e1e12fc163004edeaa30fb8146fff04be0a5218b35d3b831fa2673d3",
+      "artifact_sha256": "0d14e0e515ddff23ef20783d89aa421220e08ce6877f2e8931740063d4a5f779"
+    },
+    "expanded_esm_matrix_v1_nuclear_receptor_kd_random_gnn_seed42": {
+      "directory": "C:\\Users\\abhij\\Documents\\projects\\pharmalens\\experiments\\runs\\expanded_esm_matrix_v1_nuclear_receptor_kd_random_gnn_seed42",
+      "report_sha256": "aad0486429258a84e7ddcf6912447aefbcc5c95200e6a463ac763c1aa4db5aa9",
+      "artifact_sha256": "8cd4f61083498457239f75b86b59e1eb918ec19ba1adf83af19cee7fe3db30ed"
+    },
+    "expanded_esm_matrix_v1_gpcr_kd_random_xgboost_seed42": {
+      "directory": "C:\\Users\\abhij\\Documents\\projects\\pharmalens\\experiments\\runs\\expanded_esm_matrix_v1_gpcr_kd_random_xgboost_seed42",
+      "report_sha256": "89ec261d5a782799732ee485f07bd1e5743d7caca9caf2968f905af19d30cb21",
+      "artifact_sha256": "8688677fc655e66576f8b5e0e157e428cd554070c1b4d8d48c73df40c0cbdff3"
+    },
+    "expanded_esm_matrix_v1_gpcr_kd_random_deeptda_seed42": {
+      "directory": "C:\\Users\\abhij\\Documents\\projects\\pharmalens\\experiments\\runs\\expanded_esm_matrix_v1_gpcr_kd_random_deeptda_seed42",
+      "report_sha256": "216e8315cd43bff8048387378354d277b1bdcdaed39d47bdb2a59f39d559a45b",
+      "artifact_sha256": "bcb0e6f5e44c4815d3095dda424e0d90d9c522b5bd15ab3a86c2200c20f62639"
+    },
+    "expanded_esm_matrix_v1_gpcr_kd_random_gnn_seed42": {
+      "directory": "C:\\Users\\abhij\\Documents\\projects\\pharmalens\\experiments\\runs\\expanded_esm_matrix_v1_gpcr_kd_random_gnn_seed42",
+      "report_sha256": "4d1620e4304be759994d985a27ca89547e5e0b2118818660a84617ee52b47952",
+      "artifact_sha256": "9d21d50571725dc84ebfd0a878343317aa5d8a2ecaac3a2677a96bdf6cfdc4b7"
+    },
+    "expanded_esm_matrix_v1_nuclear_receptor_ki_random_xgboost_seed42": {
+      "directory": "C:\\Users\\abhij\\Documents\\projects\\pharmalens\\experiments\\runs\\expanded_esm_matrix_v1_nuclear_receptor_ki_random_xgboost_seed42",
+      "report_sha256": "018439faf5dfcede7af5fefac8cbc6a6f2632540914cfa76300a207ee567a718",
+      "artifact_sha256": "d84d8e676a158840fbce6b15ffa616b7e6bbc6659a93934d19965a3590bfc05f"
+    },
+    "expanded_esm_matrix_v1_nuclear_receptor_ki_random_deeptda_seed42": {
+      "directory": "C:\\Users\\abhij\\Documents\\projects\\pharmalens\\experiments\\runs\\expanded_esm_matrix_v1_nuclear_receptor_ki_random_deeptda_seed42",
+      "report_sha256": "baec8c05dc1418cef54e86d1cdbc7eac2a7ecf8e82a03a2c7f704a774f5d4ffc",
+      "artifact_sha256": "1a02196ce2f167ef3894bc7220726da9665e328c2aa886deb33626747914ac4c"
+    },
+    "expanded_esm_matrix_v1_nuclear_receptor_ki_random_gnn_seed42": {
+      "directory": "C:\\Users\\abhij\\Documents\\projects\\pharmalens\\experiments\\runs\\expanded_esm_matrix_v1_nuclear_receptor_ki_random_gnn_seed42",
+      "report_sha256": "601cf8893d5b3043b74320250c3595a9048b9d9e9c2fa4db1a77fde9be3a0791",
+      "artifact_sha256": "e6f930f875268b953e86fbf3423ab9b8f21569df8b10751edf89a2864b3aac85"
+    },
+    "expanded_esm_matrix_v1_transporter_ki_random_xgboost_seed42": {
+      "directory": "C:\\Users\\abhij\\Documents\\projects\\pharmalens\\experiments\\runs\\expanded_esm_matrix_v1_transporter_ki_random_xgboost_seed42",
+      "report_sha256": "bf700f32e00154a0d23e47db1a720d5ddbd2dcd366f748b43b63d0e3fe0b12ab",
+      "artifact_sha256": "97f5e507c1aaa80e40117f133d9d8ed4f349406a611df3b3f2448cb81216a79a"
+    },
+    "expanded_esm_matrix_v1_transporter_ki_random_deeptda_seed42": {
+      "directory": "C:\\Users\\abhij\\Documents\\projects\\pharmalens\\experiments\\runs\\expanded_esm_matrix_v1_transporter_ki_random_deeptda_seed42",
+      "report_sha256": "a3d5faa87bcc8358ac92dab2826b67052e0f447668430aae5944132eea8a7e38",
+      "artifact_sha256": "6e2744caa3085c3411d650573600636d922001fdec067adf54a3f01cfe98afec"
+    },
+    "expanded_esm_matrix_v1_transporter_ki_random_gnn_seed42": {
+      "directory": "C:\\Users\\abhij\\Documents\\projects\\pharmalens\\experiments\\runs\\expanded_esm_matrix_v1_transporter_ki_random_gnn_seed42",
+      "report_sha256": "424b74671b3c44173caf00a08197e487c842e3384b97bef9c6223cac501d797c",
+      "artifact_sha256": "7c31e19516507459d15905bddebe616b7cdd6ed9e6715fd246e0f4521949f39c"
+    },
+    "expanded_esm_matrix_v1_other_enzyme_kd_random_xgboost_seed42": {
+      "directory": "C:\\Users\\abhij\\Documents\\projects\\pharmalens\\experiments\\runs\\expanded_esm_matrix_v1_other_enzyme_kd_random_xgboost_seed42",
+      "report_sha256": "448eb1f85aed84cd7ad683c39f34c3a1379e9d0769d8352a3f6c52c239d0cc16",
+      "artifact_sha256": "b82e20c77b6c17b044d5c175cf1a4bfde9bf3d925cdb9efef02703409e44f784"
+    },
+    "expanded_esm_matrix_v1_other_enzyme_kd_random_deeptda_seed42": {
+      "directory": "C:\\Users\\abhij\\Documents\\projects\\pharmalens\\experiments\\runs\\expanded_esm_matrix_v1_other_enzyme_kd_random_deeptda_seed42",
+      "report_sha256": "ef4c5918f986e0823aacfe0d4c53eb1e2604cac63e1f575b41a67f8db54386b8",
+      "artifact_sha256": "cd8cb62d80e3e81935c3f12dcd9dbe719e658db9c187776846c3a17adb397e62"
+    },
+    "expanded_esm_matrix_v1_other_enzyme_kd_random_gnn_seed42": {
+      "directory": "C:\\Users\\abhij\\Documents\\projects\\pharmalens\\experiments\\runs\\expanded_esm_matrix_v1_other_enzyme_kd_random_gnn_seed42",
+      "report_sha256": "604362a4b00ec9a0dc275d31c3c97eb4fb4fdcd9fdb2e6f10b62e3ff939a7fab",
+      "artifact_sha256": "57e3812df2ac1ad43df0277934a8ae6e33d1c6984a59b576bb31dc1350668550"
+    },
+    "expanded_esm_matrix_v1_ion_channel_ki_random_xgboost_seed42": {
+      "directory": "C:\\Users\\abhij\\Documents\\projects\\pharmalens\\experiments\\runs\\expanded_esm_matrix_v1_ion_channel_ki_random_xgboost_seed42",
+      "report_sha256": "476b97bb881af4712e99c7a0f3e92cff567e1f1919719a09a436515a031c7773",
+      "artifact_sha256": "88b1201c35d07c57a9bc3abf0e852790e3e6568eb3481a2dd2cf52f1d4888ce3"
+    },
+    "expanded_esm_matrix_v1_ion_channel_ki_random_deeptda_seed42": {
+      "directory": "C:\\Users\\abhij\\Documents\\projects\\pharmalens\\experiments\\runs\\expanded_esm_matrix_v1_ion_channel_ki_random_deeptda_seed42",
+      "report_sha256": "08c2ce59b221895d173cdd8ed5d77a80d31b77f4d19be5da73e58c052b409f62",
+      "artifact_sha256": "16120852c7c1b568aa1365cfffafb307545246c28bf753a4ff94363cc5a33dcd"
+    },
+    "expanded_esm_matrix_v1_ion_channel_ki_random_gnn_seed42": {
+      "directory": "C:\\Users\\abhij\\Documents\\projects\\pharmalens\\experiments\\runs\\expanded_esm_matrix_v1_ion_channel_ki_random_gnn_seed42",
+      "report_sha256": "1df0f515da246afd02dacf956b3edc202d33a8b6ba15544dafba2a4410d83b3f",
+      "artifact_sha256": "280b88d57d8b6711d23f45aacf204224971c508d81613baf9819420042669041"
+    },
+    "expanded_esm_matrix_v1_broad_kd_random_xgboost_seed42": {
+      "directory": "C:\\Users\\abhij\\Documents\\projects\\pharmalens\\experiments\\runs\\expanded_esm_matrix_v1_broad_kd_random_xgboost_seed42",
+      "report_sha256": "7d584e5b1e229163a36dd52c478b83928d9a87115c652ee3a9e0a5247f83592c",
+      "artifact_sha256": "96976ffdddfbca702ee8cfe332701cc25dc46fbbc9b65d41a5b32aa0bf2fbbc4"
+    },
+    "expanded_esm_matrix_v1_broad_kd_random_deeptda_seed42": {
+      "directory": "C:\\Users\\abhij\\Documents\\projects\\pharmalens\\experiments\\runs\\expanded_esm_matrix_v1_broad_kd_random_deeptda_seed42",
+      "report_sha256": "fead95c541abae3dcfb51dba8aa517e91a4a9e0e5c5e7f28713940082825be87",
+      "artifact_sha256": "3cb119a8eba5a02fbf2700311afb7ff8bc166da1e03d8b732ebbcbe9f675c8d5"
+    },
+    "expanded_esm_matrix_v1_broad_kd_random_gnn_seed42": {
+      "directory": "C:\\Users\\abhij\\Documents\\projects\\pharmalens\\experiments\\runs\\expanded_esm_matrix_v1_broad_kd_random_gnn_seed42",
+      "report_sha256": "c8ebe22a8233abff2c7620fee9231b814abe330f35349ed733a283d3af17d959",
+      "artifact_sha256": "84f2c806bbce77904dc78daa60ca33191e7325549184a72d9c2dd5f27a9c4a16"
+    },
+    "expanded_esm_matrix_v1_protease_ki_random_xgboost_seed42": {
+      "directory": "C:\\Users\\abhij\\Documents\\projects\\pharmalens\\experiments\\runs\\expanded_esm_matrix_v1_protease_ki_random_xgboost_seed42",
+      "report_sha256": "654bf7e9995ad62b7d32e1d97d3d828e8ffb672f9717ed00ad14931564884b3b",
+      "artifact_sha256": "91e1b300071fc6a10937badd87f0dfb2ee6eeb248e3453043bc741d973382bb6"
+    },
+    "expanded_esm_matrix_v1_protease_ki_random_deeptda_seed42": {
+      "directory": "C:\\Users\\abhij\\Documents\\projects\\pharmalens\\experiments\\runs\\expanded_esm_matrix_v1_protease_ki_random_deeptda_seed42",
+      "report_sha256": "4587b3ecac58cad22af2fe80c384b2c0880b3e5510c6e296a288f55b0c4db054",
+      "artifact_sha256": "da219b4d4580f111822f3a695dc96fa302540e61d30081ef95081c14198c54a4"
+    },
+    "expanded_esm_matrix_v1_protease_ki_random_gnn_seed42": {
+      "directory": "C:\\Users\\abhij\\Documents\\projects\\pharmalens\\experiments\\runs\\expanded_esm_matrix_v1_protease_ki_random_gnn_seed42",
+      "report_sha256": "a7a9307280cab544ecbc1d5d3b6f8ea28da07bbb7490df5ecc97ba5517ac0d89",
+      "artifact_sha256": "75da32e89b13211fe1586ccc3a648aff667d5921a6dff96217f148053cd47693"
+    },
+    "expanded_esm_matrix_v1_other_enzyme_ki_random_xgboost_seed42": {
+      "directory": "C:\\Users\\abhij\\Documents\\projects\\pharmalens\\experiments\\runs\\expanded_esm_matrix_v1_other_enzyme_ki_random_xgboost_seed42",
+      "report_sha256": "67cbc5f58858297e8f231db0c9c7e792318caccf96bc4f7035f48f738b9540b0",
+      "artifact_sha256": "69f95ed4c36d047593a62f2c5477b3830c9863ab079ca2e04deaf097aed9c94c"
+    },
+    "expanded_esm_matrix_v1_other_enzyme_ki_random_deeptda_seed42": {
+      "directory": "C:\\Users\\abhij\\Documents\\projects\\pharmalens\\experiments\\runs\\expanded_esm_matrix_v1_other_enzyme_ki_random_deeptda_seed42",
+      "report_sha256": "4add233f5d5ff37519e80f5130de3c95049a880ab4e338451502c13d0b7cd053",
+      "artifact_sha256": "00820d558733948e1834fc3ec9d55a223c54d00c6ebaf1816c5beffa2bb1a9a3"
+    },
+    "expanded_esm_matrix_v1_other_enzyme_ki_random_gnn_seed42": {
+      "directory": "C:\\Users\\abhij\\Documents\\projects\\pharmalens\\experiments\\runs\\expanded_esm_matrix_v1_other_enzyme_ki_random_gnn_seed42",
+      "report_sha256": "2e5b61722f44fcc3b4ac536545e126993ba676a9510a460f34e7d6e18bd3f6e6",
+      "artifact_sha256": "b655787a42ceafbc4c20a2063d85326270ef1b41fc9902ce2a1314d41765a0ad"
+    },
+    "expanded_esm_matrix_v1_gpcr_ki_random_xgboost_seed42": {
+      "directory": "C:\\Users\\abhij\\Documents\\projects\\pharmalens\\experiments\\runs\\expanded_esm_matrix_v1_gpcr_ki_random_xgboost_seed42",
+      "report_sha256": "e03a663c797cc02cb2a6373cbe255d5e78e81e0400566043f320397453a6cf3d",
+      "artifact_sha256": "3ffb1f16b5019df2e74fef272adc88f6a738cb2d770b96c5bee491f915d4d28e"
+    },
+    "expanded_esm_matrix_v1_gpcr_ki_random_deeptda_seed42": {
+      "directory": "C:\\Users\\abhij\\Documents\\projects\\pharmalens\\experiments\\runs\\expanded_esm_matrix_v1_gpcr_ki_random_deeptda_seed42",
+      "report_sha256": "f9139188ab94084289bcadda1ba88b8eaccfb3203fd9848c0179371fc41e16fd",
+      "artifact_sha256": "6b4ab67cdb73bc3663fc148c973b1374a64bd75cc43027852456a139a8c175b1"
+    },
+    "expanded_esm_matrix_v1_gpcr_ki_random_gnn_seed42": {
+      "directory": "C:\\Users\\abhij\\Documents\\projects\\pharmalens\\experiments\\runs\\expanded_esm_matrix_v1_gpcr_ki_random_gnn_seed42",
+      "report_sha256": "39be2c4cfed304eba8bcf00f3899d298ec6b35d5c9401bed03595b2b01ce7582",
+      "artifact_sha256": "29d69b0f4b539822028767fa2656282728af30d3481236aef3d6fbff8d1d918d"
+    },
+    "expanded_esm_matrix_v1_broad_ki_random_xgboost_seed42": {
+      "directory": "C:\\Users\\abhij\\Documents\\projects\\pharmalens\\experiments\\runs\\expanded_esm_matrix_v1_broad_ki_random_xgboost_seed42",
+      "report_sha256": "4dee5d5673dee47a6b023477453a48581329a48a8338481bd381a0cb5bb440b1",
+      "artifact_sha256": "63a7d778f1a804f120fa9a77b464686118c808646f49f97619e29af384c304fe"
+    },
+    "expanded_esm_matrix_v1_broad_ki_random_deeptda_seed42": {
+      "directory": "C:\\Users\\abhij\\Documents\\projects\\pharmalens\\experiments\\runs\\expanded_esm_matrix_v1_broad_ki_random_deeptda_seed42",
+      "report_sha256": "ae3836caa90840a9f752d96cf0f8ecdb6b873df03d0b1bf279fa54521d2a691d",
+      "artifact_sha256": "e9fa5f557083c5a6acbfea06e23bd68ebc46500fd2380630f4f0cc107c5a686f"
+    },
+    "expanded_esm_matrix_v1_broad_ki_random_gnn_seed42": {
+      "directory": "C:\\Users\\abhij\\Documents\\projects\\pharmalens\\experiments\\runs\\expanded_esm_matrix_v1_broad_ki_random_gnn_seed42",
+      "report_sha256": "f7a21d7373ffe84d395b80634c655ae3c363587a32205fe6b76beabdddd78687",
+      "artifact_sha256": "09ca1118b6b47c3be0dfce6f4416a8197892a20c20719fe64a1a629f8e700894"
+    },
+    "kiba_xgboost_esm_v1_seed42": {
+      "directory": "C:\\Users\\abhij\\Documents\\projects\\pharmalens\\experiments\\runs\\kiba_xgboost_esm_v1_seed42",
+      "report_sha256": "2ce12ea2e187167473cd48c4bab1646db31b26a58c8f828913afe60403521e56",
+      "artifact_sha256": "9121c862728ac35df218ff62a75fc198eac4a4828008bd972fc663a3a5648b53"
+    },
+    "kiba_deeptda_esm_v1_seed42": {
+      "directory": "C:\\Users\\abhij\\Documents\\projects\\pharmalens\\experiments\\runs\\kiba_deeptda_esm_v1_seed42",
+      "report_sha256": "50b91fcc10fe671f1a6c3ffec6295e2c21950f2015aebc7db3cbac5de2a96407",
+      "artifact_sha256": "2fe6725c5a1e2e0614d21f245624b3fb331c8c12088eeca5addd7967f1b227e5"
+    },
+    "kiba_gnn_esm_v1_seed42": {
+      "directory": "C:\\Users\\abhij\\Documents\\projects\\pharmalens\\experiments\\runs\\kiba_gnn_esm_v1_seed42",
+      "report_sha256": "d72c34fb083de9dd5ef8c1f103ea2688ec99e7e5a476020b4cb343c7a6a2b0a3",
+      "artifact_sha256": "e3235ddcc965d646b26da6a23370ee6dbf106aa53de4531e98b7c9e55076b7ee"
+    },
+    "nuclear_repeats_v1_nuclear_receptor_kd_random_xgboost_seed123": {
+      "directory": "C:\\Users\\abhij\\Documents\\projects\\pharmalens\\experiments\\runs\\nuclear_repeats_v1_nuclear_receptor_kd_random_xgboost_seed123",
+      "report_sha256": "bd31d47acbf0a4bcfe63f02ed99b4357a9eb7c2440056ff87ae51bf61a951f16",
+      "artifact_sha256": "e475d9a06df900dba0905874d5b580cfdbd64acb662db2ca45e574fd21386e2c"
+    },
+    "nuclear_repeats_v1_nuclear_receptor_kd_random_xgboost_seed456": {
+      "directory": "C:\\Users\\abhij\\Documents\\projects\\pharmalens\\experiments\\runs\\nuclear_repeats_v1_nuclear_receptor_kd_random_xgboost_seed456",
+      "report_sha256": "238b6ef2ca9ad98a63095910d04eaf10741e9e5c8f4b8b7a43a2959236d98d6d",
+      "artifact_sha256": "d8381dabe1972ae302aba5662ce0707660e10356a7dba0d9c28908703e7c3b70"
+    },
+    "nuclear_repeats_v1_nuclear_receptor_kd_random_deeptda_seed123": {
+      "directory": "C:\\Users\\abhij\\Documents\\projects\\pharmalens\\experiments\\runs\\nuclear_repeats_v1_nuclear_receptor_kd_random_deeptda_seed123",
+      "report_sha256": "27b659aae288b7ce43693c18ae42d1a64f282d65c5f41a87ca98abaf2695b72a",
+      "artifact_sha256": "40b8b79756bbde5f2f21f9b943c9ea125c7e2bc0a7977cc4f63acbbc70d93d4a"
+    },
+    "nuclear_repeats_v1_nuclear_receptor_kd_random_deeptda_seed456": {
+      "directory": "C:\\Users\\abhij\\Documents\\projects\\pharmalens\\experiments\\runs\\nuclear_repeats_v1_nuclear_receptor_kd_random_deeptda_seed456",
+      "report_sha256": "a26026bfc4008dbd1ba006030183ff10e3b922babbf4845ca0d2b58aecdfc75f",
+      "artifact_sha256": "246a32066891d4bcfeaec33e3f7fd57d4b78df8a1c6a520ebe18902ab318ecfd"
+    },
+    "nuclear_repeats_v1_nuclear_receptor_kd_random_gnn_seed123": {
+      "directory": "C:\\Users\\abhij\\Documents\\projects\\pharmalens\\experiments\\runs\\nuclear_repeats_v1_nuclear_receptor_kd_random_gnn_seed123",
+      "report_sha256": "8fca52ada6db1dee96763ac743faa1da41c5b8c701cb5f67d537117eb9c5e347",
+      "artifact_sha256": "42fbc4554aaa2d42b36246a2bee903c4a71a4a21884edf865c37948d3d1262d9"
+    },
+    "nuclear_repeats_v1_nuclear_receptor_kd_random_gnn_seed456": {
+      "directory": "C:\\Users\\abhij\\Documents\\projects\\pharmalens\\experiments\\runs\\nuclear_repeats_v1_nuclear_receptor_kd_random_gnn_seed456",
+      "report_sha256": "dcb3a67fbce69d61ee441157bf86dc4efda1ce1fb16f3dff18485b20bac234c6",
+      "artifact_sha256": "63f4e68b93c243bf59c885ef7c40f4e80759282928a37ccf4191076216d62d0a"
+    },
+    "nuclear_repeats_v1_nuclear_receptor_ki_random_xgboost_seed123": {
+      "directory": "C:\\Users\\abhij\\Documents\\projects\\pharmalens\\experiments\\runs\\nuclear_repeats_v1_nuclear_receptor_ki_random_xgboost_seed123",
+      "report_sha256": "598e9070e63478a797561076c1cfcca3b60267b774079ad7ae822c9cd9b82c93",
+      "artifact_sha256": "1e4c5f31bd8894a96f41c99f055a41ffe9b6a017c0da4ed72ca0df47e08aaa58"
+    },
+    "nuclear_repeats_v1_nuclear_receptor_ki_random_xgboost_seed456": {
+      "directory": "C:\\Users\\abhij\\Documents\\projects\\pharmalens\\experiments\\runs\\nuclear_repeats_v1_nuclear_receptor_ki_random_xgboost_seed456",
+      "report_sha256": "81109a48dcac9a886d2f0f5a67d80fa298210cd2e1e126a3a1736a8e97e66789",
+      "artifact_sha256": "8097e3606b887dedc28ffc07a375aaffa9def0f6ba84d1df376b0c9918b111f1"
+    },
+    "nuclear_repeats_v1_nuclear_receptor_ki_random_deeptda_seed123": {
+      "directory": "C:\\Users\\abhij\\Documents\\projects\\pharmalens\\experiments\\runs\\nuclear_repeats_v1_nuclear_receptor_ki_random_deeptda_seed123",
+      "report_sha256": "fd3d27c5f6abc4c886c956b59aaf4262ecb70b397e05d50f0ee5d9ab3eefd163",
+      "artifact_sha256": "1b76b596841f0fc6cab6e0b622c2fb8ee92813e0fa5aa9febc822fc06230a411"
+    },
+    "nuclear_repeats_v1_nuclear_receptor_ki_random_deeptda_seed456": {
+      "directory": "C:\\Users\\abhij\\Documents\\projects\\pharmalens\\experiments\\runs\\nuclear_repeats_v1_nuclear_receptor_ki_random_deeptda_seed456",
+      "report_sha256": "5c56b839397497e65a2a4a1cf54780ba85391ff79a518cfb56e8a11744278065",
+      "artifact_sha256": "792c2dcc35f3e182c5ad0d558b12f2c07c4023c5cfc3529455511e1ffa2bdd0f"
+    },
+    "nuclear_repeats_v1_nuclear_receptor_ki_random_gnn_seed123": {
+      "directory": "C:\\Users\\abhij\\Documents\\projects\\pharmalens\\experiments\\runs\\nuclear_repeats_v1_nuclear_receptor_ki_random_gnn_seed123",
+      "report_sha256": "4f3ed9f0a2805782a03930d3b7b7adedbc6175f62c79c0b3696dc18b96d4a85a",
+      "artifact_sha256": "ef840a146c18dfde2e20eb4c696495878bfaf083476a53f857ff5ce61a1b42f7"
+    },
+    "nuclear_repeats_v1_nuclear_receptor_ki_random_gnn_seed456": {
+      "directory": "C:\\Users\\abhij\\Documents\\projects\\pharmalens\\experiments\\runs\\nuclear_repeats_v1_nuclear_receptor_ki_random_gnn_seed456",
+      "report_sha256": "76ee9c34dca7a645a278ed83bf23566d40f24e4450b476a7eb876c04a0987875",
+      "artifact_sha256": "cdb9020c1fcfd25d2b0e1279ffbd9ca12f94710d93f691303140b3ba16d8b6e1"
+    }
+  },
+  "selections": [
+    {
+      "scope": [
+        "NonKinasePanel",
+        "202610_v1",
+        "Ki",
+        "random"
+      ],
+      "selected_architecture": "xgboost",
+      "representative_run": "original_panel_xgboost_esm_v1_seed42",
+      "architectures": {
+        "xgboost": {
+          "validation_mean_rmse": 0.7588897501094437,
+          "validation_seed_std": null,
+          "seeds": [
+            42
+          ],
+          "runs": [
+            "original_panel_xgboost_esm_v1_seed42"
+          ]
+        },
+        "deeptda": {
+          "validation_mean_rmse": 0.8053610832112083,
+          "validation_seed_std": null,
+          "seeds": [
+            42
+          ],
+          "runs": [
+            "original_panel_deeptda_esm_v1_seed42"
+          ]
+        },
+        "gnn": {
+          "validation_mean_rmse": 0.7908084221311478,
+          "validation_seed_std": null,
+          "seeds": [
+            42
+          ],
+          "runs": [
+            "original_panel_gnn_esm_v1_seed42"
+          ]
+        }
+      }
+    },
+    {
+      "scope": [
+        "NonKinase_ion_channel",
+        "202610_v3",
+        "Kd",
+        "random"
+      ],
+      "selected_architecture": "xgboost",
+      "representative_run": "expanded_esm_matrix_v1_ion_channel_kd_random_xgboost_seed42",
+      "architectures": {
+        "xgboost": {
+          "validation_mean_rmse": 0.8838977847872194,
+          "validation_seed_std": null,
+          "seeds": [
+            42
+          ],
+          "runs": [
+            "expanded_esm_matrix_v1_ion_channel_kd_random_xgboost_seed42"
+          ]
+        },
+        "deeptda": {
+          "validation_mean_rmse": 1.032390734374341,
+          "validation_seed_std": null,
+          "seeds": [
+            42
+          ],
+          "runs": [
+            "expanded_esm_matrix_v1_ion_channel_kd_random_deeptda_seed42"
+          ]
+        },
+        "gnn": {
+          "validation_mean_rmse": 0.9979079091363321,
+          "validation_seed_std": null,
+          "seeds": [
+            42
+          ],
+          "runs": [
+            "expanded_esm_matrix_v1_ion_channel_kd_random_gnn_seed42"
+          ]
+        }
+      }
+    },
+    {
+      "scope": [
+        "NonKinase_protease",
+        "202610_v3",
+        "Kd",
+        "random"
+      ],
+      "selected_architecture": "xgboost",
+      "representative_run": "expanded_esm_matrix_v1_protease_kd_random_xgboost_seed42",
+      "architectures": {
+        "xgboost": {
+          "validation_mean_rmse": 0.8749202853472113,
+          "validation_seed_std": null,
+          "seeds": [
+            42
+          ],
+          "runs": [
+            "expanded_esm_matrix_v1_protease_kd_random_xgboost_seed42"
+          ]
+        },
+        "deeptda": {
+          "validation_mean_rmse": 0.890538475476912,
+          "validation_seed_std": null,
+          "seeds": [
+            42
+          ],
+          "runs": [
+            "expanded_esm_matrix_v1_protease_kd_random_deeptda_seed42"
+          ]
+        },
+        "gnn": {
+          "validation_mean_rmse": 0.9308475505652366,
+          "validation_seed_std": null,
+          "seeds": [
+            42
+          ],
+          "runs": [
+            "expanded_esm_matrix_v1_protease_kd_random_gnn_seed42"
+          ]
+        }
+      }
+    },
+    {
+      "scope": [
+        "NonKinase_nuclear_receptor",
+        "202610_v3",
+        "Kd",
+        "random"
+      ],
+      "selected_architecture": "deeptda",
+      "representative_run": "expanded_esm_matrix_v1_nuclear_receptor_kd_random_deeptda_seed42",
+      "architectures": {
+        "xgboost": {
+          "validation_mean_rmse": 0.7791112352627453,
+          "validation_seed_std": 0.005727351609453627,
+          "seeds": [
+            42,
+            123,
+            456
+          ],
+          "runs": [
+            "expanded_esm_matrix_v1_nuclear_receptor_kd_random_xgboost_seed42",
+            "nuclear_repeats_v1_nuclear_receptor_kd_random_xgboost_seed123",
+            "nuclear_repeats_v1_nuclear_receptor_kd_random_xgboost_seed456"
+          ]
+        },
+        "deeptda": {
+          "validation_mean_rmse": 0.7516914436012317,
+          "validation_seed_std": 0.009389548532382556,
+          "seeds": [
+            42,
+            123,
+            456
+          ],
+          "runs": [
+            "expanded_esm_matrix_v1_nuclear_receptor_kd_random_deeptda_seed42",
+            "nuclear_repeats_v1_nuclear_receptor_kd_random_deeptda_seed123",
+            "nuclear_repeats_v1_nuclear_receptor_kd_random_deeptda_seed456"
+          ]
+        },
+        "gnn": {
+          "validation_mean_rmse": 0.7715978177199604,
+          "validation_seed_std": 0.014616638729012636,
+          "seeds": [
+            42,
+            123,
+            456
+          ],
+          "runs": [
+            "expanded_esm_matrix_v1_nuclear_receptor_kd_random_gnn_seed42",
+            "nuclear_repeats_v1_nuclear_receptor_kd_random_gnn_seed123",
+            "nuclear_repeats_v1_nuclear_receptor_kd_random_gnn_seed456"
+          ]
+        }
+      }
+    },
+    {
+      "scope": [
+        "NonKinase_gpcr",
+        "202610_v3",
+        "Kd",
+        "random"
+      ],
+      "selected_architecture": "xgboost",
+      "representative_run": "expanded_esm_matrix_v1_gpcr_kd_random_xgboost_seed42",
+      "architectures": {
+        "xgboost": {
+          "validation_mean_rmse": 0.8885508814767422,
+          "validation_seed_std": null,
+          "seeds": [
+            42
+          ],
+          "runs": [
+            "expanded_esm_matrix_v1_gpcr_kd_random_xgboost_seed42"
+          ]
+        },
+        "deeptda": {
+          "validation_mean_rmse": 0.93229360506653,
+          "validation_seed_std": null,
+          "seeds": [
+            42
+          ],
+          "runs": [
+            "expanded_esm_matrix_v1_gpcr_kd_random_deeptda_seed42"
+          ]
+        },
+        "gnn": {
+          "validation_mean_rmse": 0.8944488870281495,
+          "validation_seed_std": null,
+          "seeds": [
+            42
+          ],
+          "runs": [
+            "expanded_esm_matrix_v1_gpcr_kd_random_gnn_seed42"
+          ]
+        }
+      }
+    },
+    {
+      "scope": [
+        "NonKinase_nuclear_receptor",
+        "202610_v3",
+        "Ki",
+        "random"
+      ],
+      "selected_architecture": "deeptda",
+      "representative_run": "expanded_esm_matrix_v1_nuclear_receptor_ki_random_deeptda_seed42",
+      "architectures": {
+        "xgboost": {
+          "validation_mean_rmse": 0.8052142221763869,
+          "validation_seed_std": 0.008098269484580452,
+          "seeds": [
+            42,
+            123,
+            456
+          ],
+          "runs": [
+            "expanded_esm_matrix_v1_nuclear_receptor_ki_random_xgboost_seed42",
+            "nuclear_repeats_v1_nuclear_receptor_ki_random_xgboost_seed123",
+            "nuclear_repeats_v1_nuclear_receptor_ki_random_xgboost_seed456"
+          ]
+        },
+        "deeptda": {
+          "validation_mean_rmse": 0.775416456043116,
+          "validation_seed_std": 0.0021858417228618546,
+          "seeds": [
+            42,
+            123,
+            456
+          ],
+          "runs": [
+            "expanded_esm_matrix_v1_nuclear_receptor_ki_random_deeptda_seed42",
+            "nuclear_repeats_v1_nuclear_receptor_ki_random_deeptda_seed123",
+            "nuclear_repeats_v1_nuclear_receptor_ki_random_deeptda_seed456"
+          ]
+        },
+        "gnn": {
+          "validation_mean_rmse": 0.7823396031476393,
+          "validation_seed_std": 0.0069681412924854184,
+          "seeds": [
+            42,
+            123,
+            456
+          ],
+          "runs": [
+            "expanded_esm_matrix_v1_nuclear_receptor_ki_random_gnn_seed42",
+            "nuclear_repeats_v1_nuclear_receptor_ki_random_gnn_seed123",
+            "nuclear_repeats_v1_nuclear_receptor_ki_random_gnn_seed456"
+          ]
+        }
+      }
+    },
+    {
+      "scope": [
+        "NonKinase_transporter",
+        "202610_v3",
+        "Ki",
+        "random"
+      ],
+      "selected_architecture": "xgboost",
+      "representative_run": "expanded_esm_matrix_v1_transporter_ki_random_xgboost_seed42",
+      "architectures": {
+        "xgboost": {
+          "validation_mean_rmse": 0.6694914346875311,
+          "validation_seed_std": null,
+          "seeds": [
+            42
+          ],
+          "runs": [
+            "expanded_esm_matrix_v1_transporter_ki_random_xgboost_seed42"
+          ]
+        },
+        "deeptda": {
+          "validation_mean_rmse": 0.6978181810469652,
+          "validation_seed_std": null,
+          "seeds": [
+            42
+          ],
+          "runs": [
+            "expanded_esm_matrix_v1_transporter_ki_random_deeptda_seed42"
+          ]
+        },
+        "gnn": {
+          "validation_mean_rmse": 0.6959545748515263,
+          "validation_seed_std": null,
+          "seeds": [
+            42
+          ],
+          "runs": [
+            "expanded_esm_matrix_v1_transporter_ki_random_gnn_seed42"
+          ]
+        }
+      }
+    },
+    {
+      "scope": [
+        "NonKinase_other_enzyme",
+        "202610_v3",
+        "Kd",
+        "random"
+      ],
+      "selected_architecture": "gnn",
+      "representative_run": "expanded_esm_matrix_v1_other_enzyme_kd_random_gnn_seed42",
+      "architectures": {
+        "xgboost": {
+          "validation_mean_rmse": 1.0966624728502916,
+          "validation_seed_std": null,
+          "seeds": [
+            42
+          ],
+          "runs": [
+            "expanded_esm_matrix_v1_other_enzyme_kd_random_xgboost_seed42"
+          ]
+        },
+        "deeptda": {
+          "validation_mean_rmse": 1.1083031904340892,
+          "validation_seed_std": null,
+          "seeds": [
+            42
+          ],
+          "runs": [
+            "expanded_esm_matrix_v1_other_enzyme_kd_random_deeptda_seed42"
+          ]
+        },
+        "gnn": {
+          "validation_mean_rmse": 1.0951932331333953,
+          "validation_seed_std": null,
+          "seeds": [
+            42
+          ],
+          "runs": [
+            "expanded_esm_matrix_v1_other_enzyme_kd_random_gnn_seed42"
+          ]
+        }
+      }
+    },
+    {
+      "scope": [
+        "NonKinase_ion_channel",
+        "202610_v3",
+        "Ki",
+        "random"
+      ],
+      "selected_architecture": "deeptda",
+      "representative_run": "expanded_esm_matrix_v1_ion_channel_ki_random_deeptda_seed42",
+      "architectures": {
+        "xgboost": {
+          "validation_mean_rmse": 0.6240707255089482,
+          "validation_seed_std": null,
+          "seeds": [
+            42
+          ],
+          "runs": [
+            "expanded_esm_matrix_v1_ion_channel_ki_random_xgboost_seed42"
+          ]
+        },
+        "deeptda": {
+          "validation_mean_rmse": 0.623677606379907,
+          "validation_seed_std": null,
+          "seeds": [
+            42
+          ],
+          "runs": [
+            "expanded_esm_matrix_v1_ion_channel_ki_random_deeptda_seed42"
+          ]
+        },
+        "gnn": {
+          "validation_mean_rmse": 0.6469326053239125,
+          "validation_seed_std": null,
+          "seeds": [
+            42
+          ],
+          "runs": [
+            "expanded_esm_matrix_v1_ion_channel_ki_random_gnn_seed42"
+          ]
+        }
+      }
+    },
+    {
+      "scope": [
+        "NonKinaseBroad",
+        "202610_v3",
+        "Kd",
+        "random"
+      ],
+      "selected_architecture": "xgboost",
+      "representative_run": "expanded_esm_matrix_v1_broad_kd_random_xgboost_seed42",
+      "architectures": {
+        "xgboost": {
+          "validation_mean_rmse": 1.0150752837711343,
+          "validation_seed_std": null,
+          "seeds": [
+            42
+          ],
+          "runs": [
+            "expanded_esm_matrix_v1_broad_kd_random_xgboost_seed42"
+          ]
+        },
+        "deeptda": {
+          "validation_mean_rmse": 1.0372904668789589,
+          "validation_seed_std": null,
+          "seeds": [
+            42
+          ],
+          "runs": [
+            "expanded_esm_matrix_v1_broad_kd_random_deeptda_seed42"
+          ]
+        },
+        "gnn": {
+          "validation_mean_rmse": 1.0432509407142847,
+          "validation_seed_std": null,
+          "seeds": [
+            42
+          ],
+          "runs": [
+            "expanded_esm_matrix_v1_broad_kd_random_gnn_seed42"
+          ]
+        }
+      }
+    },
+    {
+      "scope": [
+        "NonKinase_protease",
+        "202610_v3",
+        "Ki",
+        "random"
+      ],
+      "selected_architecture": "xgboost",
+      "representative_run": "expanded_esm_matrix_v1_protease_ki_random_xgboost_seed42",
+      "architectures": {
+        "xgboost": {
+          "validation_mean_rmse": 0.7267332334442204,
+          "validation_seed_std": null,
+          "seeds": [
+            42
+          ],
+          "runs": [
+            "expanded_esm_matrix_v1_protease_ki_random_xgboost_seed42"
+          ]
+        },
+        "deeptda": {
+          "validation_mean_rmse": 0.7507316096063174,
+          "validation_seed_std": null,
+          "seeds": [
+            42
+          ],
+          "runs": [
+            "expanded_esm_matrix_v1_protease_ki_random_deeptda_seed42"
+          ]
+        },
+        "gnn": {
+          "validation_mean_rmse": 0.7489822694039113,
+          "validation_seed_std": null,
+          "seeds": [
+            42
+          ],
+          "runs": [
+            "expanded_esm_matrix_v1_protease_ki_random_gnn_seed42"
+          ]
+        }
+      }
+    },
+    {
+      "scope": [
+        "NonKinase_other_enzyme",
+        "202610_v3",
+        "Ki",
+        "random"
+      ],
+      "selected_architecture": "xgboost",
+      "representative_run": "expanded_esm_matrix_v1_other_enzyme_ki_random_xgboost_seed42",
+      "architectures": {
+        "xgboost": {
+          "validation_mean_rmse": 0.7201939146829958,
+          "validation_seed_std": null,
+          "seeds": [
+            42
+          ],
+          "runs": [
+            "expanded_esm_matrix_v1_other_enzyme_ki_random_xgboost_seed42"
+          ]
+        },
+        "deeptda": {
+          "validation_mean_rmse": 0.7569956144332401,
+          "validation_seed_std": null,
+          "seeds": [
+            42
+          ],
+          "runs": [
+            "expanded_esm_matrix_v1_other_enzyme_ki_random_deeptda_seed42"
+          ]
+        },
+        "gnn": {
+          "validation_mean_rmse": 0.7609930818827377,
+          "validation_seed_std": null,
+          "seeds": [
+            42
+          ],
+          "runs": [
+            "expanded_esm_matrix_v1_other_enzyme_ki_random_gnn_seed42"
+          ]
+        }
+      }
+    },
+    {
+      "scope": [
+        "NonKinase_gpcr",
+        "202610_v3",
+        "Ki",
+        "random"
+      ],
+      "selected_architecture": "xgboost",
+      "representative_run": "expanded_esm_matrix_v1_gpcr_ki_random_xgboost_seed42",
+      "architectures": {
+        "xgboost": {
+          "validation_mean_rmse": 0.7142553755126527,
+          "validation_seed_std": null,
+          "seeds": [
+            42
+          ],
+          "runs": [
+            "expanded_esm_matrix_v1_gpcr_ki_random_xgboost_seed42"
+          ]
+        },
+        "deeptda": {
+          "validation_mean_rmse": 0.727952748016583,
+          "validation_seed_std": null,
+          "seeds": [
+            42
+          ],
+          "runs": [
+            "expanded_esm_matrix_v1_gpcr_ki_random_deeptda_seed42"
+          ]
+        },
+        "gnn": {
+          "validation_mean_rmse": 0.7356195377384184,
+          "validation_seed_std": null,
+          "seeds": [
+            42
+          ],
+          "runs": [
+            "expanded_esm_matrix_v1_gpcr_ki_random_gnn_seed42"
+          ]
+        }
+      }
+    },
+    {
+      "scope": [
+        "NonKinaseBroad",
+        "202610_v3",
+        "Ki",
+        "random"
+      ],
+      "selected_architecture": "gnn",
+      "representative_run": "expanded_esm_matrix_v1_broad_ki_random_gnn_seed42",
+      "architectures": {
+        "xgboost": {
+          "validation_mean_rmse": 0.7600614728008134,
+          "validation_seed_std": null,
+          "seeds": [
+            42
+          ],
+          "runs": [
+            "expanded_esm_matrix_v1_broad_ki_random_xgboost_seed42"
+          ]
+        },
+        "deeptda": {
+          "validation_mean_rmse": 0.7593373496048677,
+          "validation_seed_std": null,
+          "seeds": [
+            42
+          ],
+          "runs": [
+            "expanded_esm_matrix_v1_broad_ki_random_deeptda_seed42"
+          ]
+        },
+        "gnn": {
+          "validation_mean_rmse": 0.757302490934275,
+          "validation_seed_std": null,
+          "seeds": [
+            42
+          ],
+          "runs": [
+            "expanded_esm_matrix_v1_broad_ki_random_gnn_seed42"
+          ]
+        }
+      }
+    },
+    {
+      "scope": [
+        "KIBA",
+        "identity_v2",
+        "KIBA",
+        "random"
+      ],
+      "selected_architecture": "gnn",
+      "representative_run": "kiba_gnn_esm_v1_seed42",
+      "architectures": {
+        "xgboost": {
+          "validation_mean_rmse": 0.42783992915614694,
+          "validation_seed_std": null,
+          "seeds": [
+            42
+          ],
+          "runs": [
+            "kiba_xgboost_esm_v1_seed42"
+          ]
+        },
+        "deeptda": {
+          "validation_mean_rmse": 0.38634304775560785,
+          "validation_seed_std": null,
+          "seeds": [
+            42
+          ],
+          "runs": [
+            "kiba_deeptda_esm_v1_seed42"
+          ]
+        },
+        "gnn": {
+          "validation_mean_rmse": 0.38596763441555393,
+          "validation_seed_std": null,
+          "seeds": [
+            42
+          ],
+          "runs": [
+            "kiba_gnn_esm_v1_seed42"
+          ]
+        }
+      }
+    }
+  ],
+  "limitations": "Most tasks have one initialization; nuclear-receptor endpoints have three; random identity-grouped evaluation does not establish cold-target/scaffold or external validity"
+}

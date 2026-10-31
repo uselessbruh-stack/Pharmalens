@@ -6,13 +6,59 @@ Each sample pairs a molecular graph with an encoded protein sequence.
 """
 
 import logging
-from typing import Optional
 
 import numpy as np
 import torch
+from torch.utils.data import Dataset
 from torch_geometric.data import Data, InMemoryDataset
 
 logger = logging.getLogger("pharmalens.models.gnn_dataset")
+
+
+class CachedGraphPairDataset(Dataset):
+    """One cached graph/sequence per identity; never silently omit a pair."""
+
+    def __init__(
+        self, frame, protein_max_len=1000, graph_cache=None, protein_cache=None, auxiliary=None
+    ):
+        from src.features.mol_graph import smiles_to_graph
+        from src.features.protein_features import encode_sequence
+
+        self.graphs = {} if graph_cache is None else graph_cache
+        self.proteins = {} if protein_cache is None else protein_cache
+        self.pairs = list(frame[["smiles", "sequence"]].itertuples(index=False, name=None))
+        self.scores = torch.tensor(frame.score.to_numpy(dtype=np.float32))
+        self.auxiliary = auxiliary
+        for smiles, sequence in self.pairs:
+            if smiles not in self.graphs:
+                graph = smiles_to_graph(smiles)
+                if graph is None or not graph["num_atoms"]:
+                    raise ValueError("Invalid molecular graph; prepare inputs before training")
+                self.graphs[smiles] = {
+                    "x": torch.tensor(graph["node_features"], dtype=torch.float),
+                    "edge_index": torch.tensor(graph["edge_index"], dtype=torch.long),
+                    "edge_attr": torch.tensor(graph["edge_features"], dtype=torch.float),
+                }
+            key = (sequence, protein_max_len)
+            if key not in self.proteins:
+                self.proteins[key] = torch.tensor(
+                    encode_sequence(sequence, protein_max_len), dtype=torch.long
+                ).unsqueeze(0)
+        self.protein_max_len = protein_max_len
+
+    def __len__(self):
+        return len(self.pairs)
+
+    def __getitem__(self, index):
+        smiles, sequence = self.pairs[index]
+        data = Data(
+            **self.graphs[smiles],
+            protein_input=self.proteins[(sequence, self.protein_max_len)],
+            y=self.scores[index].reshape(1),
+        )
+        if self.auxiliary is not None:
+            data.auxiliary = torch.as_tensor(self.auxiliary[index], dtype=torch.float).unsqueeze(0)
+        return data
 
 
 class DTIGraphDataset(InMemoryDataset):
@@ -46,7 +92,7 @@ class DTIGraphDataset(InMemoryDataset):
             target_sequence_dict: {target_id: encoded_sequence np.ndarray}
             protein_max_len: Max protein sequence length.
         """
-        super().__init__('.', transform)
+        super().__init__(".", transform)
 
         from src.features.mol_graph import smiles_to_graph
         from src.features.protein_features import encode_sequence

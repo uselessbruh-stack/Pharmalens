@@ -1,0 +1,259 @@
+{
+  "source_sha256": "0a1c1fac04cdd4adcdbc6374e88f1b5b7dadcc89594292636535c79c06081884",
+  "jobs": [
+    {
+      "id": "original_panel_xgboost_esm_seed42",
+      "config": "experiments/configs/original_panel_xgboost_esm_v1.json",
+      "config_sha256": "bbbb08cbe01afadf28d0fa10b5a54bf64fc87306ca1afe6420d558d5549bbbe5",
+      "output": "experiments/runs/original_panel_xgboost_esm_v1_seed42"
+    },
+    {
+      "id": "original_panel_deeptda_esm_seed42",
+      "config": "experiments/configs/original_panel_deeptda_esm_v1.json",
+      "config_sha256": "c52874bc11d23cfa4958ae61d7096855b4fcfd03772b12873593a702bc510b6a",
+      "output": "experiments/runs/original_panel_deeptda_esm_v1_seed42"
+    },
+    {
+      "id": "original_panel_gnn_esm_seed42",
+      "config": "experiments/configs/original_panel_gnn_esm_v1.json",
+      "config_sha256": "002fccd7ef447b0ffff829a8080cb7f998d57cd0f9253519a05dc569f3fb6a68",
+      "output": "experiments/runs/original_panel_gnn_esm_v1_seed42"
+    },
+    {
+      "id": "ion_channel_kd_random_xgboost_seed42",
+      "config": "experiments/configs/expanded_esm_matrix_v1/ion_channel_kd_random_xgboost_seed42.json",
+      "config_sha256": "3684cf297efb3e0c43d800cbb783a647102bea7ab86396fa2d9d8926104a0a18",
+      "output": "experiments/runs/expanded_esm_matrix_v1_ion_channel_kd_random_xgboost_seed42"
+    },
+    {
+      "id": "ion_channel_kd_random_deeptda_seed42",
+      "config": "experiments/configs/expanded_esm_matrix_v1/ion_channel_kd_random_deeptda_seed42.json",
+      "config_sha256": "d01dfa43d88474d0fdc89d122219fa857231663f886d23a291f1c90e848dcfda",
+      "output": "experiments/runs/expanded_esm_matrix_v1_ion_channel_kd_random_deeptda_seed42"
+    },
+    {
+      "id": "ion_channel_kd_random_gnn_seed42",
+      "config": "experiments/configs/expanded_esm_matrix_v1/ion_channel_kd_random_gnn_seed42.json",
+      "config_sha256": "acaef11919d3dc2970af832f88d0d71b67d26ae9272206f2136f8a09491ac47b",
+      "output": "experiments/runs/expanded_esm_matrix_v1_ion_channel_kd_random_gnn_seed42"
+    },
+    {
+      "id": "protease_kd_random_xgboost_seed42",
+      "config": "experiments/configs/expanded_esm_matrix_v1/protease_kd_random_xgboost_seed42.json",
+      "config_sha256": "1d480f27e65dc3dfa0639a49b6ba8026d79f6beb923ed301ce8dfb0a1b7e40e0",
+      "output": "experiments/runs/expanded_esm_matrix_v1_protease_kd_random_xgboost_seed42"
+    },
+    {
+      "id": "protease_kd_random_deeptda_seed42",
+      "config": "experiments/configs/expanded_esm_matrix_v1/protease_kd_random_deeptda_seed42.json",
+      "config_sha256": "7ef7d00e4dfaec447139d9c6556017ba7462919034aef4abcf674f100fa27df4",
+      "output": "experiments/runs/expanded_esm_matrix_v1_protease_kd_random_deeptda_seed42"
+    },
+    {
+      "id": "protease_kd_random_gnn_seed42",
+      "config": "experiments/configs/expanded_esm_matrix_v1/protease_kd_random_gnn_seed42.json",
+      "config_sha256": "5839f2d1cbe933ea61911ef5e000d47d297684e0e65f50d241974146f04ec309",
+      "output": "experiments/runs/expanded_esm_matrix_v1_protease_kd_random_gnn_seed42"
+    },
+    {
+      "id": "nuclear_receptor_kd_random_xgboost_seed42",
+      "config": "experiments/configs/expanded_esm_matrix_v1/nuclear_receptor_kd_random_xgboost_seed42.json",
+      "config_sha256": "c74401d5b2002d0135f6e0cbf6129ab1dbe58ae888edd7343e1bbe927f473164",
+      "output": "experiments/runs/expanded_esm_matrix_v1_nuclear_receptor_kd_random_xgboost_seed42"
+    },
+    {
+      "id": "nuclear_receptor_kd_random_deeptda_seed42",
+      "config": "experiments/configs/expanded_esm_matrix_v1/nuclear_receptor_kd_random_deeptda_seed42.json",
+      "config_sha256": "ffa6275a89da7800b1778527c7d2b1890bece851a10470b4930e41b32d3cbad8",
+      "output": "experiments/runs/expanded_esm_matrix_v1_nuclear_receptor_kd_random_deeptda_seed42"
+    },
+    {
+      "id": "nuclear_receptor_kd_random_gnn_seed42",
+      "config": "experiments/configs/expanded_esm_matrix_v1/nuclear_receptor_kd_random_gnn_seed42.json",
+      "config_sha256": "864e0fe544f813c89925a841d9df673126996cccbcd5529ec800722d6088534e",
+      "output": "experiments/runs/expanded_esm_matrix_v1_nuclear_receptor_kd_random_gnn_seed42"
+    },
+    {
+      "id": "gpcr_kd_random_xgboost_seed42",
+      "config": "experiments/configs/expanded_esm_matrix_v1/gpcr_kd_random_xgboost_seed42.json",
+      "config_sha256": "31487f307f1ccf2697b23541939ed143bfcb4cc66edd370824a3bb32e467454f",
+      "output": "experiments/runs/expanded_esm_matrix_v1_gpcr_kd_random_xgboost_seed42"
+    },
+    {
+      "id": "gpcr_kd_random_deeptda_seed42",
+      "config": "experiments/configs/expanded_esm_matrix_v1/gpcr_kd_random_deeptda_seed42.json",
+      "config_sha256": "b4389444f8390350af42106b9896a984edf37293b5bb2b871d056d7936684005",
+      "output": "experiments/runs/expanded_esm_matrix_v1_gpcr_kd_random_deeptda_seed42"
+    },
+    {
+      "id": "gpcr_kd_random_gnn_seed42",
+      "config": "experiments/configs/expanded_esm_matrix_v1/gpcr_kd_random_gnn_seed42.json",
+      "config_sha256": "d17f755124af3f58305fcd5d46f2d466d7ac82433e60e30cb52cd0689bff81ad",
+      "output": "experiments/runs/expanded_esm_matrix_v1_gpcr_kd_random_gnn_seed42"
+    },
+    {
+      "id": "nuclear_receptor_ki_random_xgboost_seed42",
+      "config": "experiments/configs/expanded_esm_matrix_v1/nuclear_receptor_ki_random_xgboost_seed42.json",
+      "config_sha256": "a9b1f7bb25bb99e31dbd821e9375efbbe0d53c8543b0cbb3f49cf2f2f1010cf8",
+      "output": "experiments/runs/expanded_esm_matrix_v1_nuclear_receptor_ki_random_xgboost_seed42"
+    },
+    {
+      "id": "nuclear_receptor_ki_random_deeptda_seed42",
+      "config": "experiments/configs/expanded_esm_matrix_v1/nuclear_receptor_ki_random_deeptda_seed42.json",
+      "config_sha256": "e3a38c67bb29fc3022b3703d807e6f453c96b49f97d0a32e2e85abc4225569e9",
+      "output": "experiments/runs/expanded_esm_matrix_v1_nuclear_receptor_ki_random_deeptda_seed42"
+    },
+    {
+      "id": "nuclear_receptor_ki_random_gnn_seed42",
+      "config": "experiments/configs/expanded_esm_matrix_v1/nuclear_receptor_ki_random_gnn_seed42.json",
+      "config_sha256": "dcc750c13a2a39f4c76a8862eb1b61167ccded417122f45545e1e0ce0287f5cb",
+      "output": "experiments/runs/expanded_esm_matrix_v1_nuclear_receptor_ki_random_gnn_seed42"
+    },
+    {
+      "id": "transporter_ki_random_xgboost_seed42",
+      "config": "experiments/configs/expanded_esm_matrix_v1/transporter_ki_random_xgboost_seed42.json",
+      "config_sha256": "493303bb4f8e2044529f686858b19598bf8f377223e7dbde9ad2d3a6aa16de78",
+      "output": "experiments/runs/expanded_esm_matrix_v1_transporter_ki_random_xgboost_seed42"
+    },
+    {
+      "id": "transporter_ki_random_deeptda_seed42",
+      "config": "experiments/configs/expanded_esm_matrix_v1/transporter_ki_random_deeptda_seed42.json",
+      "config_sha256": "627a4320ba1a78b069a5c5dece616de109348e57bdefc455623306178da869f7",
+      "output": "experiments/runs/expanded_esm_matrix_v1_transporter_ki_random_deeptda_seed42"
+    },
+    {
+      "id": "transporter_ki_random_gnn_seed42",
+      "config": "experiments/configs/expanded_esm_matrix_v1/transporter_ki_random_gnn_seed42.json",
+      "config_sha256": "21a7565d9e22b84bc260830a4da19023f7e7789a6e280ebaea11e98e9fed9bef",
+      "output": "experiments/runs/expanded_esm_matrix_v1_transporter_ki_random_gnn_seed42"
+    },
+    {
+      "id": "other_enzyme_kd_random_xgboost_seed42",
+      "config": "experiments/configs/expanded_esm_matrix_v1/other_enzyme_kd_random_xgboost_seed42.json",
+      "config_sha256": "579a64d4c061c4a421cef5be15064eab4c0dd4a50f20b3c56ec35c9ba6dc8ed7",
+      "output": "experiments/runs/expanded_esm_matrix_v1_other_enzyme_kd_random_xgboost_seed42"
+    },
+    {
+      "id": "other_enzyme_kd_random_deeptda_seed42",
+      "config": "experiments/configs/expanded_esm_matrix_v1/other_enzyme_kd_random_deeptda_seed42.json",
+      "config_sha256": "8337b3b54355b1895e6d0d143696f1884e1006bdf1ccc964a40f2e215539a99e",
+      "output": "experiments/runs/expanded_esm_matrix_v1_other_enzyme_kd_random_deeptda_seed42"
+    },
+    {
+      "id": "other_enzyme_kd_random_gnn_seed42",
+      "config": "experiments/configs/expanded_esm_matrix_v1/other_enzyme_kd_random_gnn_seed42.json",
+      "config_sha256": "14c24a22ecca0c5a12270cd5f72ca573e1c47d950560dbf898a46dc99aa1f222",
+      "output": "experiments/runs/expanded_esm_matrix_v1_other_enzyme_kd_random_gnn_seed42"
+    },
+    {
+      "id": "ion_channel_ki_random_xgboost_seed42",
+      "config": "experiments/configs/expanded_esm_matrix_v1/ion_channel_ki_random_xgboost_seed42.json",
+      "config_sha256": "a04c17fe3f71edf130c0d39f2c522aa9844338991af1d7398bc44f3e22748a01",
+      "output": "experiments/runs/expanded_esm_matrix_v1_ion_channel_ki_random_xgboost_seed42"
+    },
+    {
+      "id": "ion_channel_ki_random_deeptda_seed42",
+      "config": "experiments/configs/expanded_esm_matrix_v1/ion_channel_ki_random_deeptda_seed42.json",
+      "config_sha256": "58b4852f74fe737fe7e82382c289fa1958a9c76ed3a8bcd702b8dcf4ffe4bbd8",
+      "output": "experiments/runs/expanded_esm_matrix_v1_ion_channel_ki_random_deeptda_seed42"
+    },
+    {
+      "id": "ion_channel_ki_random_gnn_seed42",
+      "config": "experiments/configs/expanded_esm_matrix_v1/ion_channel_ki_random_gnn_seed42.json",
+      "config_sha256": "5b8e6f6235eeb6e027e6bc2e0dd2be88a74613e2a753c699b8e12a7e6782d6eb",
+      "output": "experiments/runs/expanded_esm_matrix_v1_ion_channel_ki_random_gnn_seed42"
+    },
+    {
+      "id": "broad_kd_random_xgboost_seed42",
+      "config": "experiments/configs/expanded_esm_matrix_v1/broad_kd_random_xgboost_seed42.json",
+      "config_sha256": "38beb73708d5d4bd43668f0942a3a56297bad62d4764073aefe077f9a7453220",
+      "output": "experiments/runs/expanded_esm_matrix_v1_broad_kd_random_xgboost_seed42"
+    },
+    {
+      "id": "broad_kd_random_deeptda_seed42",
+      "config": "experiments/configs/expanded_esm_matrix_v1/broad_kd_random_deeptda_seed42.json",
+      "config_sha256": "0fe896a48ac42161f28435ca7db38ca08762ac40664768c9ce8979f3149b8d1d",
+      "output": "experiments/runs/expanded_esm_matrix_v1_broad_kd_random_deeptda_seed42"
+    },
+    {
+      "id": "broad_kd_random_gnn_seed42",
+      "config": "experiments/configs/expanded_esm_matrix_v1/broad_kd_random_gnn_seed42.json",
+      "config_sha256": "14cd6262146bc14213361a3aa0b1919e5af5f76fd7cdeae72c807ef89d49712f",
+      "output": "experiments/runs/expanded_esm_matrix_v1_broad_kd_random_gnn_seed42"
+    },
+    {
+      "id": "protease_ki_random_xgboost_seed42",
+      "config": "experiments/configs/expanded_esm_matrix_v1/protease_ki_random_xgboost_seed42.json",
+      "config_sha256": "da5893faeea18b8760248ccc7522973c79bb0643b9ff25a7667752998ff35e13",
+      "output": "experiments/runs/expanded_esm_matrix_v1_protease_ki_random_xgboost_seed42"
+    },
+    {
+      "id": "protease_ki_random_deeptda_seed42",
+      "config": "experiments/configs/expanded_esm_matrix_v1/protease_ki_random_deeptda_seed42.json",
+      "config_sha256": "3b3b9376cbff31b79707ce28e4a68fb400c609869563cc9698a8da8d5892b538",
+      "output": "experiments/runs/expanded_esm_matrix_v1_protease_ki_random_deeptda_seed42"
+    },
+    {
+      "id": "protease_ki_random_gnn_seed42",
+      "config": "experiments/configs/expanded_esm_matrix_v1/protease_ki_random_gnn_seed42.json",
+      "config_sha256": "9d3372b47db557687eb90b3f4d1912d646a5fcf5bc3e722cc7b400d434f2fb4f",
+      "output": "experiments/runs/expanded_esm_matrix_v1_protease_ki_random_gnn_seed42"
+    },
+    {
+      "id": "other_enzyme_ki_random_xgboost_seed42",
+      "config": "experiments/configs/expanded_esm_matrix_v1/other_enzyme_ki_random_xgboost_seed42.json",
+      "config_sha256": "2db106e1988bf08c8806695e631d2be5b0d431f971bb73c1a17e4c1e06e49111",
+      "output": "experiments/runs/expanded_esm_matrix_v1_other_enzyme_ki_random_xgboost_seed42"
+    },
+    {
+      "id": "other_enzyme_ki_random_deeptda_seed42",
+      "config": "experiments/configs/expanded_esm_matrix_v1/other_enzyme_ki_random_deeptda_seed42.json",
+      "config_sha256": "6c94b9de7f11dda1b43b94d57a98f4359aa4d3bf146ddbebafe2440e26bb46ab",
+      "output": "experiments/runs/expanded_esm_matrix_v1_other_enzyme_ki_random_deeptda_seed42"
+    },
+    {
+      "id": "other_enzyme_ki_random_gnn_seed42",
+      "config": "experiments/configs/expanded_esm_matrix_v1/other_enzyme_ki_random_gnn_seed42.json",
+      "config_sha256": "6c8bc3aad0081dcfd2c86b0af33849bd83d82a1b0c8ef576bdc2eda2ab6c7eae",
+      "output": "experiments/runs/expanded_esm_matrix_v1_other_enzyme_ki_random_gnn_seed42"
+    },
+    {
+      "id": "gpcr_ki_random_xgboost_seed42",
+      "config": "experiments/configs/expanded_esm_matrix_v1/gpcr_ki_random_xgboost_seed42.json",
+      "config_sha256": "b29e2ef848434b5f297d7df299d7f7202d240666c1548a188b72fc8126690ec3",
+      "output": "experiments/runs/expanded_esm_matrix_v1_gpcr_ki_random_xgboost_seed42"
+    },
+    {
+      "id": "gpcr_ki_random_deeptda_seed42",
+      "config": "experiments/configs/expanded_esm_matrix_v1/gpcr_ki_random_deeptda_seed42.json",
+      "config_sha256": "a5c4f6f53f67335a838a3972a406fb6e07ffa96f5818afe2f2eeee36883e5704",
+      "output": "experiments/runs/expanded_esm_matrix_v1_gpcr_ki_random_deeptda_seed42"
+    },
+    {
+      "id": "gpcr_ki_random_gnn_seed42",
+      "config": "experiments/configs/expanded_esm_matrix_v1/gpcr_ki_random_gnn_seed42.json",
+      "config_sha256": "ee5c70051ff8a8d0f8a6e2f321d72be1c3470a10bf1ec42c3803f5d31c75ede0",
+      "output": "experiments/runs/expanded_esm_matrix_v1_gpcr_ki_random_gnn_seed42"
+    },
+    {
+      "id": "broad_ki_random_xgboost_seed42",
+      "config": "experiments/configs/expanded_esm_matrix_v1/broad_ki_random_xgboost_seed42.json",
+      "config_sha256": "560cf4a0e3debca48b82077da6b609d54c3ca94143b443afb8522351513d5c1a",
+      "output": "experiments/runs/expanded_esm_matrix_v1_broad_ki_random_xgboost_seed42"
+    },
+    {
+      "id": "broad_ki_random_deeptda_seed42",
+      "config": "experiments/configs/expanded_esm_matrix_v1/broad_ki_random_deeptda_seed42.json",
+      "config_sha256": "60c6b44b3e92ad97c99d785fb7e902cc822f1b4cf50d228f2d29ef15f05f8455",
+      "output": "experiments/runs/expanded_esm_matrix_v1_broad_ki_random_deeptda_seed42"
+    },
+    {
+      "id": "broad_ki_random_gnn_seed42",
+      "config": "experiments/configs/expanded_esm_matrix_v1/broad_ki_random_gnn_seed42.json",
+      "config_sha256": "a108f1fb9fa2d8961e7a70c9bf71502ea029652d1433a17ffde53d6a3a9d764f",
+      "output": "experiments/runs/expanded_esm_matrix_v1_broad_ki_random_gnn_seed42"
+    }
+  ],
+  "test_evaluation_requested": false,
+  "selection": "all fixed coverage tasks; matched frozen protein features; keep stronger compatible existing defaults"
+}

@@ -1,0 +1,19 @@
+{
+  "torch": "2.15.0+xpu",
+  "device": "Intel(R) Arc(TM) 140T GPU (16GB)",
+  "models": {
+    "cnn": {
+      "prediction_parity": true,
+      "backward_finite": true,
+      "max_prediction_difference": 2.9802322387695312e-08,
+      "first_backward_seconds": 2.6814492999983486
+    },
+    "gine": {
+      "prediction_parity": true,
+      "backward_finite": true,
+      "max_prediction_difference": 1.7881393432617188e-07,
+      "first_backward_seconds": 0.1563393999967957
+    }
+  },
+  "status": "passed"
+}

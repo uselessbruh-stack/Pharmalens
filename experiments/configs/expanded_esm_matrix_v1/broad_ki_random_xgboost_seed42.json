@@ -1,0 +1,27 @@
+{
+  "dataset": "NonKinaseBroad",
+  "dataset_version": "202610_v3",
+  "endpoint": "Ki",
+  "input": "data/processed/prepared/nonkinase_ki_202610_v3/Ki.csv",
+  "preprocessing_version": "standardized_v1",
+  "model": "xgboost",
+  "model_params": {
+    "n_estimators": 1800,
+    "max_depth": 9,
+    "learning_rate": 0.03,
+    "early_stopping_rounds": 60,
+    "n_jobs": 4
+  },
+  "seed": 42,
+  "split": "random",
+  "split_seed": 42,
+  "smoke": false,
+  "training": {
+    "threads": 4
+  },
+  "protein_embedding_cache": {
+    "manifest": "C:\\Users\\abhij\\Documents\\projects\\pharmalens\\data\\processed\\features\\esm2_affinity_202610_v1\\manifest.json",
+    "sha256": "6fc771b5a1dc79ca198401a0dd57cf16838fd7ee7d0129af36618e03c7c352ca",
+    "regression_sha256": "8f7a4557d57713b97ba0e484303007efb7230d25299c0ac47a0a1b12a87bbb9d"
+  }
+}

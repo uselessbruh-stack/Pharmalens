@@ -13,6 +13,9 @@ build/
 venv/
 env/
 .venv/
+.venv-xpu/
+models/protein/
+models/registry.json
 .env
 
 # Jupyter
@@ -58,6 +61,18 @@ frontend/node_modules/
 frontend/dist/
 frontend/.env
 frontend/.env.local
+frontend/.next/
+data/processed/datasets/
+data/processed/prepared/
+data/processed/features/
+data/jobs/
+.pytest_cache/
+.ruff_cache/
+experiments/runs/
+dashboard/node_modules/
+dashboard/.next/
+dashboard/.env.local
+dashboard/*.tsbuildinfo
 
 # Misc
 *.log

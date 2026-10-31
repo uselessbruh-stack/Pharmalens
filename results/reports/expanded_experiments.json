@@ -1,0 +1,4405 @@
+{
+  "scope": "Validation summaries grouped by data, split, code and model contract",
+  "groups": [
+    {
+      "contract_id": "0f3cd93a86f2c7b036ef1c16aa5d93b7825dc4deb3e143dff76a1306949de965",
+      "contract": {
+        "data_sha256": "98cecca326526874bc57bdc6894422c9db9e110e1fc46acb31221faae688930b",
+        "dataset": "NonKinaseBroad",
+        "dataset_version": "202610_v3",
+        "endpoint": "Kd",
+        "model": "deeptda",
+        "model_params": {
+          "auxiliary_dim": 1774,
+          "auxiliary_interactions": true,
+          "deduplicate_proteins": true,
+          "dropout": 0.1,
+          "drug_embed_dim": 32,
+          "drug_max_len": 200,
+          "fc_dims": [
+            512,
+            256
+          ],
+          "mask_padding": true,
+          "num_filters": 32,
+          "protein_embed_dim": 32,
+          "protein_max_len": 1500,
+          "use_protein_cnn": false
+        },
+        "protein_feature_contract": {
+          "manifest": "C:\\Users\\abhij\\Documents\\projects\\pharmalens\\data\\processed\\features\\esm2_affinity_202610_v1\\manifest.json",
+          "regression_sha256": "8f7a4557d57713b97ba0e484303007efb7230d25299c0ac47a0a1b12a87bbb9d",
+          "sha256": "6fc771b5a1dc79ca198401a0dd57cf16838fd7ee7d0129af36618e03c7c352ca"
+        },
+        "source_sha256": "0a1c1fac04cdd4adcdbc6374e88f1b5b7dadcc89594292636535c79c06081884",
+        "split": "random",
+        "split_seed": 42,
+        "training": {
+          "batch_size": 128,
+          "device": "xpu",
+          "epochs": 120,
+          "learning_rate": 0.001,
+          "normalize_targets": true,
+          "patience": 15,
+          "threads": 2,
+          "weight_decay": 0.0001
+        },
+        "validation_membership_sha256": "a98668d7f0d4632301508699c13da9003414fac24c194c40ecbf77d551081930"
+      },
+      "model_seeds": [
+        42
+      ],
+      "runs": [
+        "expanded_esm_matrix_v1_broad_kd_random_deeptda_seed42"
+      ],
+      "validation_metrics": {
+        "rmse": {
+          "mean": 1.0372904668789589,
+          "sample_std": null
+        },
+        "mae": {
+          "mean": 0.763428874959294,
+          "sample_std": null
+        },
+        "ci": {
+          "mean": 0.8097316074607792,
+          "sample_std": null
+        },
+        "pearson": {
+          "mean": 0.8144501775626665,
+          "sample_std": null
+        },
+        "r2": {
+          "mean": 0.6629192572285141,
+          "sample_std": null
+        }
+      },
+      "replicates": 1,
+      "all_serving_parity_passed": true,
+      "test_evaluations": 0,
+      "iteration_budget_reached": []
+    },
+    {
+      "contract_id": "54db3c9419f6a875dea203667423bd6774746dc4be112cc2b383b8d3edd32a4e",
+      "contract": {
+        "data_sha256": "98cecca326526874bc57bdc6894422c9db9e110e1fc46acb31221faae688930b",
+        "dataset": "NonKinaseBroad",
+        "dataset_version": "202610_v3",
+        "endpoint": "Kd",
+        "model": "gnn",
+        "model_params": {
+          "auxiliary_dim": 1774,
+          "auxiliary_interactions": true,
+          "deduplicate_proteins": true,
+          "dropout": 0.1,
+          "fc_dims": [
+            512,
+            256
+          ],
+          "gnn_hidden_dim": 128,
+          "gnn_output_dim": 128,
+          "gnn_type": "gine",
+          "mask_padding": true,
+          "protein_embed_dim": 32,
+          "protein_max_len": 1500,
+          "protein_num_filters": 32,
+          "use_protein_cnn": false
+        },
+        "protein_feature_contract": {
+          "manifest": "C:\\Users\\abhij\\Documents\\projects\\pharmalens\\data\\processed\\features\\esm2_affinity_202610_v1\\manifest.json",
+          "regression_sha256": "8f7a4557d57713b97ba0e484303007efb7230d25299c0ac47a0a1b12a87bbb9d",
+          "sha256": "6fc771b5a1dc79ca198401a0dd57cf16838fd7ee7d0129af36618e03c7c352ca"
+        },
+        "source_sha256": "0a1c1fac04cdd4adcdbc6374e88f1b5b7dadcc89594292636535c79c06081884",
+        "split": "random",
+        "split_seed": 42,
+        "training": {
+          "batch_size": 128,
+          "device": "xpu",
+          "epochs": 120,
+          "learning_rate": 0.0005,
+          "normalize_targets": true,
+          "patience": 15,
+          "threads": 2,
+          "weight_decay": 0.0001
+        },
+        "validation_membership_sha256": "a98668d7f0d4632301508699c13da9003414fac24c194c40ecbf77d551081930"
+      },
+      "model_seeds": [
+        42
+      ],
+      "runs": [
+        "expanded_esm_matrix_v1_broad_kd_random_gnn_seed42"
+      ],
+      "validation_metrics": {
+        "rmse": {
+          "mean": 1.0432509407142847,
+          "sample_std": null
+        },
+        "mae": {
+          "mean": 0.7644162432484962,
+          "sample_std": null
+        },
+        "ci": {
+          "mean": 0.8076458696657358,
+          "sample_std": null
+        },
+        "pearson": {
+          "mean": 0.8120588005793921,
+          "sample_std": null
+        },
+        "r2": {
+          "mean": 0.6590342635303379,
+          "sample_std": null
+        }
+      },
+      "replicates": 1,
+      "all_serving_parity_passed": true,
+      "test_evaluations": 0,
+      "iteration_budget_reached": []
+    },
+    {
+      "contract_id": "6877626bd6dbd6a6a9c76803c0381a0dcc64aba1257aee3e23aa75cff0ad6ee1",
+      "contract": {
+        "data_sha256": "98cecca326526874bc57bdc6894422c9db9e110e1fc46acb31221faae688930b",
+        "dataset": "NonKinaseBroad",
+        "dataset_version": "202610_v3",
+        "endpoint": "Kd",
+        "model": "xgboost",
+        "model_params": {
+          "early_stopping_rounds": 60,
+          "learning_rate": 0.03,
+          "max_depth": 9,
+          "n_estimators": 1800,
+          "n_jobs": 4
+        },
+        "protein_feature_contract": {
+          "manifest": "C:\\Users\\abhij\\Documents\\projects\\pharmalens\\data\\processed\\features\\esm2_affinity_202610_v1\\manifest.json",
+          "regression_sha256": "8f7a4557d57713b97ba0e484303007efb7230d25299c0ac47a0a1b12a87bbb9d",
+          "sha256": "6fc771b5a1dc79ca198401a0dd57cf16838fd7ee7d0129af36618e03c7c352ca"
+        },
+        "source_sha256": "0a1c1fac04cdd4adcdbc6374e88f1b5b7dadcc89594292636535c79c06081884",
+        "split": "random",
+        "split_seed": 42,
+        "training": {
+          "threads": 4
+        },
+        "validation_membership_sha256": "a98668d7f0d4632301508699c13da9003414fac24c194c40ecbf77d551081930"
+      },
+      "model_seeds": [
+        42
+      ],
+      "runs": [
+        "expanded_esm_matrix_v1_broad_kd_random_xgboost_seed42"
+      ],
+      "validation_metrics": {
+        "rmse": {
+          "mean": 1.0150752837711343,
+          "sample_std": null
+        },
+        "mae": {
+          "mean": 0.7558607051469699,
+          "sample_std": null
+        },
+        "ci": {
+          "mean": 0.8121711879648879,
+          "sample_std": null
+        },
+        "pearson": {
+          "mean": 0.8229602448407506,
+          "sample_std": null
+        },
+        "r2": {
+          "mean": 0.6772028620088296,
+          "sample_std": null
+        }
+      },
+      "replicates": 1,
+      "all_serving_parity_passed": true,
+      "test_evaluations": 0,
+      "iteration_budget_reached": []
+    },
+    {
+      "contract_id": "910961035e6b31bdd9cfc78b420142d01125139c52f8d0319904c37b0253b0a0",
+      "contract": {
+        "data_sha256": "f0bcd19ca1dabaf6e1c108f453bde336c94f10a34627f643d1b08cd69319e515",
+        "dataset": "NonKinaseBroad",
+        "dataset_version": "202610_v3",
+        "endpoint": "Ki",
+        "model": "deeptda",
+        "model_params": {
+          "auxiliary_dim": 1774,
+          "auxiliary_interactions": true,
+          "deduplicate_proteins": true,
+          "dropout": 0.1,
+          "drug_embed_dim": 32,
+          "drug_max_len": 200,
+          "fc_dims": [
+            512,
+            256
+          ],
+          "mask_padding": true,
+          "num_filters": 32,
+          "protein_embed_dim": 32,
+          "protein_max_len": 1500,
+          "use_protein_cnn": false
+        },
+        "protein_feature_contract": {
+          "manifest": "C:\\Users\\abhij\\Documents\\projects\\pharmalens\\data\\processed\\features\\esm2_affinity_202610_v1\\manifest.json",
+          "regression_sha256": "8f7a4557d57713b97ba0e484303007efb7230d25299c0ac47a0a1b12a87bbb9d",
+          "sha256": "6fc771b5a1dc79ca198401a0dd57cf16838fd7ee7d0129af36618e03c7c352ca"
+        },
+        "source_sha256": "0a1c1fac04cdd4adcdbc6374e88f1b5b7dadcc89594292636535c79c06081884",
+        "split": "random",
+        "split_seed": 42,
+        "training": {
+          "batch_size": 128,
+          "device": "xpu",
+          "epochs": 120,
+          "learning_rate": 0.001,
+          "normalize_targets": true,
+          "patience": 15,
+          "threads": 2,
+          "weight_decay": 0.0001
+        },
+        "validation_membership_sha256": "ac09b848ac30a8ab5d973ee34329d004f317ab3430405e2256015eceaf1297dc"
+      },
+      "model_seeds": [
+        42
+      ],
+      "runs": [
+        "expanded_esm_matrix_v1_broad_ki_random_deeptda_seed42"
+      ],
+      "validation_metrics": {
+        "rmse": {
+          "mean": 0.7593373496048677,
+          "sample_std": null
+        },
+        "mae": {
+          "mean": 0.5462107000154123,
+          "sample_std": null
+        },
+        "ci": {
+          "mean": 0.8356770004817914,
+          "sample_std": null
+        },
+        "pearson": {
+          "mean": 0.8553061847564892,
+          "sample_std": null
+        },
+        "r2": {
+          "mean": 0.729498590305793,
+          "sample_std": null
+        }
+      },
+      "replicates": 1,
+      "all_serving_parity_passed": true,
+      "test_evaluations": 0,
+      "iteration_budget_reached": []
+    },
+    {
+      "contract_id": "2bc933b7b84aaaa94c6e7be572d6aad470ca2e7a230275ec9786e158cc2d928c",
+      "contract": {
+        "data_sha256": "f0bcd19ca1dabaf6e1c108f453bde336c94f10a34627f643d1b08cd69319e515",
+        "dataset": "NonKinaseBroad",
+        "dataset_version": "202610_v3",
+        "endpoint": "Ki",
+        "model": "gnn",
+        "model_params": {
+          "auxiliary_dim": 1774,
+          "auxiliary_interactions": true,
+          "deduplicate_proteins": true,
+          "dropout": 0.1,
+          "fc_dims": [
+            512,
+            256
+          ],
+          "gnn_hidden_dim": 128,
+          "gnn_output_dim": 128,
+          "gnn_type": "gine",
+          "mask_padding": true,
+          "protein_embed_dim": 32,
+          "protein_max_len": 1500,
+          "protein_num_filters": 32,
+          "use_protein_cnn": false
+        },
+        "protein_feature_contract": {
+          "manifest": "C:\\Users\\abhij\\Documents\\projects\\pharmalens\\data\\processed\\features\\esm2_affinity_202610_v1\\manifest.json",
+          "regression_sha256": "8f7a4557d57713b97ba0e484303007efb7230d25299c0ac47a0a1b12a87bbb9d",
+          "sha256": "6fc771b5a1dc79ca198401a0dd57cf16838fd7ee7d0129af36618e03c7c352ca"
+        },
+        "source_sha256": "0a1c1fac04cdd4adcdbc6374e88f1b5b7dadcc89594292636535c79c06081884",
+        "split": "random",
+        "split_seed": 42,
+        "training": {
+          "batch_size": 128,
+          "device": "xpu",
+          "epochs": 120,
+          "learning_rate": 0.0005,
+          "normalize_targets": true,
+          "patience": 15,
+          "threads": 2,
+          "weight_decay": 0.0001
+        },
+        "validation_membership_sha256": "ac09b848ac30a8ab5d973ee34329d004f317ab3430405e2256015eceaf1297dc"
+      },
+      "model_seeds": [
+        42
+      ],
+      "runs": [
+        "expanded_esm_matrix_v1_broad_ki_random_gnn_seed42"
+      ],
+      "validation_metrics": {
+        "rmse": {
+          "mean": 0.757302490934275,
+          "sample_std": null
+        },
+        "mae": {
+          "mean": 0.5473602073748195,
+          "sample_std": null
+        },
+        "ci": {
+          "mean": 0.8359179139346676,
+          "sample_std": null
+        },
+        "pearson": {
+          "mean": 0.85651803172051,
+          "sample_std": null
+        },
+        "r2": {
+          "mean": 0.7309464174674656,
+          "sample_std": null
+        }
+      },
+      "replicates": 1,
+      "all_serving_parity_passed": true,
+      "test_evaluations": 0,
+      "iteration_budget_reached": []
+    },
+    {
+      "contract_id": "85a016d56341e9d1c99a1f94dc514713568aa55cd6a2b90a6206f8c42488a733",
+      "contract": {
+        "data_sha256": "f0bcd19ca1dabaf6e1c108f453bde336c94f10a34627f643d1b08cd69319e515",
+        "dataset": "NonKinaseBroad",
+        "dataset_version": "202610_v3",
+        "endpoint": "Ki",
+        "model": "xgboost",
+        "model_params": {
+          "early_stopping_rounds": 60,
+          "learning_rate": 0.03,
+          "max_depth": 9,
+          "n_estimators": 1800,
+          "n_jobs": 4
+        },
+        "protein_feature_contract": {
+          "manifest": "C:\\Users\\abhij\\Documents\\projects\\pharmalens\\data\\processed\\features\\esm2_affinity_202610_v1\\manifest.json",
+          "regression_sha256": "8f7a4557d57713b97ba0e484303007efb7230d25299c0ac47a0a1b12a87bbb9d",
+          "sha256": "6fc771b5a1dc79ca198401a0dd57cf16838fd7ee7d0129af36618e03c7c352ca"
+        },
+        "source_sha256": "0a1c1fac04cdd4adcdbc6374e88f1b5b7dadcc89594292636535c79c06081884",
+        "split": "random",
+        "split_seed": 42,
+        "training": {
+          "threads": 4
+        },
+        "validation_membership_sha256": "ac09b848ac30a8ab5d973ee34329d004f317ab3430405e2256015eceaf1297dc"
+      },
+      "model_seeds": [
+        42
+      ],
+      "runs": [
+        "expanded_esm_matrix_v1_broad_ki_random_xgboost_seed42"
+      ],
+      "validation_metrics": {
+        "rmse": {
+          "mean": 0.7600614728008134,
+          "sample_std": null
+        },
+        "mae": {
+          "mean": 0.568888967480839,
+          "sample_std": null
+        },
+        "ci": {
+          "mean": 0.8349579080945696,
+          "sample_std": null
+        },
+        "pearson": {
+          "mean": 0.8571662543505175,
+          "sample_std": null
+        },
+        "r2": {
+          "mean": 0.7289824304153243,
+          "sample_std": null
+        }
+      },
+      "replicates": 1,
+      "all_serving_parity_passed": true,
+      "test_evaluations": 0,
+      "iteration_budget_reached": [
+        "expanded_esm_matrix_v1_broad_ki_random_xgboost_seed42"
+      ]
+    },
+    {
+      "contract_id": "0a43dbf6b95feb504bdb7d4ef13b9be435b1f78790fd2a9c4a26ef567170bca5",
+      "contract": {
+        "data_sha256": "d3a109fed322e4f04015e60c9b5a28d95eee2c4860a116c50e39f4f6fa4fde1a",
+        "dataset": "NonKinase_gpcr",
+        "dataset_version": "202610_v3",
+        "endpoint": "Kd",
+        "model": "deeptda",
+        "model_params": {
+          "auxiliary_dim": 1774,
+          "auxiliary_interactions": true,
+          "deduplicate_proteins": true,
+          "dropout": 0.1,
+          "drug_embed_dim": 32,
+          "drug_max_len": 200,
+          "fc_dims": [
+            512,
+            256
+          ],
+          "mask_padding": true,
+          "num_filters": 32,
+          "protein_embed_dim": 32,
+          "protein_max_len": 1500,
+          "use_protein_cnn": false
+        },
+        "protein_feature_contract": {
+          "manifest": "C:\\Users\\abhij\\Documents\\projects\\pharmalens\\data\\processed\\features\\esm2_affinity_202610_v1\\manifest.json",
+          "regression_sha256": "8f7a4557d57713b97ba0e484303007efb7230d25299c0ac47a0a1b12a87bbb9d",
+          "sha256": "6fc771b5a1dc79ca198401a0dd57cf16838fd7ee7d0129af36618e03c7c352ca"
+        },
+        "source_sha256": "0a1c1fac04cdd4adcdbc6374e88f1b5b7dadcc89594292636535c79c06081884",
+        "split": "random",
+        "split_seed": 42,
+        "training": {
+          "batch_size": 128,
+          "device": "xpu",
+          "epochs": 120,
+          "learning_rate": 0.001,
+          "normalize_targets": true,
+          "patience": 15,
+          "threads": 2,
+          "weight_decay": 0.0001
+        },
+        "validation_membership_sha256": "68bf01f911ffe8fa30b7d0c3b9d3a0ff3ef39b4379e9ac6c9572b42ecb1e5e52"
+      },
+      "model_seeds": [
+        42
+      ],
+      "runs": [
+        "expanded_esm_matrix_v1_gpcr_kd_random_deeptda_seed42"
+      ],
+      "validation_metrics": {
+        "rmse": {
+          "mean": 0.93229360506653,
+          "sample_std": null
+        },
+        "mae": {
+          "mean": 0.6489112740445154,
+          "sample_std": null
+        },
+        "ci": {
+          "mean": 0.8215022787857942,
+          "sample_std": null
+        },
+        "pearson": {
+          "mean": 0.863596503607136,
+          "sample_std": null
+        },
+        "r2": {
+          "mean": 0.7441249595979641,
+          "sample_std": null
+        }
+      },
+      "replicates": 1,
+      "all_serving_parity_passed": true,
+      "test_evaluations": 0,
+      "iteration_budget_reached": []
+    },
+    {
+      "contract_id": "3cb4e76605cef2a8ece4eeece1988b63823e7f513094855ca0b8423c95ae9b1e",
+      "contract": {
+        "data_sha256": "d3a109fed322e4f04015e60c9b5a28d95eee2c4860a116c50e39f4f6fa4fde1a",
+        "dataset": "NonKinase_gpcr",
+        "dataset_version": "202610_v3",
+        "endpoint": "Kd",
+        "model": "gnn",
+        "model_params": {
+          "auxiliary_dim": 1774,
+          "auxiliary_interactions": true,
+          "deduplicate_proteins": true,
+          "dropout": 0.1,
+          "fc_dims": [
+            512,
+            256
+          ],
+          "gnn_hidden_dim": 128,
+          "gnn_output_dim": 128,
+          "gnn_type": "gine",
+          "mask_padding": true,
+          "protein_embed_dim": 32,
+          "protein_max_len": 1500,
+          "protein_num_filters": 32,
+          "use_protein_cnn": false
+        },
+        "protein_feature_contract": {
+          "manifest": "C:\\Users\\abhij\\Documents\\projects\\pharmalens\\data\\processed\\features\\esm2_affinity_202610_v1\\manifest.json",
+          "regression_sha256": "8f7a4557d57713b97ba0e484303007efb7230d25299c0ac47a0a1b12a87bbb9d",
+          "sha256": "6fc771b5a1dc79ca198401a0dd57cf16838fd7ee7d0129af36618e03c7c352ca"
+        },
+        "source_sha256": "0a1c1fac04cdd4adcdbc6374e88f1b5b7dadcc89594292636535c79c06081884",
+        "split": "random",
+        "split_seed": 42,
+        "training": {
+          "batch_size": 128,
+          "device": "xpu",
+          "epochs": 120,
+          "learning_rate": 0.0005,
+          "normalize_targets": true,
+          "patience": 15,
+          "threads": 2,
+          "weight_decay": 0.0001
+        },
+        "validation_membership_sha256": "68bf01f911ffe8fa30b7d0c3b9d3a0ff3ef39b4379e9ac6c9572b42ecb1e5e52"
+      },
+      "model_seeds": [
+        42
+      ],
+      "runs": [
+        "expanded_esm_matrix_v1_gpcr_kd_random_gnn_seed42"
+      ],
+      "validation_metrics": {
+        "rmse": {
+          "mean": 0.8944488870281495,
+          "sample_std": null
+        },
+        "mae": {
+          "mean": 0.6183967514409798,
+          "sample_std": null
+        },
+        "ci": {
+          "mean": 0.8306281709519305,
+          "sample_std": null
+        },
+        "pearson": {
+          "mean": 0.8744371256515283,
+          "sample_std": null
+        },
+        "r2": {
+          "mean": 0.7644768670324844,
+          "sample_std": null
+        }
+      },
+      "replicates": 1,
+      "all_serving_parity_passed": true,
+      "test_evaluations": 0,
+      "iteration_budget_reached": []
+    },
+    {
+      "contract_id": "0bb72f1a111a537fd82c1421bdef927a7d7fadaba558bd53d08159e7c183602a",
+      "contract": {
+        "data_sha256": "d3a109fed322e4f04015e60c9b5a28d95eee2c4860a116c50e39f4f6fa4fde1a",
+        "dataset": "NonKinase_gpcr",
+        "dataset_version": "202610_v3",
+        "endpoint": "Kd",
+        "model": "xgboost",
+        "model_params": {
+          "early_stopping_rounds": 60,
+          "learning_rate": 0.03,
+          "max_depth": 9,
+          "n_estimators": 1800,
+          "n_jobs": 4
+        },
+        "protein_feature_contract": {
+          "manifest": "C:\\Users\\abhij\\Documents\\projects\\pharmalens\\data\\processed\\features\\esm2_affinity_202610_v1\\manifest.json",
+          "regression_sha256": "8f7a4557d57713b97ba0e484303007efb7230d25299c0ac47a0a1b12a87bbb9d",
+          "sha256": "6fc771b5a1dc79ca198401a0dd57cf16838fd7ee7d0129af36618e03c7c352ca"
+        },
+        "source_sha256": "0a1c1fac04cdd4adcdbc6374e88f1b5b7dadcc89594292636535c79c06081884",
+        "split": "random",
+        "split_seed": 42,
+        "training": {
+          "threads": 4
+        },
+        "validation_membership_sha256": "68bf01f911ffe8fa30b7d0c3b9d3a0ff3ef39b4379e9ac6c9572b42ecb1e5e52"
+      },
+      "model_seeds": [
+        42
+      ],
+      "runs": [
+        "expanded_esm_matrix_v1_gpcr_kd_random_xgboost_seed42"
+      ],
+      "validation_metrics": {
+        "rmse": {
+          "mean": 0.8885508814767422,
+          "sample_std": null
+        },
+        "mae": {
+          "mean": 0.6088267224249306,
+          "sample_std": null
+        },
+        "ci": {
+          "mean": 0.8357016940407602,
+          "sample_std": null
+        },
+        "pearson": {
+          "mean": 0.8763531625695254,
+          "sample_std": null
+        },
+        "r2": {
+          "mean": 0.7675727103846287,
+          "sample_std": null
+        }
+      },
+      "replicates": 1,
+      "all_serving_parity_passed": true,
+      "test_evaluations": 0,
+      "iteration_budget_reached": []
+    },
+    {
+      "contract_id": "78e93d726ab35f15b6936dcedf3917ae7e644373553044ba0273058948abe8f6",
+      "contract": {
+        "data_sha256": "e86ccbbc71075291723065abcf346675c8548fa6034fd4e337a2d9d4b2e783d5",
+        "dataset": "NonKinase_gpcr",
+        "dataset_version": "202610_v3",
+        "endpoint": "Ki",
+        "model": "deeptda",
+        "model_params": {
+          "auxiliary_dim": 1774,
+          "auxiliary_interactions": true,
+          "deduplicate_proteins": true,
+          "dropout": 0.1,
+          "drug_embed_dim": 32,
+          "drug_max_len": 200,
+          "fc_dims": [
+            512,
+            256
+          ],
+          "mask_padding": true,
+          "num_filters": 32,
+          "protein_embed_dim": 32,
+          "protein_max_len": 1500,
+          "use_protein_cnn": false
+        },
+        "protein_feature_contract": {
+          "manifest": "C:\\Users\\abhij\\Documents\\projects\\pharmalens\\data\\processed\\features\\esm2_affinity_202610_v1\\manifest.json",
+          "regression_sha256": "8f7a4557d57713b97ba0e484303007efb7230d25299c0ac47a0a1b12a87bbb9d",
+          "sha256": "6fc771b5a1dc79ca198401a0dd57cf16838fd7ee7d0129af36618e03c7c352ca"
+        },
+        "source_sha256": "0a1c1fac04cdd4adcdbc6374e88f1b5b7dadcc89594292636535c79c06081884",
+        "split": "random",
+        "split_seed": 42,
+        "training": {
+          "batch_size": 128,
+          "device": "xpu",
+          "epochs": 120,
+          "learning_rate": 0.001,
+          "normalize_targets": true,
+          "patience": 15,
+          "threads": 2,
+          "weight_decay": 0.0001
+        },
+        "validation_membership_sha256": "1f4d681e2332c02526586f52b8725e1950d0c437346bb04aaca6cd210c425219"
+      },
+      "model_seeds": [
+        42
+      ],
+      "runs": [
+        "expanded_esm_matrix_v1_gpcr_ki_random_deeptda_seed42"
+      ],
+      "validation_metrics": {
+        "rmse": {
+          "mean": 0.727952748016583,
+          "sample_std": null
+        },
+        "mae": {
+          "mean": 0.5258640126075653,
+          "sample_std": null
+        },
+        "ci": {
+          "mean": 0.8243955735269188,
+          "sample_std": null
+        },
+        "pearson": {
+          "mean": 0.8306012360428983,
+          "sample_std": null
+        },
+        "r2": {
+          "mean": 0.6853340285930738,
+          "sample_std": null
+        }
+      },
+      "replicates": 1,
+      "all_serving_parity_passed": true,
+      "test_evaluations": 0,
+      "iteration_budget_reached": []
+    },
+    {
+      "contract_id": "722c699f79c3855add7285856cd5952bc2b5342dfc31903927984446d4f705cb",
+      "contract": {
+        "data_sha256": "e86ccbbc71075291723065abcf346675c8548fa6034fd4e337a2d9d4b2e783d5",
+        "dataset": "NonKinase_gpcr",
+        "dataset_version": "202610_v3",
+        "endpoint": "Ki",
+        "model": "gnn",
+        "model_params": {
+          "auxiliary_dim": 1774,
+          "auxiliary_interactions": true,
+          "deduplicate_proteins": true,
+          "dropout": 0.1,
+          "fc_dims": [
+            512,
+            256
+          ],
+          "gnn_hidden_dim": 128,
+          "gnn_output_dim": 128,
+          "gnn_type": "gine",
+          "mask_padding": true,
+          "protein_embed_dim": 32,
+          "protein_max_len": 1500,
+          "protein_num_filters": 32,
+          "use_protein_cnn": false
+        },
+        "protein_feature_contract": {
+          "manifest": "C:\\Users\\abhij\\Documents\\projects\\pharmalens\\data\\processed\\features\\esm2_affinity_202610_v1\\manifest.json",
+          "regression_sha256": "8f7a4557d57713b97ba0e484303007efb7230d25299c0ac47a0a1b12a87bbb9d",
+          "sha256": "6fc771b5a1dc79ca198401a0dd57cf16838fd7ee7d0129af36618e03c7c352ca"
+        },
+        "source_sha256": "0a1c1fac04cdd4adcdbc6374e88f1b5b7dadcc89594292636535c79c06081884",
+        "split": "random",
+        "split_seed": 42,
+        "training": {
+          "batch_size": 128,
+          "device": "xpu",
+          "epochs": 120,
+          "learning_rate": 0.0005,
+          "normalize_targets": true,
+          "patience": 15,
+          "threads": 2,
+          "weight_decay": 0.0001
+        },
+        "validation_membership_sha256": "1f4d681e2332c02526586f52b8725e1950d0c437346bb04aaca6cd210c425219"
+      },
+      "model_seeds": [
+        42
+      ],
+      "runs": [
+        "expanded_esm_matrix_v1_gpcr_ki_random_gnn_seed42"
+      ],
+      "validation_metrics": {
+        "rmse": {
+          "mean": 0.7356195377384184,
+          "sample_std": null
+        },
+        "mae": {
+          "mean": 0.5315371270130735,
+          "sample_std": null
+        },
+        "ci": {
+          "mean": 0.8227351918343977,
+          "sample_std": null
+        },
+        "pearson": {
+          "mean": 0.8271735583567793,
+          "sample_std": null
+        },
+        "r2": {
+          "mean": 0.6786710084011758,
+          "sample_std": null
+        }
+      },
+      "replicates": 1,
+      "all_serving_parity_passed": true,
+      "test_evaluations": 0,
+      "iteration_budget_reached": []
+    },
+    {
+      "contract_id": "e965037e6dec0b8f002dd698dc79be6da6b1b20b3d13a471ba38810197275ac8",
+      "contract": {
+        "data_sha256": "e86ccbbc71075291723065abcf346675c8548fa6034fd4e337a2d9d4b2e783d5",
+        "dataset": "NonKinase_gpcr",
+        "dataset_version": "202610_v3",
+        "endpoint": "Ki",
+        "model": "xgboost",
+        "model_params": {
+          "early_stopping_rounds": 60,
+          "learning_rate": 0.03,
+          "max_depth": 9,
+          "n_estimators": 1800,
+          "n_jobs": 4
+        },
+        "protein_feature_contract": {
+          "manifest": "C:\\Users\\abhij\\Documents\\projects\\pharmalens\\data\\processed\\features\\esm2_affinity_202610_v1\\manifest.json",
+          "regression_sha256": "8f7a4557d57713b97ba0e484303007efb7230d25299c0ac47a0a1b12a87bbb9d",
+          "sha256": "6fc771b5a1dc79ca198401a0dd57cf16838fd7ee7d0129af36618e03c7c352ca"
+        },
+        "source_sha256": "0a1c1fac04cdd4adcdbc6374e88f1b5b7dadcc89594292636535c79c06081884",
+        "split": "random",
+        "split_seed": 42,
+        "training": {
+          "threads": 4
+        },
+        "validation_membership_sha256": "1f4d681e2332c02526586f52b8725e1950d0c437346bb04aaca6cd210c425219"
+      },
+      "model_seeds": [
+        42
+      ],
+      "runs": [
+        "expanded_esm_matrix_v1_gpcr_ki_random_xgboost_seed42"
+      ],
+      "validation_metrics": {
+        "rmse": {
+          "mean": 0.7142553755126527,
+          "sample_std": null
+        },
+        "mae": {
+          "mean": 0.5332681459149624,
+          "sample_std": null
+        },
+        "ci": {
+          "mean": 0.8269721343306365,
+          "sample_std": null
+        },
+        "pearson": {
+          "mean": 0.8365103176722161,
+          "sample_std": null
+        },
+        "r2": {
+          "mean": 0.6970643146896873,
+          "sample_std": null
+        }
+      },
+      "replicates": 1,
+      "all_serving_parity_passed": true,
+      "test_evaluations": 0,
+      "iteration_budget_reached": [
+        "expanded_esm_matrix_v1_gpcr_ki_random_xgboost_seed42"
+      ]
+    },
+    {
+      "contract_id": "044ea73866ad51f600e0a68262c5dced1f8a57262a401ec871161f6c2570c619",
+      "contract": {
+        "data_sha256": "5db605f837c6dd24b530d5114c373fdad3f5333433db925142702f4129475a61",
+        "dataset": "NonKinase_ion_channel",
+        "dataset_version": "202610_v3",
+        "endpoint": "Kd",
+        "model": "deeptda",
+        "model_params": {
+          "auxiliary_dim": 1774,
+          "auxiliary_interactions": true,
+          "deduplicate_proteins": true,
+          "dropout": 0.1,
+          "drug_embed_dim": 32,
+          "drug_max_len": 200,
+          "fc_dims": [
+            512,
+            256
+          ],
+          "mask_padding": true,
+          "num_filters": 32,
+          "protein_embed_dim": 32,
+          "protein_max_len": 1500,
+          "use_protein_cnn": false
+        },
+        "protein_feature_contract": {
+          "manifest": "C:\\Users\\abhij\\Documents\\projects\\pharmalens\\data\\processed\\features\\esm2_affinity_202610_v1\\manifest.json",
+          "regression_sha256": "8f7a4557d57713b97ba0e484303007efb7230d25299c0ac47a0a1b12a87bbb9d",
+          "sha256": "6fc771b5a1dc79ca198401a0dd57cf16838fd7ee7d0129af36618e03c7c352ca"
+        },
+        "source_sha256": "0a1c1fac04cdd4adcdbc6374e88f1b5b7dadcc89594292636535c79c06081884",
+        "split": "random",
+        "split_seed": 42,
+        "training": {
+          "batch_size": 128,
+          "device": "xpu",
+          "epochs": 120,
+          "learning_rate": 0.001,
+          "normalize_targets": true,
+          "patience": 15,
+          "threads": 2,
+          "weight_decay": 0.0001
+        },
+        "validation_membership_sha256": "f65ca92d3f3843f64d9058bf0f1b45d91bee9a8cf1a66756ac26376cf6fcfb67"
+      },
+      "model_seeds": [
+        42
+      ],
+      "runs": [
+        "expanded_esm_matrix_v1_ion_channel_kd_random_deeptda_seed42"
+      ],
+      "validation_metrics": {
+        "rmse": {
+          "mean": 1.032390734374341,
+          "sample_std": null
+        },
+        "mae": {
+          "mean": 0.7854623866518082,
+          "sample_std": null
+        },
+        "ci": {
+          "mean": 0.7993890020366599,
+          "sample_std": null
+        },
+        "pearson": {
+          "mean": 0.7536511708892293,
+          "sample_std": null
+        },
+        "r2": {
+          "mean": 0.5602812124069322,
+          "sample_std": null
+        }
+      },
+      "replicates": 1,
+      "all_serving_parity_passed": true,
+      "test_evaluations": 0,
+      "iteration_budget_reached": []
+    },
+    {
+      "contract_id": "d410fcf117118c7d5060446403b3af1d0ee4813ab82e4528b8f9196dd99db3e0",
+      "contract": {
+        "data_sha256": "5db605f837c6dd24b530d5114c373fdad3f5333433db925142702f4129475a61",
+        "dataset": "NonKinase_ion_channel",
+        "dataset_version": "202610_v3",
+        "endpoint": "Kd",
+        "model": "gnn",
+        "model_params": {
+          "auxiliary_dim": 1774,
+          "auxiliary_interactions": true,
+          "deduplicate_proteins": true,
+          "dropout": 0.1,
+          "fc_dims": [
+            512,
+            256
+          ],
+          "gnn_hidden_dim": 128,
+          "gnn_output_dim": 128,
+          "gnn_type": "gine",
+          "mask_padding": true,
+          "protein_embed_dim": 32,
+          "protein_max_len": 1500,
+          "protein_num_filters": 32,
+          "use_protein_cnn": false
+        },
+        "protein_feature_contract": {
+          "manifest": "C:\\Users\\abhij\\Documents\\projects\\pharmalens\\data\\processed\\features\\esm2_affinity_202610_v1\\manifest.json",
+          "regression_sha256": "8f7a4557d57713b97ba0e484303007efb7230d25299c0ac47a0a1b12a87bbb9d",
+          "sha256": "6fc771b5a1dc79ca198401a0dd57cf16838fd7ee7d0129af36618e03c7c352ca"
+        },
+        "source_sha256": "0a1c1fac04cdd4adcdbc6374e88f1b5b7dadcc89594292636535c79c06081884",
+        "split": "random",
+        "split_seed": 42,
+        "training": {
+          "batch_size": 128,
+          "device": "xpu",
+          "epochs": 120,
+          "learning_rate": 0.0005,
+          "normalize_targets": true,
+          "patience": 15,
+          "threads": 2,
+          "weight_decay": 0.0001
+        },
+        "validation_membership_sha256": "f65ca92d3f3843f64d9058bf0f1b45d91bee9a8cf1a66756ac26376cf6fcfb67"
+      },
+      "model_seeds": [
+        42
+      ],
+      "runs": [
+        "expanded_esm_matrix_v1_ion_channel_kd_random_gnn_seed42"
+      ],
+      "validation_metrics": {
+        "rmse": {
+          "mean": 0.9979079091363321,
+          "sample_std": null
+        },
+        "mae": {
+          "mean": 0.7218978750878114,
+          "sample_std": null
+        },
+        "ci": {
+          "mean": 0.8136456211812627,
+          "sample_std": null
+        },
+        "pearson": {
+          "mean": 0.7745472986272252,
+          "sample_std": null
+        },
+        "r2": {
+          "mean": 0.5891646972973807,
+          "sample_std": null
+        }
+      },
+      "replicates": 1,
+      "all_serving_parity_passed": true,
+      "test_evaluations": 0,
+      "iteration_budget_reached": []
+    },
+    {
+      "contract_id": "cadaf8cae2424ad67ca16d49ff9285e9b41520ee0bfb5bf454af71eb97a9cd7a",
+      "contract": {
+        "data_sha256": "5db605f837c6dd24b530d5114c373fdad3f5333433db925142702f4129475a61",
+        "dataset": "NonKinase_ion_channel",
+        "dataset_version": "202610_v3",
+        "endpoint": "Kd",
+        "model": "xgboost",
+        "model_params": {
+          "early_stopping_rounds": 60,
+          "learning_rate": 0.03,
+          "max_depth": 9,
+          "n_estimators": 1800,
+          "n_jobs": 4
+        },
+        "protein_feature_contract": {
+          "manifest": "C:\\Users\\abhij\\Documents\\projects\\pharmalens\\data\\processed\\features\\esm2_affinity_202610_v1\\manifest.json",
+          "regression_sha256": "8f7a4557d57713b97ba0e484303007efb7230d25299c0ac47a0a1b12a87bbb9d",
+          "sha256": "6fc771b5a1dc79ca198401a0dd57cf16838fd7ee7d0129af36618e03c7c352ca"
+        },
+        "source_sha256": "0a1c1fac04cdd4adcdbc6374e88f1b5b7dadcc89594292636535c79c06081884",
+        "split": "random",
+        "split_seed": 42,
+        "training": {
+          "threads": 4
+        },
+        "validation_membership_sha256": "f65ca92d3f3843f64d9058bf0f1b45d91bee9a8cf1a66756ac26376cf6fcfb67"
+      },
+      "model_seeds": [
+        42
+      ],
+      "runs": [
+        "expanded_esm_matrix_v1_ion_channel_kd_random_xgboost_seed42"
+      ],
+      "validation_metrics": {
+        "rmse": {
+          "mean": 0.8838977847872194,
+          "sample_std": null
+        },
+        "mae": {
+          "mean": 0.632425988096861,
+          "sample_std": null
+        },
+        "ci": {
+          "mean": 0.8333333333333334,
+          "sample_std": null
+        },
+        "pearson": {
+          "mean": 0.8275529570238475,
+          "sample_std": null
+        },
+        "r2": {
+          "mean": 0.6776772820447928,
+          "sample_std": null
+        }
+      },
+      "replicates": 1,
+      "all_serving_parity_passed": true,
+      "test_evaluations": 0,
+      "iteration_budget_reached": []
+    },
+    {
+      "contract_id": "c44551d4751d1a70e2174b0e5d2af72375e4653fa1c596dfc3bdbcb63a27ee9f",
+      "contract": {
+        "data_sha256": "b6418f0582453008c0685bd630bfaeabbee0b4b9127e2702465f68306bd5940a",
+        "dataset": "NonKinase_ion_channel",
+        "dataset_version": "202610_v3",
+        "endpoint": "Ki",
+        "model": "deeptda",
+        "model_params": {
+          "auxiliary_dim": 1774,
+          "auxiliary_interactions": true,
+          "deduplicate_proteins": true,
+          "dropout": 0.1,
+          "drug_embed_dim": 32,
+          "drug_max_len": 200,
+          "fc_dims": [
+            512,
+            256
+          ],
+          "mask_padding": true,
+          "num_filters": 32,
+          "protein_embed_dim": 32,
+          "protein_max_len": 1500,
+          "use_protein_cnn": false
+        },
+        "protein_feature_contract": {
+          "manifest": "C:\\Users\\abhij\\Documents\\projects\\pharmalens\\data\\processed\\features\\esm2_affinity_202610_v1\\manifest.json",
+          "regression_sha256": "8f7a4557d57713b97ba0e484303007efb7230d25299c0ac47a0a1b12a87bbb9d",
+          "sha256": "6fc771b5a1dc79ca198401a0dd57cf16838fd7ee7d0129af36618e03c7c352ca"
+        },
+        "source_sha256": "0a1c1fac04cdd4adcdbc6374e88f1b5b7dadcc89594292636535c79c06081884",
+        "split": "random",
+        "split_seed": 42,
+        "training": {
+          "batch_size": 128,
+          "device": "xpu",
+          "epochs": 120,
+          "learning_rate": 0.001,
+          "normalize_targets": true,
+          "patience": 15,
+          "threads": 2,
+          "weight_decay": 0.0001
+        },
+        "validation_membership_sha256": "5a540d44cc8a448f378760f52eb4669238ad49a3fc515048a8f2d29fdf7653bf"
+      },
+      "model_seeds": [
+        42
+      ],
+      "runs": [
+        "expanded_esm_matrix_v1_ion_channel_ki_random_deeptda_seed42"
+      ],
+      "validation_metrics": {
+        "rmse": {
+          "mean": 0.623677606379907,
+          "sample_std": null
+        },
+        "mae": {
+          "mean": 0.43412226196285647,
+          "sample_std": null
+        },
+        "ci": {
+          "mean": 0.8850055293298063,
+          "sample_std": null
+        },
+        "pearson": {
+          "mean": 0.9251785825745966,
+          "sample_std": null
+        },
+        "r2": {
+          "mean": 0.8550489479977896,
+          "sample_std": null
+        }
+      },
+      "replicates": 1,
+      "all_serving_parity_passed": true,
+      "test_evaluations": 0,
+      "iteration_budget_reached": []
+    },
+    {
+      "contract_id": "55b6b5b721c6d8576c34ebcfde324043f8c6c7dec86b835820b672a27f16e7b6",
+      "contract": {
+        "data_sha256": "b6418f0582453008c0685bd630bfaeabbee0b4b9127e2702465f68306bd5940a",
+        "dataset": "NonKinase_ion_channel",
+        "dataset_version": "202610_v3",
+        "endpoint": "Ki",
+        "model": "gnn",
+        "model_params": {
+          "auxiliary_dim": 1774,
+          "auxiliary_interactions": true,
+          "deduplicate_proteins": true,
+          "dropout": 0.1,
+          "fc_dims": [
+            512,
+            256
+          ],
+          "gnn_hidden_dim": 128,
+          "gnn_output_dim": 128,
+          "gnn_type": "gine",
+          "mask_padding": true,
+          "protein_embed_dim": 32,
+          "protein_max_len": 1500,
+          "protein_num_filters": 32,
+          "use_protein_cnn": false
+        },
+        "protein_feature_contract": {
+          "manifest": "C:\\Users\\abhij\\Documents\\projects\\pharmalens\\data\\processed\\features\\esm2_affinity_202610_v1\\manifest.json",
+          "regression_sha256": "8f7a4557d57713b97ba0e484303007efb7230d25299c0ac47a0a1b12a87bbb9d",
+          "sha256": "6fc771b5a1dc79ca198401a0dd57cf16838fd7ee7d0129af36618e03c7c352ca"
+        },
+        "source_sha256": "0a1c1fac04cdd4adcdbc6374e88f1b5b7dadcc89594292636535c79c06081884",
+        "split": "random",
+        "split_seed": 42,
+        "training": {
+          "batch_size": 128,
+          "device": "xpu",
+          "epochs": 120,
+          "learning_rate": 0.0005,
+          "normalize_targets": true,
+          "patience": 15,
+          "threads": 2,
+          "weight_decay": 0.0001
+        },
+        "validation_membership_sha256": "5a540d44cc8a448f378760f52eb4669238ad49a3fc515048a8f2d29fdf7653bf"
+      },
+      "model_seeds": [
+        42
+      ],
+      "runs": [
+        "expanded_esm_matrix_v1_ion_channel_ki_random_gnn_seed42"
+      ],
+      "validation_metrics": {
+        "rmse": {
+          "mean": 0.6469326053239125,
+          "sample_std": null
+        },
+        "mae": {
+          "mean": 0.4543239568261316,
+          "sample_std": null
+        },
+        "ci": {
+          "mean": 0.8785559436641676,
+          "sample_std": null
+        },
+        "pearson": {
+          "mean": 0.9189412573280207,
+          "sample_std": null
+        },
+        "r2": {
+          "mean": 0.8440378726156349,
+          "sample_std": null
+        }
+      },
+      "replicates": 1,
+      "all_serving_parity_passed": true,
+      "test_evaluations": 0,
+      "iteration_budget_reached": []
+    },
+    {
+      "contract_id": "4503208bb0ae9fdc5bfcd4b2048fd5ddd447b82cbbea4d92ecafc27aa2bd9f51",
+      "contract": {
+        "data_sha256": "b6418f0582453008c0685bd630bfaeabbee0b4b9127e2702465f68306bd5940a",
+        "dataset": "NonKinase_ion_channel",
+        "dataset_version": "202610_v3",
+        "endpoint": "Ki",
+        "model": "xgboost",
+        "model_params": {
+          "early_stopping_rounds": 60,
+          "learning_rate": 0.03,
+          "max_depth": 9,
+          "n_estimators": 1800,
+          "n_jobs": 4
+        },
+        "protein_feature_contract": {
+          "manifest": "C:\\Users\\abhij\\Documents\\projects\\pharmalens\\data\\processed\\features\\esm2_affinity_202610_v1\\manifest.json",
+          "regression_sha256": "8f7a4557d57713b97ba0e484303007efb7230d25299c0ac47a0a1b12a87bbb9d",
+          "sha256": "6fc771b5a1dc79ca198401a0dd57cf16838fd7ee7d0129af36618e03c7c352ca"
+        },
+        "source_sha256": "0a1c1fac04cdd4adcdbc6374e88f1b5b7dadcc89594292636535c79c06081884",
+        "split": "random",
+        "split_seed": 42,
+        "training": {
+          "threads": 4
+        },
+        "validation_membership_sha256": "5a540d44cc8a448f378760f52eb4669238ad49a3fc515048a8f2d29fdf7653bf"
+      },
+      "model_seeds": [
+        42
+      ],
+      "runs": [
+        "expanded_esm_matrix_v1_ion_channel_ki_random_xgboost_seed42"
+      ],
+      "validation_metrics": {
+        "rmse": {
+          "mean": 0.6240707255089482,
+          "sample_std": null
+        },
+        "mae": {
+          "mean": 0.43841404349412283,
+          "sample_std": null
+        },
+        "ci": {
+          "mean": 0.8828303348289318,
+          "sample_std": null
+        },
+        "pearson": {
+          "mean": 0.9246220554105972,
+          "sample_std": null
+        },
+        "r2": {
+          "mean": 0.8548661580767558,
+          "sample_std": null
+        }
+      },
+      "replicates": 1,
+      "all_serving_parity_passed": true,
+      "test_evaluations": 0,
+      "iteration_budget_reached": []
+    },
+    {
+      "contract_id": "6b370e5ba4d5a51cffee742667ad8a289b3a2cff16a7bfe86a5645905f6a0581",
+      "contract": {
+        "data_sha256": "dd22c8723d10f6c34057ad8c7f07ee7bb7c3d9e1a868f8c4b0a6a4859b6ff25d",
+        "dataset": "NonKinase_nuclear_receptor",
+        "dataset_version": "202610_v3",
+        "endpoint": "Kd",
+        "model": "deeptda",
+        "model_params": {
+          "auxiliary_dim": 1774,
+          "auxiliary_interactions": true,
+          "deduplicate_proteins": true,
+          "dropout": 0.1,
+          "drug_embed_dim": 32,
+          "drug_max_len": 200,
+          "fc_dims": [
+            512,
+            256
+          ],
+          "mask_padding": true,
+          "num_filters": 32,
+          "protein_embed_dim": 32,
+          "protein_max_len": 1500,
+          "use_protein_cnn": false
+        },
+        "protein_feature_contract": {
+          "manifest": "C:\\Users\\abhij\\Documents\\projects\\pharmalens\\data\\processed\\features\\esm2_affinity_202610_v1\\manifest.json",
+          "regression_sha256": "8f7a4557d57713b97ba0e484303007efb7230d25299c0ac47a0a1b12a87bbb9d",
+          "sha256": "6fc771b5a1dc79ca198401a0dd57cf16838fd7ee7d0129af36618e03c7c352ca"
+        },
+        "source_sha256": "0a1c1fac04cdd4adcdbc6374e88f1b5b7dadcc89594292636535c79c06081884",
+        "split": "random",
+        "split_seed": 42,
+        "training": {
+          "batch_size": 128,
+          "device": "xpu",
+          "epochs": 120,
+          "learning_rate": 0.001,
+          "normalize_targets": true,
+          "patience": 15,
+          "threads": 2,
+          "weight_decay": 0.0001
+        },
+        "validation_membership_sha256": "1a9045f6f697f7b182b21df53d0c578094946ba1cd0b0cf1a77e59e8f813825b"
+      },
+      "model_seeds": [
+        42,
+        123,
+        456
+      ],
+      "runs": [
+        "expanded_esm_matrix_v1_nuclear_receptor_kd_random_deeptda_seed42",
+        "nuclear_repeats_v1_nuclear_receptor_kd_random_deeptda_seed123",
+        "nuclear_repeats_v1_nuclear_receptor_kd_random_deeptda_seed456"
+      ],
+      "validation_metrics": {
+        "rmse": {
+          "mean": 0.7516914436012317,
+          "sample_std": 0.009389548532382556
+        },
+        "mae": {
+          "mean": 0.5429766196338934,
+          "sample_std": 0.012752351536254194
+        },
+        "ci": {
+          "mean": 0.8370938323312842,
+          "sample_std": 0.0030035107174377442
+        },
+        "pearson": {
+          "mean": 0.8519863145345249,
+          "sample_std": 0.0034685343664067267
+        },
+        "r2": {
+          "mean": 0.7246086727575554,
+          "sample_std": 0.006859376902858975
+        }
+      },
+      "replicates": 3,
+      "all_serving_parity_passed": true,
+      "test_evaluations": 0,
+      "iteration_budget_reached": []
+    },
+    {
+      "contract_id": "05e581c6541bef5c5d0728bd521c853c8b14df28cad0d57245b7c84dd3de2c68",
+      "contract": {
+        "data_sha256": "dd22c8723d10f6c34057ad8c7f07ee7bb7c3d9e1a868f8c4b0a6a4859b6ff25d",
+        "dataset": "NonKinase_nuclear_receptor",
+        "dataset_version": "202610_v3",
+        "endpoint": "Kd",
+        "model": "gnn",
+        "model_params": {
+          "auxiliary_dim": 1774,
+          "auxiliary_interactions": true,
+          "deduplicate_proteins": true,
+          "dropout": 0.1,
+          "fc_dims": [
+            512,
+            256
+          ],
+          "gnn_hidden_dim": 128,
+          "gnn_output_dim": 128,
+          "gnn_type": "gine",
+          "mask_padding": true,
+          "protein_embed_dim": 32,
+          "protein_max_len": 1500,
+          "protein_num_filters": 32,
+          "use_protein_cnn": false
+        },
+        "protein_feature_contract": {
+          "manifest": "C:\\Users\\abhij\\Documents\\projects\\pharmalens\\data\\processed\\features\\esm2_affinity_202610_v1\\manifest.json",
+          "regression_sha256": "8f7a4557d57713b97ba0e484303007efb7230d25299c0ac47a0a1b12a87bbb9d",
+          "sha256": "6fc771b5a1dc79ca198401a0dd57cf16838fd7ee7d0129af36618e03c7c352ca"
+        },
+        "source_sha256": "0a1c1fac04cdd4adcdbc6374e88f1b5b7dadcc89594292636535c79c06081884",
+        "split": "random",
+        "split_seed": 42,
+        "training": {
+          "batch_size": 128,
+          "device": "xpu",
+          "epochs": 120,
+          "learning_rate": 0.0005,
+          "normalize_targets": true,
+          "patience": 15,
+          "threads": 2,
+          "weight_decay": 0.0001
+        },
+        "validation_membership_sha256": "1a9045f6f697f7b182b21df53d0c578094946ba1cd0b0cf1a77e59e8f813825b"
+      },
+      "model_seeds": [
+        42,
+        123,
+        456
+      ],
+      "runs": [
+        "expanded_esm_matrix_v1_nuclear_receptor_kd_random_gnn_seed42",
+        "nuclear_repeats_v1_nuclear_receptor_kd_random_gnn_seed123",
+        "nuclear_repeats_v1_nuclear_receptor_kd_random_gnn_seed456"
+      ],
+      "validation_metrics": {
+        "rmse": {
+          "mean": 0.7715978177199604,
+          "sample_std": 0.014616638729012636
+        },
+        "mae": {
+          "mean": 0.5629052432090916,
+          "sample_std": 0.007372262800307276
+        },
+        "ci": {
+          "mean": 0.8292050410202135,
+          "sample_std": 0.006350117409900812
+        },
+        "pearson": {
+          "mean": 0.8435335428636931,
+          "sample_std": 0.006135577839427838
+        },
+        "r2": {
+          "mean": 0.7097904237330969,
+          "sample_std": 0.011012995085950838
+        }
+      },
+      "replicates": 3,
+      "all_serving_parity_passed": true,
+      "test_evaluations": 0,
+      "iteration_budget_reached": []
+    },
+    {
+      "contract_id": "1a193fa7058756351f78d48fbe56a5332fc5be523fc01719d9d00b8b503829e5",
+      "contract": {
+        "data_sha256": "dd22c8723d10f6c34057ad8c7f07ee7bb7c3d9e1a868f8c4b0a6a4859b6ff25d",
+        "dataset": "NonKinase_nuclear_receptor",
+        "dataset_version": "202610_v3",
+        "endpoint": "Kd",
+        "model": "xgboost",
+        "model_params": {
+          "early_stopping_rounds": 60,
+          "learning_rate": 0.03,
+          "max_depth": 9,
+          "n_estimators": 1800,
+          "n_jobs": 4
+        },
+        "protein_feature_contract": {
+          "manifest": "C:\\Users\\abhij\\Documents\\projects\\pharmalens\\data\\processed\\features\\esm2_affinity_202610_v1\\manifest.json",
+          "regression_sha256": "8f7a4557d57713b97ba0e484303007efb7230d25299c0ac47a0a1b12a87bbb9d",
+          "sha256": "6fc771b5a1dc79ca198401a0dd57cf16838fd7ee7d0129af36618e03c7c352ca"
+        },
+        "source_sha256": "0a1c1fac04cdd4adcdbc6374e88f1b5b7dadcc89594292636535c79c06081884",
+        "split": "random",
+        "split_seed": 42,
+        "training": {
+          "threads": 4
+        },
+        "validation_membership_sha256": "1a9045f6f697f7b182b21df53d0c578094946ba1cd0b0cf1a77e59e8f813825b"
+      },
+      "model_seeds": [
+        42,
+        123,
+        456
+      ],
+      "runs": [
+        "expanded_esm_matrix_v1_nuclear_receptor_kd_random_xgboost_seed42",
+        "nuclear_repeats_v1_nuclear_receptor_kd_random_xgboost_seed123",
+        "nuclear_repeats_v1_nuclear_receptor_kd_random_xgboost_seed456"
+      ],
+      "validation_metrics": {
+        "rmse": {
+          "mean": 0.7791112352627453,
+          "sample_std": 0.005727351609453627
+        },
+        "mae": {
+          "mean": 0.5869842849470631,
+          "sample_std": 0.005955371767991062
+        },
+        "ci": {
+          "mean": 0.8205506391347099,
+          "sample_std": 0.003009862958993337
+        },
+        "pearson": {
+          "mean": 0.8397000070011957,
+          "sample_std": 0.0026692891964759788
+        },
+        "r2": {
+          "mean": 0.7041711995866664,
+          "sample_std": 0.004345057050544558
+        }
+      },
+      "replicates": 3,
+      "all_serving_parity_passed": true,
+      "test_evaluations": 0,
+      "iteration_budget_reached": []
+    },
+    {
+      "contract_id": "b795f82b88400d9f3c537b12f2db54ba81781d603e407055ffda7313db0b84d4",
+      "contract": {
+        "data_sha256": "0d51a706266f5225942137eb463e6216bdab598449bc2452b351ffa6e89e9a13",
+        "dataset": "NonKinase_nuclear_receptor",
+        "dataset_version": "202610_v3",
+        "endpoint": "Ki",
+        "model": "deeptda",
+        "model_params": {
+          "auxiliary_dim": 1774,
+          "auxiliary_interactions": true,
+          "deduplicate_proteins": true,
+          "dropout": 0.1,
+          "drug_embed_dim": 32,
+          "drug_max_len": 200,
+          "fc_dims": [
+            512,
+            256
+          ],
+          "mask_padding": true,
+          "num_filters": 32,
+          "protein_embed_dim": 32,
+          "protein_max_len": 1500,
+          "use_protein_cnn": false
+        },
+        "protein_feature_contract": {
+          "manifest": "C:\\Users\\abhij\\Documents\\projects\\pharmalens\\data\\processed\\features\\esm2_affinity_202610_v1\\manifest.json",
+          "regression_sha256": "8f7a4557d57713b97ba0e484303007efb7230d25299c0ac47a0a1b12a87bbb9d",
+          "sha256": "6fc771b5a1dc79ca198401a0dd57cf16838fd7ee7d0129af36618e03c7c352ca"
+        },
+        "source_sha256": "0a1c1fac04cdd4adcdbc6374e88f1b5b7dadcc89594292636535c79c06081884",
+        "split": "random",
+        "split_seed": 42,
+        "training": {
+          "batch_size": 128,
+          "device": "xpu",
+          "epochs": 120,
+          "learning_rate": 0.001,
+          "normalize_targets": true,
+          "patience": 15,
+          "threads": 2,
+          "weight_decay": 0.0001
+        },
+        "validation_membership_sha256": "6952fe12ad535244dd529ee7714bec57ec8ed4256e316eeea7b4235fddd6d8b1"
+      },
+      "model_seeds": [
+        42,
+        123,
+        456
+      ],
+      "runs": [
+        "expanded_esm_matrix_v1_nuclear_receptor_ki_random_deeptda_seed42",
+        "nuclear_repeats_v1_nuclear_receptor_ki_random_deeptda_seed123",
+        "nuclear_repeats_v1_nuclear_receptor_ki_random_deeptda_seed456"
+      ],
+      "validation_metrics": {
+        "rmse": {
+          "mean": 0.775416456043116,
+          "sample_std": 0.0021858417228618546
+        },
+        "mae": {
+          "mean": 0.5266458811242373,
+          "sample_std": 0.003653701322123082
+        },
+        "ci": {
+          "mean": 0.8297601425817817,
+          "sample_std": 0.00027210895401736334
+        },
+        "pearson": {
+          "mean": 0.8138213828229012,
+          "sample_std": 0.001567518320933812
+        },
+        "r2": {
+          "mean": 0.6610697482648237,
+          "sample_std": 0.001910233992816865
+        }
+      },
+      "replicates": 3,
+      "all_serving_parity_passed": true,
+      "test_evaluations": 0,
+      "iteration_budget_reached": []
+    },
+    {
+      "contract_id": "599d92028fb9014b734232f7eee6582af5972c2934aeea03a7fb55a2083a583d",
+      "contract": {
+        "data_sha256": "0d51a706266f5225942137eb463e6216bdab598449bc2452b351ffa6e89e9a13",
+        "dataset": "NonKinase_nuclear_receptor",
+        "dataset_version": "202610_v3",
+        "endpoint": "Ki",
+        "model": "gnn",
+        "model_params": {
+          "auxiliary_dim": 1774,
+          "auxiliary_interactions": true,
+          "deduplicate_proteins": true,
+          "dropout": 0.1,
+          "fc_dims": [
+            512,
+            256
+          ],
+          "gnn_hidden_dim": 128,
+          "gnn_output_dim": 128,
+          "gnn_type": "gine",
+          "mask_padding": true,
+          "protein_embed_dim": 32,
+          "protein_max_len": 1500,
+          "protein_num_filters": 32,
+          "use_protein_cnn": false
+        },
+        "protein_feature_contract": {
+          "manifest": "C:\\Users\\abhij\\Documents\\projects\\pharmalens\\data\\processed\\features\\esm2_affinity_202610_v1\\manifest.json",
+          "regression_sha256": "8f7a4557d57713b97ba0e484303007efb7230d25299c0ac47a0a1b12a87bbb9d",
+          "sha256": "6fc771b5a1dc79ca198401a0dd57cf16838fd7ee7d0129af36618e03c7c352ca"
+        },
+        "source_sha256": "0a1c1fac04cdd4adcdbc6374e88f1b5b7dadcc89594292636535c79c06081884",
+        "split": "random",
+        "split_seed": 42,
+        "training": {
+          "batch_size": 128,
+          "device": "xpu",
+          "epochs": 120,
+          "learning_rate": 0.0005,
+          "normalize_targets": true,
+          "patience": 15,
+          "threads": 2,
+          "weight_decay": 0.0001
+        },
+        "validation_membership_sha256": "6952fe12ad535244dd529ee7714bec57ec8ed4256e316eeea7b4235fddd6d8b1"
+      },
+      "model_seeds": [
+        42,
+        123,
+        456
+      ],
+      "runs": [
+        "expanded_esm_matrix_v1_nuclear_receptor_ki_random_gnn_seed42",
+        "nuclear_repeats_v1_nuclear_receptor_ki_random_gnn_seed123",
+        "nuclear_repeats_v1_nuclear_receptor_ki_random_gnn_seed456"
+      ],
+      "validation_metrics": {
+        "rmse": {
+          "mean": 0.7823396031476393,
+          "sample_std": 0.0069681412924854184
+        },
+        "mae": {
+          "mean": 0.544711875971209,
+          "sample_std": 0.001448881716109191
+        },
+        "ci": {
+          "mean": 0.8258658891993839,
+          "sample_std": 0.0012967487043858764
+        },
+        "pearson": {
+          "mean": 0.8101692720863095,
+          "sample_std": 0.003506341449841314
+        },
+        "r2": {
+          "mean": 0.6549741730270653,
+          "sample_std": 0.006131262081173054
+        }
+      },
+      "replicates": 3,
+      "all_serving_parity_passed": true,
+      "test_evaluations": 0,
+      "iteration_budget_reached": []
+    },
+    {
+      "contract_id": "0dcdb98cd7983731a537a03b1f466a3c95ec1f4b7d279c90ce669f33356a5a1f",
+      "contract": {
+        "data_sha256": "0d51a706266f5225942137eb463e6216bdab598449bc2452b351ffa6e89e9a13",
+        "dataset": "NonKinase_nuclear_receptor",
+        "dataset_version": "202610_v3",
+        "endpoint": "Ki",
+        "model": "xgboost",
+        "model_params": {
+          "early_stopping_rounds": 60,
+          "learning_rate": 0.03,
+          "max_depth": 9,
+          "n_estimators": 1800,
+          "n_jobs": 4
+        },
+        "protein_feature_contract": {
+          "manifest": "C:\\Users\\abhij\\Documents\\projects\\pharmalens\\data\\processed\\features\\esm2_affinity_202610_v1\\manifest.json",
+          "regression_sha256": "8f7a4557d57713b97ba0e484303007efb7230d25299c0ac47a0a1b12a87bbb9d",
+          "sha256": "6fc771b5a1dc79ca198401a0dd57cf16838fd7ee7d0129af36618e03c7c352ca"
+        },
+        "source_sha256": "0a1c1fac04cdd4adcdbc6374e88f1b5b7dadcc89594292636535c79c06081884",
+        "split": "random",
+        "split_seed": 42,
+        "training": {
+          "threads": 4
+        },
+        "validation_membership_sha256": "6952fe12ad535244dd529ee7714bec57ec8ed4256e316eeea7b4235fddd6d8b1"
+      },
+      "model_seeds": [
+        42,
+        123,
+        456
+      ],
+      "runs": [
+        "expanded_esm_matrix_v1_nuclear_receptor_ki_random_xgboost_seed42",
+        "nuclear_repeats_v1_nuclear_receptor_ki_random_xgboost_seed123",
+        "nuclear_repeats_v1_nuclear_receptor_ki_random_xgboost_seed456"
+      ],
+      "validation_metrics": {
+        "rmse": {
+          "mean": 0.8052142221763869,
+          "sample_std": 0.008098269484580452
+        },
+        "mae": {
+          "mean": 0.5692680520539938,
+          "sample_std": 0.006851407176263842
+        },
+        "ci": {
+          "mean": 0.8160818369624363,
+          "sample_std": 0.002524864917473359
+        },
+        "pearson": {
+          "mean": 0.7978127268041458,
+          "sample_std": 0.0043760728626691565
+        },
+        "r2": {
+          "mean": 0.6344976569592918,
+          "sample_std": 0.007370016524947644
+        }
+      },
+      "replicates": 3,
+      "all_serving_parity_passed": true,
+      "test_evaluations": 0,
+      "iteration_budget_reached": []
+    },
+    {
+      "contract_id": "9267e73a68d8dfe51ff19b4e088f2109e14ac980b01c80b419d24df1123cb1db",
+      "contract": {
+        "data_sha256": "efad6af291b521de82f9d290e5223682726b0180fc939aee657aadf6b0b97a13",
+        "dataset": "NonKinase_other_enzyme",
+        "dataset_version": "202610_v3",
+        "endpoint": "Kd",
+        "model": "deeptda",
+        "model_params": {
+          "auxiliary_dim": 1774,
+          "auxiliary_interactions": true,
+          "deduplicate_proteins": true,
+          "dropout": 0.1,
+          "drug_embed_dim": 32,
+          "drug_max_len": 200,
+          "fc_dims": [
+            512,
+            256
+          ],
+          "mask_padding": true,
+          "num_filters": 32,
+          "protein_embed_dim": 32,
+          "protein_max_len": 1500,
+          "use_protein_cnn": false
+        },
+        "protein_feature_contract": {
+          "manifest": "C:\\Users\\abhij\\Documents\\projects\\pharmalens\\data\\processed\\features\\esm2_affinity_202610_v1\\manifest.json",
+          "regression_sha256": "8f7a4557d57713b97ba0e484303007efb7230d25299c0ac47a0a1b12a87bbb9d",
+          "sha256": "6fc771b5a1dc79ca198401a0dd57cf16838fd7ee7d0129af36618e03c7c352ca"
+        },
+        "source_sha256": "0a1c1fac04cdd4adcdbc6374e88f1b5b7dadcc89594292636535c79c06081884",
+        "split": "random",
+        "split_seed": 42,
+        "training": {
+          "batch_size": 128,
+          "device": "xpu",
+          "epochs": 120,
+          "learning_rate": 0.001,
+          "normalize_targets": true,
+          "patience": 15,
+          "threads": 2,
+          "weight_decay": 0.0001
+        },
+        "validation_membership_sha256": "4cf7551eeb93d2cc46db5a84fca2dbc8c4cbbf6747f78f99509745ac3accbaca"
+      },
+      "model_seeds": [
+        42
+      ],
+      "runs": [
+        "expanded_esm_matrix_v1_other_enzyme_kd_random_deeptda_seed42"
+      ],
+      "validation_metrics": {
+        "rmse": {
+          "mean": 1.1083031904340892,
+          "sample_std": null
+        },
+        "mae": {
+          "mean": 0.8409243713099389,
+          "sample_std": null
+        },
+        "ci": {
+          "mean": 0.7886229966844338,
+          "sample_std": null
+        },
+        "pearson": {
+          "mean": 0.7738890774713352,
+          "sample_std": null
+        },
+        "r2": {
+          "mean": 0.5987693601238517,
+          "sample_std": null
+        }
+      },
+      "replicates": 1,
+      "all_serving_parity_passed": true,
+      "test_evaluations": 0,
+      "iteration_budget_reached": []
+    },
+    {
+      "contract_id": "65016e2ec18e8891d82c7a70ba7bf4545b8c52e583b43485eb09a7d772fa8a85",
+      "contract": {
+        "data_sha256": "efad6af291b521de82f9d290e5223682726b0180fc939aee657aadf6b0b97a13",
+        "dataset": "NonKinase_other_enzyme",
+        "dataset_version": "202610_v3",
+        "endpoint": "Kd",
+        "model": "gnn",
+        "model_params": {
+          "auxiliary_dim": 1774,
+          "auxiliary_interactions": true,
+          "deduplicate_proteins": true,
+          "dropout": 0.1,
+          "fc_dims": [
+            512,
+            256
+          ],
+          "gnn_hidden_dim": 128,
+          "gnn_output_dim": 128,
+          "gnn_type": "gine",
+          "mask_padding": true,
+          "protein_embed_dim": 32,
+          "protein_max_len": 1500,
+          "protein_num_filters": 32,
+          "use_protein_cnn": false
+        },
+        "protein_feature_contract": {
+          "manifest": "C:\\Users\\abhij\\Documents\\projects\\pharmalens\\data\\processed\\features\\esm2_affinity_202610_v1\\manifest.json",
+          "regression_sha256": "8f7a4557d57713b97ba0e484303007efb7230d25299c0ac47a0a1b12a87bbb9d",
+          "sha256": "6fc771b5a1dc79ca198401a0dd57cf16838fd7ee7d0129af36618e03c7c352ca"
+        },
+        "source_sha256": "0a1c1fac04cdd4adcdbc6374e88f1b5b7dadcc89594292636535c79c06081884",
+        "split": "random",
+        "split_seed": 42,
+        "training": {
+          "batch_size": 128,
+          "device": "xpu",
+          "epochs": 120,
+          "learning_rate": 0.0005,
+          "normalize_targets": true,
+          "patience": 15,
+          "threads": 2,
+          "weight_decay": 0.0001
+        },
+        "validation_membership_sha256": "4cf7551eeb93d2cc46db5a84fca2dbc8c4cbbf6747f78f99509745ac3accbaca"
+      },
+      "model_seeds": [
+        42
+      ],
+      "runs": [
+        "expanded_esm_matrix_v1_other_enzyme_kd_random_gnn_seed42"
+      ],
+      "validation_metrics": {
+        "rmse": {
+          "mean": 1.0951932331333953,
+          "sample_std": null
+        },
+        "mae": {
+          "mean": 0.8328841607536163,
+          "sample_std": null
+        },
+        "ci": {
+          "mean": 0.7919553081260997,
+          "sample_std": null
+        },
+        "pearson": {
+          "mean": 0.780579949014266,
+          "sample_std": null
+        },
+        "r2": {
+          "mean": 0.6082054170163265,
+          "sample_std": null
+        }
+      },
+      "replicates": 1,
+      "all_serving_parity_passed": true,
+      "test_evaluations": 0,
+      "iteration_budget_reached": []
+    },
+    {
+      "contract_id": "9d53ef7bb79a6995fb1c524db2018a4b55ba015f51b5e7da71492711983dadd2",
+      "contract": {
+        "data_sha256": "efad6af291b521de82f9d290e5223682726b0180fc939aee657aadf6b0b97a13",
+        "dataset": "NonKinase_other_enzyme",
+        "dataset_version": "202610_v3",
+        "endpoint": "Kd",
+        "model": "xgboost",
+        "model_params": {
+          "early_stopping_rounds": 60,
+          "learning_rate": 0.03,
+          "max_depth": 9,
+          "n_estimators": 1800,
+          "n_jobs": 4
+        },
+        "protein_feature_contract": {
+          "manifest": "C:\\Users\\abhij\\Documents\\projects\\pharmalens\\data\\processed\\features\\esm2_affinity_202610_v1\\manifest.json",
+          "regression_sha256": "8f7a4557d57713b97ba0e484303007efb7230d25299c0ac47a0a1b12a87bbb9d",
+          "sha256": "6fc771b5a1dc79ca198401a0dd57cf16838fd7ee7d0129af36618e03c7c352ca"
+        },
+        "source_sha256": "0a1c1fac04cdd4adcdbc6374e88f1b5b7dadcc89594292636535c79c06081884",
+        "split": "random",
+        "split_seed": 42,
+        "training": {
+          "threads": 4
+        },
+        "validation_membership_sha256": "4cf7551eeb93d2cc46db5a84fca2dbc8c4cbbf6747f78f99509745ac3accbaca"
+      },
+      "model_seeds": [
+        42
+      ],
+      "runs": [
+        "expanded_esm_matrix_v1_other_enzyme_kd_random_xgboost_seed42"
+      ],
+      "validation_metrics": {
+        "rmse": {
+          "mean": 1.0966624728502916,
+          "sample_std": null
+        },
+        "mae": {
+          "mean": 0.8495070666353997,
+          "sample_std": null
+        },
+        "ci": {
+          "mean": 0.7898383178460928,
+          "sample_std": null
+        },
+        "pearson": {
+          "mean": 0.7792331005677866,
+          "sample_std": null
+        },
+        "r2": {
+          "mean": 0.6071534998470425,
+          "sample_std": null
+        }
+      },
+      "replicates": 1,
+      "all_serving_parity_passed": true,
+      "test_evaluations": 0,
+      "iteration_budget_reached": []
+    },
+    {
+      "contract_id": "ad4fe10b74b3f347e9dfe2adf2a98660435b11f155cbcc67e76241c100cfad9b",
+      "contract": {
+        "data_sha256": "661a75d7ae212f04856a56acd574f10d70335ef2440001f7ef512a4c8fd55234",
+        "dataset": "NonKinase_other_enzyme",
+        "dataset_version": "202610_v3",
+        "endpoint": "Ki",
+        "model": "deeptda",
+        "model_params": {
+          "auxiliary_dim": 1774,
+          "auxiliary_interactions": true,
+          "deduplicate_proteins": true,
+          "dropout": 0.1,
+          "drug_embed_dim": 32,
+          "drug_max_len": 200,
+          "fc_dims": [
+            512,
+            256
+          ],
+          "mask_padding": true,
+          "num_filters": 32,
+          "protein_embed_dim": 32,
+          "protein_max_len": 1500,
+          "use_protein_cnn": false
+        },
+        "protein_feature_contract": {
+          "manifest": "C:\\Users\\abhij\\Documents\\projects\\pharmalens\\data\\processed\\features\\esm2_affinity_202610_v1\\manifest.json",
+          "regression_sha256": "8f7a4557d57713b97ba0e484303007efb7230d25299c0ac47a0a1b12a87bbb9d",
+          "sha256": "6fc771b5a1dc79ca198401a0dd57cf16838fd7ee7d0129af36618e03c7c352ca"
+        },
+        "source_sha256": "0a1c1fac04cdd4adcdbc6374e88f1b5b7dadcc89594292636535c79c06081884",
+        "split": "random",
+        "split_seed": 42,
+        "training": {
+          "batch_size": 128,
+          "device": "xpu",
+          "epochs": 120,
+          "learning_rate": 0.001,
+          "normalize_targets": true,
+          "patience": 15,
+          "threads": 2,
+          "weight_decay": 0.0001
+        },
+        "validation_membership_sha256": "8b42d82720516412401691664e14eed855cd551b7c9bfbb76e1a34aecbf3e84e"
+      },
+      "model_seeds": [
+        42
+      ],
+      "runs": [
+        "expanded_esm_matrix_v1_other_enzyme_ki_random_deeptda_seed42"
+      ],
+      "validation_metrics": {
+        "rmse": {
+          "mean": 0.7569956144332401,
+          "sample_std": null
+        },
+        "mae": {
+          "mean": 0.5411414709452838,
+          "sample_std": null
+        },
+        "ci": {
+          "mean": 0.8464388821130885,
+          "sample_std": null
+        },
+        "pearson": {
+          "mean": 0.8842475807522218,
+          "sample_std": null
+        },
+        "r2": {
+          "mean": 0.7818095298996548,
+          "sample_std": null
+        }
+      },
+      "replicates": 1,
+      "all_serving_parity_passed": true,
+      "test_evaluations": 0,
+      "iteration_budget_reached": []
+    },
+    {
+      "contract_id": "f40c48f830077cee19ffe5c5a5a8ac2a3041ecc88642775df0941842ccd4893b",
+      "contract": {
+        "data_sha256": "661a75d7ae212f04856a56acd574f10d70335ef2440001f7ef512a4c8fd55234",
+        "dataset": "NonKinase_other_enzyme",
+        "dataset_version": "202610_v3",
+        "endpoint": "Ki",
+        "model": "gnn",
+        "model_params": {
+          "auxiliary_dim": 1774,
+          "auxiliary_interactions": true,
+          "deduplicate_proteins": true,
+          "dropout": 0.1,
+          "fc_dims": [
+            512,
+            256
+          ],
+          "gnn_hidden_dim": 128,
+          "gnn_output_dim": 128,
+          "gnn_type": "gine",
+          "mask_padding": true,
+          "protein_embed_dim": 32,
+          "protein_max_len": 1500,
+          "protein_num_filters": 32,
+          "use_protein_cnn": false
+        },
+        "protein_feature_contract": {
+          "manifest": "C:\\Users\\abhij\\Documents\\projects\\pharmalens\\data\\processed\\features\\esm2_affinity_202610_v1\\manifest.json",
+          "regression_sha256": "8f7a4557d57713b97ba0e484303007efb7230d25299c0ac47a0a1b12a87bbb9d",
+          "sha256": "6fc771b5a1dc79ca198401a0dd57cf16838fd7ee7d0129af36618e03c7c352ca"
+        },
+        "source_sha256": "0a1c1fac04cdd4adcdbc6374e88f1b5b7dadcc89594292636535c79c06081884",
+        "split": "random",
+        "split_seed": 42,
+        "training": {
+          "batch_size": 128,
+          "device": "xpu",
+          "epochs": 120,
+          "learning_rate": 0.0005,
+          "normalize_targets": true,
+          "patience": 15,
+          "threads": 2,
+          "weight_decay": 0.0001
+        },
+        "validation_membership_sha256": "8b42d82720516412401691664e14eed855cd551b7c9bfbb76e1a34aecbf3e84e"
+      },
+      "model_seeds": [
+        42
+      ],
+      "runs": [
+        "expanded_esm_matrix_v1_other_enzyme_ki_random_gnn_seed42"
+      ],
+      "validation_metrics": {
+        "rmse": {
+          "mean": 0.7609930818827377,
+          "sample_std": null
+        },
+        "mae": {
+          "mean": 0.5405236622296948,
+          "sample_std": null
+        },
+        "ci": {
+          "mean": 0.8458670844866978,
+          "sample_std": null
+        },
+        "pearson": {
+          "mean": 0.8830445789781709,
+          "sample_std": null
+        },
+        "r2": {
+          "mean": 0.7794990482440639,
+          "sample_std": null
+        }
+      },
+      "replicates": 1,
+      "all_serving_parity_passed": true,
+      "test_evaluations": 0,
+      "iteration_budget_reached": []
+    },
+    {
+      "contract_id": "40a9de2afcd478c40565c21e9565205314e2fdf1b19f215e58765670ac1e25da",
+      "contract": {
+        "data_sha256": "661a75d7ae212f04856a56acd574f10d70335ef2440001f7ef512a4c8fd55234",
+        "dataset": "NonKinase_other_enzyme",
+        "dataset_version": "202610_v3",
+        "endpoint": "Ki",
+        "model": "xgboost",
+        "model_params": {
+          "early_stopping_rounds": 60,
+          "learning_rate": 0.03,
+          "max_depth": 9,
+          "n_estimators": 1800,
+          "n_jobs": 4
+        },
+        "protein_feature_contract": {
+          "manifest": "C:\\Users\\abhij\\Documents\\projects\\pharmalens\\data\\processed\\features\\esm2_affinity_202610_v1\\manifest.json",
+          "regression_sha256": "8f7a4557d57713b97ba0e484303007efb7230d25299c0ac47a0a1b12a87bbb9d",
+          "sha256": "6fc771b5a1dc79ca198401a0dd57cf16838fd7ee7d0129af36618e03c7c352ca"
+        },
+        "source_sha256": "0a1c1fac04cdd4adcdbc6374e88f1b5b7dadcc89594292636535c79c06081884",
+        "split": "random",
+        "split_seed": 42,
+        "training": {
+          "threads": 4
+        },
+        "validation_membership_sha256": "8b42d82720516412401691664e14eed855cd551b7c9bfbb76e1a34aecbf3e84e"
+      },
+      "model_seeds": [
+        42
+      ],
+      "runs": [
+        "expanded_esm_matrix_v1_other_enzyme_ki_random_xgboost_seed42"
+      ],
+      "validation_metrics": {
+        "rmse": {
+          "mean": 0.7201939146829958,
+          "sample_std": null
+        },
+        "mae": {
+          "mean": 0.518123004965134,
+          "sample_std": null
+        },
+        "ci": {
+          "mean": 0.8530250659465549,
+          "sample_std": null
+        },
+        "pearson": {
+          "mean": 0.8961441574054521,
+          "sample_std": null
+        },
+        "r2": {
+          "mean": 0.8025087102903256,
+          "sample_std": null
+        }
+      },
+      "replicates": 1,
+      "all_serving_parity_passed": true,
+      "test_evaluations": 0,
+      "iteration_budget_reached": [
+        "expanded_esm_matrix_v1_other_enzyme_ki_random_xgboost_seed42"
+      ]
+    },
+    {
+      "contract_id": "73e33c6148bd0f3685471ea13f074c9d55953703227341f07851cfe8929bd129",
+      "contract": {
+        "data_sha256": "f20c7b529f48e263a0f81b26a1de426f1734baf08085f4e38e0a17731e74cdbb",
+        "dataset": "NonKinase_protease",
+        "dataset_version": "202610_v3",
+        "endpoint": "Kd",
+        "model": "deeptda",
+        "model_params": {
+          "auxiliary_dim": 1774,
+          "auxiliary_interactions": true,
+          "deduplicate_proteins": true,
+          "dropout": 0.1,
+          "drug_embed_dim": 32,
+          "drug_max_len": 200,
+          "fc_dims": [
+            512,
+            256
+          ],
+          "mask_padding": true,
+          "num_filters": 32,
+          "protein_embed_dim": 32,
+          "protein_max_len": 1500,
+          "use_protein_cnn": false
+        },
+        "protein_feature_contract": {
+          "manifest": "C:\\Users\\abhij\\Documents\\projects\\pharmalens\\data\\processed\\features\\esm2_affinity_202610_v1\\manifest.json",
+          "regression_sha256": "8f7a4557d57713b97ba0e484303007efb7230d25299c0ac47a0a1b12a87bbb9d",
+          "sha256": "6fc771b5a1dc79ca198401a0dd57cf16838fd7ee7d0129af36618e03c7c352ca"
+        },
+        "source_sha256": "0a1c1fac04cdd4adcdbc6374e88f1b5b7dadcc89594292636535c79c06081884",
+        "split": "random",
+        "split_seed": 42,
+        "training": {
+          "batch_size": 128,
+          "device": "xpu",
+          "epochs": 120,
+          "learning_rate": 0.001,
+          "normalize_targets": true,
+          "patience": 15,
+          "threads": 2,
+          "weight_decay": 0.0001
+        },
+        "validation_membership_sha256": "cbc7b8245390617c54f18faacd2ced5046ffbdbe70fe116e86cb315d5e04a619"
+      },
+      "model_seeds": [
+        42
+      ],
+      "runs": [
+        "expanded_esm_matrix_v1_protease_kd_random_deeptda_seed42"
+      ],
+      "validation_metrics": {
+        "rmse": {
+          "mean": 0.890538475476912,
+          "sample_std": null
+        },
+        "mae": {
+          "mean": 0.6027067855004342,
+          "sample_std": null
+        },
+        "ci": {
+          "mean": 0.8818262075923824,
+          "sample_std": null
+        },
+        "pearson": {
+          "mean": 0.9207598918423585,
+          "sample_std": null
+        },
+        "r2": {
+          "mean": 0.8475881439655526,
+          "sample_std": null
+        }
+      },
+      "replicates": 1,
+      "all_serving_parity_passed": true,
+      "test_evaluations": 0,
+      "iteration_budget_reached": []
+    },
+    {
+      "contract_id": "3a5af91d05b3dc30177df99fad4cf8a81e6af2494804153095bf6d62da895cdc",
+      "contract": {
+        "data_sha256": "f20c7b529f48e263a0f81b26a1de426f1734baf08085f4e38e0a17731e74cdbb",
+        "dataset": "NonKinase_protease",
+        "dataset_version": "202610_v3",
+        "endpoint": "Kd",
+        "model": "gnn",
+        "model_params": {
+          "auxiliary_dim": 1774,
+          "auxiliary_interactions": true,
+          "deduplicate_proteins": true,
+          "dropout": 0.1,
+          "fc_dims": [
+            512,
+            256
+          ],
+          "gnn_hidden_dim": 128,
+          "gnn_output_dim": 128,
+          "gnn_type": "gine",
+          "mask_padding": true,
+          "protein_embed_dim": 32,
+          "protein_max_len": 1500,
+          "protein_num_filters": 32,
+          "use_protein_cnn": false
+        },
+        "protein_feature_contract": {
+          "manifest": "C:\\Users\\abhij\\Documents\\projects\\pharmalens\\data\\processed\\features\\esm2_affinity_202610_v1\\manifest.json",
+          "regression_sha256": "8f7a4557d57713b97ba0e484303007efb7230d25299c0ac47a0a1b12a87bbb9d",
+          "sha256": "6fc771b5a1dc79ca198401a0dd57cf16838fd7ee7d0129af36618e03c7c352ca"
+        },
+        "source_sha256": "0a1c1fac04cdd4adcdbc6374e88f1b5b7dadcc89594292636535c79c06081884",
+        "split": "random",
+        "split_seed": 42,
+        "training": {
+          "batch_size": 128,
+          "device": "xpu",
+          "epochs": 120,
+          "learning_rate": 0.0005,
+          "normalize_targets": true,
+          "patience": 15,
+          "threads": 2,
+          "weight_decay": 0.0001
+        },
+        "validation_membership_sha256": "cbc7b8245390617c54f18faacd2ced5046ffbdbe70fe116e86cb315d5e04a619"
+      },
+      "model_seeds": [
+        42
+      ],
+      "runs": [
+        "expanded_esm_matrix_v1_protease_kd_random_gnn_seed42"
+      ],
+      "validation_metrics": {
+        "rmse": {
+          "mean": 0.9308475505652366,
+          "sample_std": null
+        },
+        "mae": {
+          "mean": 0.6338660757128151,
+          "sample_std": null
+        },
+        "ci": {
+          "mean": 0.8801866565771219,
+          "sample_std": null
+        },
+        "pearson": {
+          "mean": 0.9132352079037518,
+          "sample_std": null
+        },
+        "r2": {
+          "mean": 0.8334784300009083,
+          "sample_std": null
+        }
+      },
+      "replicates": 1,
+      "all_serving_parity_passed": true,
+      "test_evaluations": 0,
+      "iteration_budget_reached": []
+    },
+    {
+      "contract_id": "7696f789253055722ebbbf9b8659571fef6d8dde7aa16054a4e660dbb47fd284",
+      "contract": {
+        "data_sha256": "f20c7b529f48e263a0f81b26a1de426f1734baf08085f4e38e0a17731e74cdbb",
+        "dataset": "NonKinase_protease",
+        "dataset_version": "202610_v3",
+        "endpoint": "Kd",
+        "model": "xgboost",
+        "model_params": {
+          "early_stopping_rounds": 60,
+          "learning_rate": 0.03,
+          "max_depth": 9,
+          "n_estimators": 1800,
+          "n_jobs": 4
+        },
+        "protein_feature_contract": {
+          "manifest": "C:\\Users\\abhij\\Documents\\projects\\pharmalens\\data\\processed\\features\\esm2_affinity_202610_v1\\manifest.json",
+          "regression_sha256": "8f7a4557d57713b97ba0e484303007efb7230d25299c0ac47a0a1b12a87bbb9d",
+          "sha256": "6fc771b5a1dc79ca198401a0dd57cf16838fd7ee7d0129af36618e03c7c352ca"
+        },
+        "source_sha256": "0a1c1fac04cdd4adcdbc6374e88f1b5b7dadcc89594292636535c79c06081884",
+        "split": "random",
+        "split_seed": 42,
+        "training": {
+          "threads": 4
+        },
+        "validation_membership_sha256": "cbc7b8245390617c54f18faacd2ced5046ffbdbe70fe116e86cb315d5e04a619"
+      },
+      "model_seeds": [
+        42
+      ],
+      "runs": [
+        "expanded_esm_matrix_v1_protease_kd_random_xgboost_seed42"
+      ],
+      "validation_metrics": {
+        "rmse": {
+          "mean": 0.8749202853472113,
+          "sample_std": null
+        },
+        "mae": {
+          "mean": 0.5898662434511973,
+          "sample_std": null
+        },
+        "ci": {
+          "mean": 0.8787993441795939,
+          "sample_std": null
+        },
+        "pearson": {
+          "mean": 0.9242376065833389,
+          "sample_std": null
+        },
+        "r2": {
+          "mean": 0.8528872384003365,
+          "sample_std": null
+        }
+      },
+      "replicates": 1,
+      "all_serving_parity_passed": true,
+      "test_evaluations": 0,
+      "iteration_budget_reached": []
+    },
+    {
+      "contract_id": "34bf3e8db49128ff8a54c04db5cf3fae12cb3553b7ef75be28b9dc17e8e4c710",
+      "contract": {
+        "data_sha256": "9a5d0a9bc7a628855f792ea3dce8e9ac025a342633bb62110d08b9ee7c47319c",
+        "dataset": "NonKinase_protease",
+        "dataset_version": "202610_v3",
+        "endpoint": "Ki",
+        "model": "deeptda",
+        "model_params": {
+          "auxiliary_dim": 1774,
+          "auxiliary_interactions": true,
+          "deduplicate_proteins": true,
+          "dropout": 0.1,
+          "drug_embed_dim": 32,
+          "drug_max_len": 200,
+          "fc_dims": [
+            512,
+            256
+          ],
+          "mask_padding": true,
+          "num_filters": 32,
+          "protein_embed_dim": 32,
+          "protein_max_len": 1500,
+          "use_protein_cnn": false
+        },
+        "protein_feature_contract": {
+          "manifest": "C:\\Users\\abhij\\Documents\\projects\\pharmalens\\data\\processed\\features\\esm2_affinity_202610_v1\\manifest.json",
+          "regression_sha256": "8f7a4557d57713b97ba0e484303007efb7230d25299c0ac47a0a1b12a87bbb9d",
+          "sha256": "6fc771b5a1dc79ca198401a0dd57cf16838fd7ee7d0129af36618e03c7c352ca"
+        },
+        "source_sha256": "0a1c1fac04cdd4adcdbc6374e88f1b5b7dadcc89594292636535c79c06081884",
+        "split": "random",
+        "split_seed": 42,
+        "training": {
+          "batch_size": 128,
+          "device": "xpu",
+          "epochs": 120,
+          "learning_rate": 0.001,
+          "normalize_targets": true,
+          "patience": 15,
+          "threads": 2,
+          "weight_decay": 0.0001
+        },
+        "validation_membership_sha256": "896c446c172b0718eb4e0eb2e34a0aacb17d503e2889268b69bcc85139128d27"
+      },
+      "model_seeds": [
+        42
+      ],
+      "runs": [
+        "expanded_esm_matrix_v1_protease_ki_random_deeptda_seed42"
+      ],
+      "validation_metrics": {
+        "rmse": {
+          "mean": 0.7507316096063174,
+          "sample_std": null
+        },
+        "mae": {
+          "mean": 0.5221454404454733,
+          "sample_std": null
+        },
+        "ci": {
+          "mean": 0.8551608060113225,
+          "sample_std": null
+        },
+        "pearson": {
+          "mean": 0.879411376906627,
+          "sample_std": null
+        },
+        "r2": {
+          "mean": 0.772679920226402,
+          "sample_std": null
+        }
+      },
+      "replicates": 1,
+      "all_serving_parity_passed": true,
+      "test_evaluations": 0,
+      "iteration_budget_reached": []
+    },
+    {
+      "contract_id": "d4542fd352ca0c160eb09edae95b07d501b01eb8a236dc04fcc6c1a1d15e43ab",
+      "contract": {
+        "data_sha256": "9a5d0a9bc7a628855f792ea3dce8e9ac025a342633bb62110d08b9ee7c47319c",
+        "dataset": "NonKinase_protease",
+        "dataset_version": "202610_v3",
+        "endpoint": "Ki",
+        "model": "gnn",
+        "model_params": {
+          "auxiliary_dim": 1774,
+          "auxiliary_interactions": true,
+          "deduplicate_proteins": true,
+          "dropout": 0.1,
+          "fc_dims": [
+            512,
+            256
+          ],
+          "gnn_hidden_dim": 128,
+          "gnn_output_dim": 128,
+          "gnn_type": "gine",
+          "mask_padding": true,
+          "protein_embed_dim": 32,
+          "protein_max_len": 1500,
+          "protein_num_filters": 32,
+          "use_protein_cnn": false
+        },
+        "protein_feature_contract": {
+          "manifest": "C:\\Users\\abhij\\Documents\\projects\\pharmalens\\data\\processed\\features\\esm2_affinity_202610_v1\\manifest.json",
+          "regression_sha256": "8f7a4557d57713b97ba0e484303007efb7230d25299c0ac47a0a1b12a87bbb9d",
+          "sha256": "6fc771b5a1dc79ca198401a0dd57cf16838fd7ee7d0129af36618e03c7c352ca"
+        },
+        "source_sha256": "0a1c1fac04cdd4adcdbc6374e88f1b5b7dadcc89594292636535c79c06081884",
+        "split": "random",
+        "split_seed": 42,
+        "training": {
+          "batch_size": 128,
+          "device": "xpu",
+          "epochs": 120,
+          "learning_rate": 0.0005,
+          "normalize_targets": true,
+          "patience": 15,
+          "threads": 2,
+          "weight_decay": 0.0001
+        },
+        "validation_membership_sha256": "896c446c172b0718eb4e0eb2e34a0aacb17d503e2889268b69bcc85139128d27"
+      },
+      "model_seeds": [
+        42
+      ],
+      "runs": [
+        "expanded_esm_matrix_v1_protease_ki_random_gnn_seed42"
+      ],
+      "validation_metrics": {
+        "rmse": {
+          "mean": 0.7489822694039113,
+          "sample_std": null
+        },
+        "mae": {
+          "mean": 0.5273169069083797,
+          "sample_std": null
+        },
+        "ci": {
+          "mean": 0.8539387515901934,
+          "sample_std": null
+        },
+        "pearson": {
+          "mean": 0.8804153064149729,
+          "sample_std": null
+        },
+        "r2": {
+          "mean": 0.7737380795986704,
+          "sample_std": null
+        }
+      },
+      "replicates": 1,
+      "all_serving_parity_passed": true,
+      "test_evaluations": 0,
+      "iteration_budget_reached": []
+    },
+    {
+      "contract_id": "d6608d48462eac6b4c052cdd522a3c6247325d5edaa7388b6e28894bce0858cb",
+      "contract": {
+        "data_sha256": "9a5d0a9bc7a628855f792ea3dce8e9ac025a342633bb62110d08b9ee7c47319c",
+        "dataset": "NonKinase_protease",
+        "dataset_version": "202610_v3",
+        "endpoint": "Ki",
+        "model": "xgboost",
+        "model_params": {
+          "early_stopping_rounds": 60,
+          "learning_rate": 0.03,
+          "max_depth": 9,
+          "n_estimators": 1800,
+          "n_jobs": 4
+        },
+        "protein_feature_contract": {
+          "manifest": "C:\\Users\\abhij\\Documents\\projects\\pharmalens\\data\\processed\\features\\esm2_affinity_202610_v1\\manifest.json",
+          "regression_sha256": "8f7a4557d57713b97ba0e484303007efb7230d25299c0ac47a0a1b12a87bbb9d",
+          "sha256": "6fc771b5a1dc79ca198401a0dd57cf16838fd7ee7d0129af36618e03c7c352ca"
+        },
+        "source_sha256": "0a1c1fac04cdd4adcdbc6374e88f1b5b7dadcc89594292636535c79c06081884",
+        "split": "random",
+        "split_seed": 42,
+        "training": {
+          "threads": 4
+        },
+        "validation_membership_sha256": "896c446c172b0718eb4e0eb2e34a0aacb17d503e2889268b69bcc85139128d27"
+      },
+      "model_seeds": [
+        42
+      ],
+      "runs": [
+        "expanded_esm_matrix_v1_protease_ki_random_xgboost_seed42"
+      ],
+      "validation_metrics": {
+        "rmse": {
+          "mean": 0.7267332334442204,
+          "sample_std": null
+        },
+        "mae": {
+          "mean": 0.5251335327310538,
+          "sample_std": null
+        },
+        "ci": {
+          "mean": 0.8568087441553919,
+          "sample_std": null
+        },
+        "pearson": {
+          "mean": 0.8872097392537325,
+          "sample_std": null
+        },
+        "r2": {
+          "mean": 0.7869809531709905,
+          "sample_std": null
+        }
+      },
+      "replicates": 1,
+      "all_serving_parity_passed": true,
+      "test_evaluations": 0,
+      "iteration_budget_reached": []
+    },
+    {
+      "contract_id": "bc8a7a8be3344e3eea65b7643415c36d7a9121130066eda4248a695f6c92e1be",
+      "contract": {
+        "data_sha256": "60bdcdea6572a8e2c9627af011e94ce7da02e076cd8feb2337ae1d62fe01a54e",
+        "dataset": "NonKinase_transporter",
+        "dataset_version": "202610_v3",
+        "endpoint": "Ki",
+        "model": "deeptda",
+        "model_params": {
+          "auxiliary_dim": 1774,
+          "auxiliary_interactions": true,
+          "deduplicate_proteins": true,
+          "dropout": 0.1,
+          "drug_embed_dim": 32,
+          "drug_max_len": 200,
+          "fc_dims": [
+            512,
+            256
+          ],
+          "mask_padding": true,
+          "num_filters": 32,
+          "protein_embed_dim": 32,
+          "protein_max_len": 1500,
+          "use_protein_cnn": false
+        },
+        "protein_feature_contract": {
+          "manifest": "C:\\Users\\abhij\\Documents\\projects\\pharmalens\\data\\processed\\features\\esm2_affinity_202610_v1\\manifest.json",
+          "regression_sha256": "8f7a4557d57713b97ba0e484303007efb7230d25299c0ac47a0a1b12a87bbb9d",
+          "sha256": "6fc771b5a1dc79ca198401a0dd57cf16838fd7ee7d0129af36618e03c7c352ca"
+        },
+        "source_sha256": "0a1c1fac04cdd4adcdbc6374e88f1b5b7dadcc89594292636535c79c06081884",
+        "split": "random",
+        "split_seed": 42,
+        "training": {
+          "batch_size": 128,
+          "device": "xpu",
+          "epochs": 120,
+          "learning_rate": 0.001,
+          "normalize_targets": true,
+          "patience": 15,
+          "threads": 2,
+          "weight_decay": 0.0001
+        },
+        "validation_membership_sha256": "24f9c58b5a6cdcf5d6a69180dee432a8b66fbe92edaa28063614fe3c25f73856"
+      },
+      "model_seeds": [
+        42
+      ],
+      "runs": [
+        "expanded_esm_matrix_v1_transporter_ki_random_deeptda_seed42"
+      ],
+      "validation_metrics": {
+        "rmse": {
+          "mean": 0.6978181810469652,
+          "sample_std": null
+        },
+        "mae": {
+          "mean": 0.508145040176083,
+          "sample_std": null
+        },
+        "ci": {
+          "mean": 0.8488650757520362,
+          "sample_std": null
+        },
+        "pearson": {
+          "mean": 0.89586009742411,
+          "sample_std": null
+        },
+        "r2": {
+          "mean": 0.8024462364685977,
+          "sample_std": null
+        }
+      },
+      "replicates": 1,
+      "all_serving_parity_passed": true,
+      "test_evaluations": 0,
+      "iteration_budget_reached": []
+    },
+    {
+      "contract_id": "2a51a38c4c68a278a9ab669b586aaab5ff3ca4d84a7b2fed2799fbefbe854111",
+      "contract": {
+        "data_sha256": "60bdcdea6572a8e2c9627af011e94ce7da02e076cd8feb2337ae1d62fe01a54e",
+        "dataset": "NonKinase_transporter",
+        "dataset_version": "202610_v3",
+        "endpoint": "Ki",
+        "model": "gnn",
+        "model_params": {
+          "auxiliary_dim": 1774,
+          "auxiliary_interactions": true,
+          "deduplicate_proteins": true,
+          "dropout": 0.1,
+          "fc_dims": [
+            512,
+            256
+          ],
+          "gnn_hidden_dim": 128,
+          "gnn_output_dim": 128,
+          "gnn_type": "gine",
+          "mask_padding": true,
+          "protein_embed_dim": 32,
+          "protein_max_len": 1500,
+          "protein_num_filters": 32,
+          "use_protein_cnn": false
+        },
+        "protein_feature_contract": {
+          "manifest": "C:\\Users\\abhij\\Documents\\projects\\pharmalens\\data\\processed\\features\\esm2_affinity_202610_v1\\manifest.json",
+          "regression_sha256": "8f7a4557d57713b97ba0e484303007efb7230d25299c0ac47a0a1b12a87bbb9d",
+          "sha256": "6fc771b5a1dc79ca198401a0dd57cf16838fd7ee7d0129af36618e03c7c352ca"
+        },
+        "source_sha256": "0a1c1fac04cdd4adcdbc6374e88f1b5b7dadcc89594292636535c79c06081884",
+        "split": "random",
+        "split_seed": 42,
+        "training": {
+          "batch_size": 128,
+          "device": "xpu",
+          "epochs": 120,
+          "learning_rate": 0.0005,
+          "normalize_targets": true,
+          "patience": 15,
+          "threads": 2,
+          "weight_decay": 0.0001
+        },
+        "validation_membership_sha256": "24f9c58b5a6cdcf5d6a69180dee432a8b66fbe92edaa28063614fe3c25f73856"
+      },
+      "model_seeds": [
+        42
+      ],
+      "runs": [
+        "expanded_esm_matrix_v1_transporter_ki_random_gnn_seed42"
+      ],
+      "validation_metrics": {
+        "rmse": {
+          "mean": 0.6959545748515263,
+          "sample_std": null
+        },
+        "mae": {
+          "mean": 0.5073552149385182,
+          "sample_std": null
+        },
+        "ci": {
+          "mean": 0.8501966038367823,
+          "sample_std": null
+        },
+        "pearson": {
+          "mean": 0.8963991895281336,
+          "sample_std": null
+        },
+        "r2": {
+          "mean": 0.8035000089753627,
+          "sample_std": null
+        }
+      },
+      "replicates": 1,
+      "all_serving_parity_passed": true,
+      "test_evaluations": 0,
+      "iteration_budget_reached": []
+    },
+    {
+      "contract_id": "0d04158453c4294a6e62520cb12a4f4b5e274e85f8cd7f59fff37edb3e214d2d",
+      "contract": {
+        "data_sha256": "60bdcdea6572a8e2c9627af011e94ce7da02e076cd8feb2337ae1d62fe01a54e",
+        "dataset": "NonKinase_transporter",
+        "dataset_version": "202610_v3",
+        "endpoint": "Ki",
+        "model": "xgboost",
+        "model_params": {
+          "early_stopping_rounds": 60,
+          "learning_rate": 0.03,
+          "max_depth": 9,
+          "n_estimators": 1800,
+          "n_jobs": 4
+        },
+        "protein_feature_contract": {
+          "manifest": "C:\\Users\\abhij\\Documents\\projects\\pharmalens\\data\\processed\\features\\esm2_affinity_202610_v1\\manifest.json",
+          "regression_sha256": "8f7a4557d57713b97ba0e484303007efb7230d25299c0ac47a0a1b12a87bbb9d",
+          "sha256": "6fc771b5a1dc79ca198401a0dd57cf16838fd7ee7d0129af36618e03c7c352ca"
+        },
+        "source_sha256": "0a1c1fac04cdd4adcdbc6374e88f1b5b7dadcc89594292636535c79c06081884",
+        "split": "random",
+        "split_seed": 42,
+        "training": {
+          "threads": 4
+        },
+        "validation_membership_sha256": "24f9c58b5a6cdcf5d6a69180dee432a8b66fbe92edaa28063614fe3c25f73856"
+      },
+      "model_seeds": [
+        42
+      ],
+      "runs": [
+        "expanded_esm_matrix_v1_transporter_ki_random_xgboost_seed42"
+      ],
+      "validation_metrics": {
+        "rmse": {
+          "mean": 0.6694914346875311,
+          "sample_std": null
+        },
+        "mae": {
+          "mean": 0.48912633657502247,
+          "sample_std": null
+        },
+        "ci": {
+          "mean": 0.8608228819975988,
+          "sample_std": null
+        },
+        "pearson": {
+          "mean": 0.9053821483564912,
+          "sample_std": null
+        },
+        "r2": {
+          "mean": 0.818159424544105,
+          "sample_std": null
+        }
+      },
+      "replicates": 1,
+      "all_serving_parity_passed": true,
+      "test_evaluations": 0,
+      "iteration_budget_reached": []
+    },
+    {
+      "contract_id": "c84e026db564d441eacff64fa9a0dc0a2135fa05bbeb4d6493e230bbebc45594",
+      "contract": {
+        "data_sha256": "3d2d60a2b7eb7d3c56ba55dbd43a800910c26ac6da9c6234e626b97b3afd9e80",
+        "dataset": "KIBA",
+        "dataset_version": "identity_v2",
+        "endpoint": "KIBA",
+        "model": "deeptda",
+        "model_params": {
+          "auxiliary_dim": 1774,
+          "auxiliary_interactions": true,
+          "deduplicate_proteins": true,
+          "dropout": 0.1,
+          "drug_embed_dim": 64,
+          "drug_max_len": 150,
+          "fc_dims": [
+            512,
+            256
+          ],
+          "mask_padding": true,
+          "num_filters": 32,
+          "protein_embed_dim": 64,
+          "protein_max_len": 1500,
+          "use_protein_cnn": false
+        },
+        "protein_feature_contract": {
+          "manifest": "C:\\Users\\abhij\\Documents\\projects\\pharmalens\\data\\processed\\features\\esm2_kiba_202610_v1\\manifest.json",
+          "regression_sha256": "8f7a4557d57713b97ba0e484303007efb7230d25299c0ac47a0a1b12a87bbb9d",
+          "sha256": "34032d33c4a05c66553b36f97e7951d5ea06d381d519e14110afc8a2c5c4ab85"
+        },
+        "source_sha256": "0a1c1fac04cdd4adcdbc6374e88f1b5b7dadcc89594292636535c79c06081884",
+        "split": "random",
+        "split_seed": 42,
+        "training": {
+          "batch_size": 128,
+          "device": "xpu",
+          "epochs": 160,
+          "learning_rate": 0.001,
+          "normalize_targets": true,
+          "patience": 20,
+          "threads": 2,
+          "weight_decay": 0.0001
+        },
+        "validation_membership_sha256": "50a67903ae0fc114afb0dbb0dbfba30ebd04dd6e573d1c357cd3756965ad1ab4"
+      },
+      "model_seeds": [
+        42
+      ],
+      "runs": [
+        "kiba_deeptda_esm_v1_seed42"
+      ],
+      "validation_metrics": {
+        "rmse": {
+          "mean": 0.38634304775560785,
+          "sample_std": null
+        },
+        "mae": {
+          "mean": 0.2078855483539115,
+          "sample_std": null
+        },
+        "ci": {
+          "mean": 0.8901124061757602,
+          "sample_std": null
+        },
+        "pearson": {
+          "mean": 0.8886041342874581,
+          "sample_std": null
+        },
+        "r2": {
+          "mean": 0.7886250636346384,
+          "sample_std": null
+        }
+      },
+      "replicates": 1,
+      "all_serving_parity_passed": true,
+      "test_evaluations": 0,
+      "iteration_budget_reached": []
+    },
+    {
+      "contract_id": "82cef9d5c5fca6e47bb7af90731bb3df47a593efe202e2ab8d2f4dbda6f70f86",
+      "contract": {
+        "data_sha256": "3d2d60a2b7eb7d3c56ba55dbd43a800910c26ac6da9c6234e626b97b3afd9e80",
+        "dataset": "KIBA",
+        "dataset_version": "identity_v2",
+        "endpoint": "KIBA",
+        "model": "gnn",
+        "model_params": {
+          "auxiliary_dim": 1774,
+          "auxiliary_interactions": true,
+          "deduplicate_proteins": true,
+          "dropout": 0.1,
+          "fc_dims": [
+            512,
+            256
+          ],
+          "gnn_hidden_dim": 128,
+          "gnn_output_dim": 128,
+          "gnn_type": "gine",
+          "mask_padding": true,
+          "protein_embed_dim": 64,
+          "protein_max_len": 1500,
+          "protein_num_filters": 32,
+          "use_protein_cnn": false
+        },
+        "protein_feature_contract": {
+          "manifest": "C:\\Users\\abhij\\Documents\\projects\\pharmalens\\data\\processed\\features\\esm2_kiba_202610_v1\\manifest.json",
+          "regression_sha256": "8f7a4557d57713b97ba0e484303007efb7230d25299c0ac47a0a1b12a87bbb9d",
+          "sha256": "34032d33c4a05c66553b36f97e7951d5ea06d381d519e14110afc8a2c5c4ab85"
+        },
+        "source_sha256": "0a1c1fac04cdd4adcdbc6374e88f1b5b7dadcc89594292636535c79c06081884",
+        "split": "random",
+        "split_seed": 42,
+        "training": {
+          "batch_size": 128,
+          "device": "xpu",
+          "epochs": 160,
+          "learning_rate": 0.0005,
+          "normalize_targets": true,
+          "patience": 20,
+          "threads": 2,
+          "weight_decay": 0.0001
+        },
+        "validation_membership_sha256": "50a67903ae0fc114afb0dbb0dbfba30ebd04dd6e573d1c357cd3756965ad1ab4"
+      },
+      "model_seeds": [
+        42
+      ],
+      "runs": [
+        "kiba_gnn_esm_v1_seed42"
+      ],
+      "validation_metrics": {
+        "rmse": {
+          "mean": 0.38596763441555393,
+          "sample_std": null
+        },
+        "mae": {
+          "mean": 0.20460489635415505,
+          "sample_std": null
+        },
+        "ci": {
+          "mean": 0.8922573627338004,
+          "sample_std": null
+        },
+        "pearson": {
+          "mean": 0.8886948367092211,
+          "sample_std": null
+        },
+        "r2": {
+          "mean": 0.7890356542602193,
+          "sample_std": null
+        }
+      },
+      "replicates": 1,
+      "all_serving_parity_passed": true,
+      "test_evaluations": 0,
+      "iteration_budget_reached": []
+    },
+    {
+      "contract_id": "3d0337a105344c8c73e657f1aa70aa7391980bccf084ea1c2c7f0dfed3548f01",
+      "contract": {
+        "data_sha256": "3d2d60a2b7eb7d3c56ba55dbd43a800910c26ac6da9c6234e626b97b3afd9e80",
+        "dataset": "KIBA",
+        "dataset_version": "identity_v2",
+        "endpoint": "KIBA",
+        "model": "xgboost",
+        "model_params": {
+          "early_stopping_rounds": 40,
+          "learning_rate": 0.05,
+          "max_depth": 7,
+          "n_estimators": 1000,
+          "n_jobs": 4
+        },
+        "protein_feature_contract": null,
+        "source_sha256": "82051aa62458df9c3fb01a2200313802ea65f3cfd6949c2546c21d01221d8b1d",
+        "split": "random",
+        "split_seed": 42,
+        "training": {
+          "threads": 4
+        },
+        "validation_membership_sha256": "50a67903ae0fc114afb0dbb0dbfba30ebd04dd6e573d1c357cd3756965ad1ab4"
+      },
+      "model_seeds": [
+        42
+      ],
+      "runs": [
+        "kiba_identity_v2_xgb_seed42"
+      ],
+      "validation_metrics": {
+        "rmse": {
+          "mean": 0.4632863257686516,
+          "sample_std": null
+        },
+        "mae": {
+          "mean": 0.2984754461728819,
+          "sample_std": null
+        },
+        "ci": {
+          "mean": 0.8398960723103635,
+          "sample_std": null
+        },
+        "pearson": {
+          "mean": 0.8381028674006085,
+          "sample_std": null
+        },
+        "r2": {
+          "mean": 0.6960471285207055,
+          "sample_std": null
+        }
+      },
+      "replicates": 1,
+      "all_serving_parity_passed": true,
+      "test_evaluations": 0,
+      "iteration_budget_reached": []
+    },
+    {
+      "contract_id": "c962185c6ea82f85e1fcec33d34b0582a7e0bff0255762136489b7d2205772d0",
+      "contract": {
+        "data_sha256": "3d2d60a2b7eb7d3c56ba55dbd43a800910c26ac6da9c6234e626b97b3afd9e80",
+        "dataset": "KIBA",
+        "dataset_version": "identity_v2",
+        "endpoint": "KIBA",
+        "model": "xgboost",
+        "model_params": {
+          "early_stopping_rounds": 60,
+          "learning_rate": 0.03,
+          "max_depth": 9,
+          "n_estimators": 1800,
+          "n_jobs": 4
+        },
+        "protein_feature_contract": {
+          "manifest": "C:\\Users\\abhij\\Documents\\projects\\pharmalens\\data\\processed\\features\\esm2_kiba_202610_v1\\manifest.json",
+          "regression_sha256": "8f7a4557d57713b97ba0e484303007efb7230d25299c0ac47a0a1b12a87bbb9d",
+          "sha256": "34032d33c4a05c66553b36f97e7951d5ea06d381d519e14110afc8a2c5c4ab85"
+        },
+        "source_sha256": "0a1c1fac04cdd4adcdbc6374e88f1b5b7dadcc89594292636535c79c06081884",
+        "split": "random",
+        "split_seed": 42,
+        "training": {
+          "threads": 4
+        },
+        "validation_membership_sha256": "50a67903ae0fc114afb0dbb0dbfba30ebd04dd6e573d1c357cd3756965ad1ab4"
+      },
+      "model_seeds": [
+        42
+      ],
+      "runs": [
+        "kiba_xgboost_esm_v1_seed42"
+      ],
+      "validation_metrics": {
+        "rmse": {
+          "mean": 0.42783992915614694,
+          "sample_std": null
+        },
+        "mae": {
+          "mean": 0.26782672650035116,
+          "sample_std": null
+        },
+        "ci": {
+          "mean": 0.8577535779079654,
+          "sample_std": null
+        },
+        "pearson": {
+          "mean": 0.8632255076908142,
+          "sample_std": null
+        },
+        "r2": {
+          "mean": 0.7407791596713496,
+          "sample_std": null
+        }
+      },
+      "replicates": 1,
+      "all_serving_parity_passed": true,
+      "test_evaluations": 0,
+      "iteration_budget_reached": [
+        "kiba_xgboost_esm_v1_seed42"
+      ]
+    },
+    {
+      "contract_id": "a460ba728786032ef94c0813e1209fdaeb9c56c54a712b7ae01d8533ca8ff02d",
+      "contract": {
+        "data_sha256": "8d7d531268400ea6e0623898285665ca7c1ce9ddea2d975f1287ab96b21161f5",
+        "dataset": "NonKinasePanel",
+        "dataset_version": "202610_v2",
+        "endpoint": "Kd",
+        "model": "deeptda",
+        "model_params": {
+          "auxiliary_dim": 1454,
+          "deduplicate_proteins": true,
+          "dropout": 0.1,
+          "drug_embed_dim": 64,
+          "drug_max_len": 150,
+          "fc_dims": [
+            512,
+            256
+          ],
+          "mask_padding": true,
+          "num_filters": 32,
+          "protein_embed_dim": 64,
+          "protein_max_len": 1500
+        },
+        "protein_feature_contract": null,
+        "source_sha256": "e265d729db86ce986602c35ba35417270eec00295876ae587e0e172e3b9759e6",
+        "split": "random",
+        "split_seed": 42,
+        "training": {
+          "batch_size": 64,
+          "epochs": 80,
+          "learning_rate": 0.001,
+          "normalize_targets": true,
+          "patience": 15,
+          "threads": 2,
+          "weight_decay": 0.0001
+        },
+        "validation_membership_sha256": "8ff675a8d84b7700fdc9c6a4be1d7d00dda81246017b2cbc918b8a2560d72302"
+      },
+      "model_seeds": [
+        42
+      ],
+      "runs": [
+        "nonkinase_kd_cnn_v2_seed42"
+      ],
+      "validation_metrics": {
+        "rmse": {
+          "mean": 1.0244193800788763,
+          "sample_std": null
+        },
+        "mae": {
+          "mean": 0.7122288724897519,
+          "sample_std": null
+        },
+        "ci": {
+          "mean": 0.8103744277305428,
+          "sample_std": null
+        },
+        "pearson": {
+          "mean": 0.8157728637222167,
+          "sample_std": null
+        },
+        "r2": {
+          "mean": 0.6615647721203035,
+          "sample_std": null
+        }
+      },
+      "replicates": 1,
+      "all_serving_parity_passed": true,
+      "test_evaluations": 0,
+      "iteration_budget_reached": []
+    },
+    {
+      "contract_id": "9f1be89b62362e97524066ca20d5ae272302ee09027f865cdd984855e99f2c9a",
+      "contract": {
+        "data_sha256": "8d7d531268400ea6e0623898285665ca7c1ce9ddea2d975f1287ab96b21161f5",
+        "dataset": "NonKinasePanel",
+        "dataset_version": "202610_v2",
+        "endpoint": "Kd",
+        "model": "gnn",
+        "model_params": {
+          "auxiliary_dim": 1454,
+          "deduplicate_proteins": true,
+          "dropout": 0.1,
+          "fc_dims": [
+            512,
+            256
+          ],
+          "gnn_hidden_dim": 128,
+          "gnn_output_dim": 128,
+          "gnn_type": "gine",
+          "mask_padding": true,
+          "protein_embed_dim": 64,
+          "protein_max_len": 1500,
+          "protein_num_filters": 32
+        },
+        "protein_feature_contract": null,
+        "source_sha256": "e265d729db86ce986602c35ba35417270eec00295876ae587e0e172e3b9759e6",
+        "split": "random",
+        "split_seed": 42,
+        "training": {
+          "batch_size": 64,
+          "epochs": 80,
+          "learning_rate": 0.0005,
+          "normalize_targets": true,
+          "patience": 15,
+          "threads": 2,
+          "weight_decay": 0.0001
+        },
+        "validation_membership_sha256": "8ff675a8d84b7700fdc9c6a4be1d7d00dda81246017b2cbc918b8a2560d72302"
+      },
+      "model_seeds": [
+        42
+      ],
+      "runs": [
+        "nonkinase_kd_gine_v2_seed42"
+      ],
+      "validation_metrics": {
+        "rmse": {
+          "mean": 0.990559334453245,
+          "sample_std": null
+        },
+        "mae": {
+          "mean": 0.6851814091394386,
+          "sample_std": null
+        },
+        "ci": {
+          "mean": 0.822351209941138,
+          "sample_std": null
+        },
+        "pearson": {
+          "mean": 0.8292168089467996,
+          "sample_std": null
+        },
+        "r2": {
+          "mean": 0.683567574219305,
+          "sample_std": null
+        }
+      },
+      "replicates": 1,
+      "all_serving_parity_passed": true,
+      "test_evaluations": 0,
+      "iteration_budget_reached": []
+    },
+    {
+      "contract_id": "11a55e3baa6634b60fb79a877854b8f7ca10c7d71c2aeb0afd43b56cc07e42ce",
+      "contract": {
+        "data_sha256": "8d7d531268400ea6e0623898285665ca7c1ce9ddea2d975f1287ab96b21161f5",
+        "dataset": "NonKinasePanel",
+        "dataset_version": "202610_v2",
+        "endpoint": "Kd",
+        "model": "xgboost",
+        "model_params": {
+          "early_stopping_rounds": 30,
+          "learning_rate": 0.05,
+          "max_depth": 7,
+          "n_estimators": 500,
+          "n_jobs": 4
+        },
+        "protein_feature_contract": null,
+        "source_sha256": "e265d729db86ce986602c35ba35417270eec00295876ae587e0e172e3b9759e6",
+        "split": "random",
+        "split_seed": 42,
+        "training": {
+          "threads": 2
+        },
+        "validation_membership_sha256": "8ff675a8d84b7700fdc9c6a4be1d7d00dda81246017b2cbc918b8a2560d72302"
+      },
+      "model_seeds": [
+        42
+      ],
+      "runs": [
+        "nonkinase_kd_xgb_v2_seed42"
+      ],
+      "validation_metrics": {
+        "rmse": {
+          "mean": 0.9393085056656288,
+          "sample_std": null
+        },
+        "mae": {
+          "mean": 0.6300781321419172,
+          "sample_std": null
+        },
+        "ci": {
+          "mean": 0.8406229561805101,
+          "sample_std": null
+        },
+        "pearson": {
+          "mean": 0.8478995653204896,
+          "sample_std": null
+        },
+        "r2": {
+          "mean": 0.7154644724421387,
+          "sample_std": null
+        }
+      },
+      "replicates": 1,
+      "all_serving_parity_passed": true,
+      "test_evaluations": 0,
+      "iteration_budget_reached": []
+    },
+    {
+      "contract_id": "accacc48e4d954543fadeaed47fc9c4369167b360a3dcf13e680314173ebf2c1",
+      "contract": {
+        "data_sha256": "98cecca326526874bc57bdc6894422c9db9e110e1fc46acb31221faae688930b",
+        "dataset": "NonKinaseBroad",
+        "dataset_version": "202610_v3",
+        "endpoint": "Kd",
+        "model": "xgboost",
+        "model_params": {
+          "early_stopping_rounds": 60,
+          "learning_rate": 0.03,
+          "max_depth": 9,
+          "n_estimators": 1800,
+          "n_jobs": 4
+        },
+        "protein_feature_contract": null,
+        "source_sha256": "e265d729db86ce986602c35ba35417270eec00295876ae587e0e172e3b9759e6",
+        "split": "random",
+        "split_seed": 42,
+        "training": {
+          "threads": 4
+        },
+        "validation_membership_sha256": "a98668d7f0d4632301508699c13da9003414fac24c194c40ecbf77d551081930"
+      },
+      "model_seeds": [
+        42
+      ],
+      "runs": [
+        "nonkinase_kd_xgb_v3_seed42"
+      ],
+      "validation_metrics": {
+        "rmse": {
+          "mean": 1.0174374509321573,
+          "sample_std": null
+        },
+        "mae": {
+          "mean": 0.7609128048647152,
+          "sample_std": null
+        },
+        "ci": {
+          "mean": 0.8113483614465727,
+          "sample_std": null
+        },
+        "pearson": {
+          "mean": 0.822097454405898,
+          "sample_std": null
+        },
+        "r2": {
+          "mean": 0.6756987607592246,
+          "sample_std": null
+        }
+      },
+      "replicates": 1,
+      "all_serving_parity_passed": true,
+      "test_evaluations": 0,
+      "iteration_budget_reached": []
+    },
+    {
+      "contract_id": "cc6284a5581e14427a6325efa67a90df280206797c7f903fcd317dbcbba01d33",
+      "contract": {
+        "data_sha256": "1965691400bf0b41388c5448e3447e8f05165987921d9867aca387df334889ea",
+        "dataset": "NonKinasePanel",
+        "dataset_version": "202610_v1",
+        "endpoint": "Ki",
+        "model": "deeptda",
+        "model_params": {
+          "auxiliary_dim": 1454,
+          "deduplicate_proteins": true,
+          "dropout": 0.1,
+          "drug_embed_dim": 64,
+          "drug_max_len": 150,
+          "fc_dims": [
+            512,
+            256
+          ],
+          "mask_padding": true,
+          "num_filters": 32,
+          "protein_embed_dim": 64,
+          "protein_max_len": 1500
+        },
+        "protein_feature_contract": null,
+        "source_sha256": "e265d729db86ce986602c35ba35417270eec00295876ae587e0e172e3b9759e6",
+        "split": "random",
+        "split_seed": 42,
+        "training": {
+          "batch_size": 64,
+          "epochs": 160,
+          "learning_rate": 0.001,
+          "normalize_targets": true,
+          "patience": 20,
+          "threads": 4,
+          "weight_decay": 0.0001
+        },
+        "validation_membership_sha256": "2872f500cf3783f02d483e543e2fba5538b87b2a84d450bf08956eb994b90f16"
+      },
+      "model_seeds": [
+        42
+      ],
+      "runs": [
+        "nonkinase_ki_cnn_hybrid_seed42"
+      ],
+      "validation_metrics": {
+        "rmse": {
+          "mean": 0.7944857334611023,
+          "sample_std": null
+        },
+        "mae": {
+          "mean": 0.5642993175753436,
+          "sample_std": null
+        },
+        "ci": {
+          "mean": 0.818180327968381,
+          "sample_std": null
+        },
+        "pearson": {
+          "mean": 0.8166773414794831,
+          "sample_std": null
+        },
+        "r2": {
+          "mean": 0.6644362670591416,
+          "sample_std": null
+        }
+      },
+      "replicates": 1,
+      "all_serving_parity_passed": true,
+      "test_evaluations": 0,
+      "iteration_budget_reached": []
+    },
+    {
+      "contract_id": "9f662cd38247134c25b910a1168de303c3daf13b2851b774af32bc88d0641a8e",
+      "contract": {
+        "data_sha256": "1965691400bf0b41388c5448e3447e8f05165987921d9867aca387df334889ea",
+        "dataset": "NonKinasePanel",
+        "dataset_version": "202610_v1",
+        "endpoint": "Ki",
+        "model": "deeptda",
+        "model_params": {
+          "deduplicate_proteins": true,
+          "dropout": 0.2,
+          "drug_embed_dim": 64,
+          "drug_max_len": 150,
+          "fc_dims": [
+            512,
+            256
+          ],
+          "mask_padding": true,
+          "num_filters": 64,
+          "protein_embed_dim": 64,
+          "protein_max_len": 1500
+        },
+        "protein_feature_contract": null,
+        "source_sha256": "377bc658ad3c092b33677598914f21808e7bb318ab2897954dfb1854108bcc88",
+        "split": "random",
+        "split_seed": 42,
+        "training": {
+          "batch_size": 64,
+          "epochs": 40,
+          "learning_rate": 0.001,
+          "normalize_targets": true,
+          "patience": 8,
+          "threads": 4,
+          "weight_decay": 0.0001
+        },
+        "validation_membership_sha256": "2872f500cf3783f02d483e543e2fba5538b87b2a84d450bf08956eb994b90f16"
+      },
+      "model_seeds": [
+        42
+      ],
+      "runs": [
+        "nonkinase_ki_cnn_pilot_seed42"
+      ],
+      "validation_metrics": {
+        "rmse": {
+          "mean": 0.8534004200457586,
+          "sample_std": null
+        },
+        "mae": {
+          "mean": 0.625161220323819,
+          "sample_std": null
+        },
+        "ci": {
+          "mean": 0.7982023058569252,
+          "sample_std": null
+        },
+        "pearson": {
+          "mean": 0.7857792687515643,
+          "sample_std": null
+        },
+        "r2": {
+          "mean": 0.6128239225843792,
+          "sample_std": null
+        }
+      },
+      "replicates": 1,
+      "all_serving_parity_passed": true,
+      "test_evaluations": 0,
+      "iteration_budget_reached": []
+    },
+    {
+      "contract_id": "d6eadd16776a4a9b108b026c86de60bb05b900f8f39733d99ab6664b80c10748",
+      "contract": {
+        "data_sha256": "1965691400bf0b41388c5448e3447e8f05165987921d9867aca387df334889ea",
+        "dataset": "NonKinasePanel",
+        "dataset_version": "202610_v1",
+        "endpoint": "Ki",
+        "model": "gnn",
+        "model_params": {
+          "auxiliary_dim": 1454,
+          "deduplicate_proteins": true,
+          "dropout": 0.1,
+          "fc_dims": [
+            512,
+            256
+          ],
+          "gnn_hidden_dim": 128,
+          "gnn_output_dim": 128,
+          "gnn_type": "gine",
+          "mask_padding": true,
+          "protein_embed_dim": 64,
+          "protein_max_len": 1500,
+          "protein_num_filters": 32
+        },
+        "protein_feature_contract": null,
+        "source_sha256": "e265d729db86ce986602c35ba35417270eec00295876ae587e0e172e3b9759e6",
+        "split": "random",
+        "split_seed": 42,
+        "training": {
+          "batch_size": 64,
+          "epochs": 160,
+          "learning_rate": 0.0005,
+          "normalize_targets": true,
+          "patience": 20,
+          "threads": 4,
+          "weight_decay": 0.0001
+        },
+        "validation_membership_sha256": "2872f500cf3783f02d483e543e2fba5538b87b2a84d450bf08956eb994b90f16"
+      },
+      "model_seeds": [
+        42
+      ],
+      "runs": [
+        "nonkinase_ki_gine_hybrid_seed42"
+      ],
+      "validation_metrics": {
+        "rmse": {
+          "mean": 0.7957098936627715,
+          "sample_std": null
+        },
+        "mae": {
+          "mean": 0.5707306732609697,
+          "sample_std": null
+        },
+        "ci": {
+          "mean": 0.8169271026221685,
+          "sample_std": null
+        },
+        "pearson": {
+          "mean": 0.8150663473414531,
+          "sample_std": null
+        },
+        "r2": {
+          "mean": 0.6634013831794774,
+          "sample_std": null
+        }
+      },
+      "replicates": 1,
+      "all_serving_parity_passed": true,
+      "test_evaluations": 0,
+      "iteration_budget_reached": []
+    },
+    {
+      "contract_id": "966c979e63610ddbce4dc27137282dbec7afa75348b88a767a27f77156f0285e",
+      "contract": {
+        "data_sha256": "1965691400bf0b41388c5448e3447e8f05165987921d9867aca387df334889ea",
+        "dataset": "NonKinasePanel",
+        "dataset_version": "202610_v1",
+        "endpoint": "Ki",
+        "model": "gnn",
+        "model_params": {
+          "deduplicate_proteins": true,
+          "dropout": 0.2,
+          "fc_dims": [
+            512,
+            256
+          ],
+          "gnn_hidden_dim": 128,
+          "gnn_output_dim": 128,
+          "gnn_type": "gine",
+          "mask_padding": true,
+          "protein_embed_dim": 64,
+          "protein_max_len": 1500,
+          "protein_num_filters": 64
+        },
+        "protein_feature_contract": null,
+        "source_sha256": "377bc658ad3c092b33677598914f21808e7bb318ab2897954dfb1854108bcc88",
+        "split": "random",
+        "split_seed": 42,
+        "training": {
+          "batch_size": 64,
+          "epochs": 40,
+          "learning_rate": 0.0005,
+          "normalize_targets": true,
+          "patience": 8,
+          "threads": 4,
+          "weight_decay": 0.0001
+        },
+        "validation_membership_sha256": "2872f500cf3783f02d483e543e2fba5538b87b2a84d450bf08956eb994b90f16"
+      },
+      "model_seeds": [
+        42
+      ],
+      "runs": [
+        "nonkinase_ki_gine_pilot_seed42"
+      ],
+      "validation_metrics": {
+        "rmse": {
+          "mean": 0.861573403447202,
+          "sample_std": null
+        },
+        "mae": {
+          "mean": 0.6541526425269651,
+          "sample_std": null
+        },
+        "ci": {
+          "mean": 0.7946275597865352,
+          "sample_std": null
+        },
+        "pearson": {
+          "mean": 0.7822164782243448,
+          "sample_std": null
+        },
+        "r2": {
+          "mean": 0.605372470322374,
+          "sample_std": null
+        }
+      },
+      "replicates": 1,
+      "all_serving_parity_passed": true,
+      "test_evaluations": 0,
+      "iteration_budget_reached": []
+    },
+    {
+      "contract_id": "9970e8f006277b1a116363b86447a2a133c2b420fb641860ba95dcaa7d4c8d9e",
+      "contract": {
+        "data_sha256": "1965691400bf0b41388c5448e3447e8f05165987921d9867aca387df334889ea",
+        "dataset": "NonKinasePanel",
+        "dataset_version": "202610_v1",
+        "endpoint": "Ki",
+        "model": "xgboost",
+        "model_params": {
+          "early_stopping_rounds": 30,
+          "learning_rate": 0.05,
+          "max_depth": 7,
+          "n_estimators": 500,
+          "n_jobs": 4
+        },
+        "protein_feature_contract": null,
+        "source_sha256": "377bc658ad3c092b33677598914f21808e7bb318ab2897954dfb1854108bcc88",
+        "split": "random",
+        "split_seed": 42,
+        "training": {
+          "threads": 4
+        },
+        "validation_membership_sha256": "2872f500cf3783f02d483e543e2fba5538b87b2a84d450bf08956eb994b90f16"
+      },
+      "model_seeds": [
+        42,
+        123,
+        456
+      ],
+      "runs": [
+        "nonkinase_ki_xgb_final_seed123",
+        "nonkinase_ki_xgb_final_seed42",
+        "nonkinase_ki_xgb_final_seed456"
+      ],
+      "validation_metrics": {
+        "rmse": {
+          "mean": 0.8094176109944441,
+          "sample_std": 0.001797207903593421
+        },
+        "mae": {
+          "mean": 0.6108963847103851,
+          "sample_std": 0.0011003149466576288
+        },
+        "ci": {
+          "mean": 0.8106882155209224,
+          "sample_std": 0.000369095564318041
+        },
+        "pearson": {
+          "mean": 0.8121495821393291,
+          "sample_std": 0.001345412627678675
+        },
+        "r2": {
+          "mean": 0.6517031576906219,
+          "sample_std": 0.0015474106710737538
+        }
+      },
+      "replicates": 3,
+      "all_serving_parity_passed": true,
+      "test_evaluations": 0,
+      "iteration_budget_reached": [
+        "nonkinase_ki_xgb_final_seed123",
+        "nonkinase_ki_xgb_final_seed42",
+        "nonkinase_ki_xgb_final_seed456"
+      ]
+    },
+    {
+      "contract_id": "b03a063d508cc3fa33aa9077ed2da7fd0675c06fafb4ccbb1486242bd7805368",
+      "contract": {
+        "data_sha256": "1965691400bf0b41388c5448e3447e8f05165987921d9867aca387df334889ea",
+        "dataset": "NonKinasePanel",
+        "dataset_version": "202610_v1",
+        "endpoint": "Ki",
+        "model": "xgboost",
+        "model_params": {
+          "early_stopping_rounds": 60,
+          "learning_rate": 0.03,
+          "max_depth": 5,
+          "n_estimators": 1800,
+          "n_jobs": 4
+        },
+        "protein_feature_contract": null,
+        "source_sha256": "e265d729db86ce986602c35ba35417270eec00295876ae587e0e172e3b9759e6",
+        "split": "random",
+        "split_seed": 42,
+        "training": {
+          "threads": 4
+        },
+        "validation_membership_sha256": "2872f500cf3783f02d483e543e2fba5538b87b2a84d450bf08956eb994b90f16"
+      },
+      "model_seeds": [
+        42
+      ],
+      "runs": [
+        "nonkinase_ki_xgb_search0_seed42"
+      ],
+      "validation_metrics": {
+        "rmse": {
+          "mean": 0.813389729209218,
+          "sample_std": null
+        },
+        "mae": {
+          "mean": 0.6123608384947775,
+          "sample_std": null
+        },
+        "ci": {
+          "mean": 0.8086285676123635,
+          "sample_std": null
+        },
+        "pearson": {
+          "mean": 0.8086101564724959,
+          "sample_std": null
+        },
+        "r2": {
+          "mean": 0.6482774773320455,
+          "sample_std": null
+        }
+      },
+      "replicates": 1,
+      "all_serving_parity_passed": true,
+      "test_evaluations": 0,
+      "iteration_budget_reached": [
+        "nonkinase_ki_xgb_search0_seed42"
+      ]
+    },
+    {
+      "contract_id": "6db66d0d21e55b6fbd433b5b26316ba4871cdbdb4bf698ccc5598f836987fb8d",
+      "contract": {
+        "data_sha256": "1965691400bf0b41388c5448e3447e8f05165987921d9867aca387df334889ea",
+        "dataset": "NonKinasePanel",
+        "dataset_version": "202610_v1",
+        "endpoint": "Ki",
+        "model": "xgboost",
+        "model_params": {
+          "early_stopping_rounds": 60,
+          "learning_rate": 0.03,
+          "max_depth": 7,
+          "n_estimators": 1800,
+          "n_jobs": 4
+        },
+        "protein_feature_contract": null,
+        "source_sha256": "e265d729db86ce986602c35ba35417270eec00295876ae587e0e172e3b9759e6",
+        "split": "random",
+        "split_seed": 42,
+        "training": {
+          "threads": 4
+        },
+        "validation_membership_sha256": "2872f500cf3783f02d483e543e2fba5538b87b2a84d450bf08956eb994b90f16"
+      },
+      "model_seeds": [
+        42
+      ],
+      "runs": [
+        "nonkinase_ki_xgb_search1_seed42"
+      ],
+      "validation_metrics": {
+        "rmse": {
+          "mean": 0.7713964415890383,
+          "sample_std": null
+        },
+        "mae": {
+          "mean": 0.5703098186666666,
+          "sample_std": null
+        },
+        "ci": {
+          "mean": 0.8203769025748129,
+          "sample_std": null
+        },
+        "pearson": {
+          "mean": 0.8279762744090156,
+          "sample_std": null
+        },
+        "r2": {
+          "mean": 0.683657113325224,
+          "sample_std": null
+        }
+      },
+      "replicates": 1,
+      "all_serving_parity_passed": true,
+      "test_evaluations": 0,
+      "iteration_budget_reached": [
+        "nonkinase_ki_xgb_search1_seed42"
+      ]
+    },
+    {
+      "contract_id": "8a7096831354e7f1c39d2dae83a613db7c24880024f9d8fe1819ad8874d571de",
+      "contract": {
+        "data_sha256": "1965691400bf0b41388c5448e3447e8f05165987921d9867aca387df334889ea",
+        "dataset": "NonKinasePanel",
+        "dataset_version": "202610_v1",
+        "endpoint": "Ki",
+        "model": "xgboost",
+        "model_params": {
+          "early_stopping_rounds": 60,
+          "learning_rate": 0.03,
+          "max_depth": 9,
+          "n_estimators": 1800,
+          "n_jobs": 4
+        },
+        "protein_feature_contract": null,
+        "source_sha256": "e265d729db86ce986602c35ba35417270eec00295876ae587e0e172e3b9759e6",
+        "split": "random",
+        "split_seed": 42,
+        "training": {
+          "threads": 4
+        },
+        "validation_membership_sha256": "2872f500cf3783f02d483e543e2fba5538b87b2a84d450bf08956eb994b90f16"
+      },
+      "model_seeds": [
+        42
+      ],
+      "runs": [
+        "nonkinase_ki_xgb_search2_seed42"
+      ],
+      "validation_metrics": {
+        "rmse": {
+          "mean": 0.7604492436857613,
+          "sample_std": null
+        },
+        "mae": {
+          "mean": 0.5541907879482987,
+          "sample_std": null
+        },
+        "ci": {
+          "mean": 0.8242564248896552,
+          "sample_std": null
+        },
+        "pearson": {
+          "mean": 0.833018598984129,
+          "sample_std": null
+        },
+        "r2": {
+          "mean": 0.6925721020442087,
+          "sample_std": null
+        }
+      },
+      "replicates": 1,
+      "all_serving_parity_passed": true,
+      "test_evaluations": 0,
+      "iteration_budget_reached": []
+    },
+    {
+      "contract_id": "2394cccbf3346c3b74db51cf9cff22db6a96f5f7de600f26b43f0a41ba5d42fa",
+      "contract": {
+        "data_sha256": "1965691400bf0b41388c5448e3447e8f05165987921d9867aca387df334889ea",
+        "dataset": "NonKinasePanel",
+        "dataset_version": "202610_v1",
+        "endpoint": "Ki",
+        "model": "xgboost",
+        "model_params": {
+          "early_stopping_rounds": 30,
+          "learning_rate": 0.05,
+          "max_depth": 7,
+          "n_estimators": 500,
+          "n_jobs": 4
+        },
+        "protein_feature_contract": null,
+        "source_sha256": "a6bc8be44a268481b3cff2388323417eb85b104326b79ef409509ca009031c37",
+        "split": "random",
+        "split_seed": 42,
+        "training": {
+          "threads": 4
+        },
+        "validation_membership_sha256": "2872f500cf3783f02d483e543e2fba5538b87b2a84d450bf08956eb994b90f16"
+      },
+      "model_seeds": [
+        42
+      ],
+      "runs": [
+        "nonkinase_ki_xgb_seed42"
+      ],
+      "validation_metrics": {
+        "rmse": {
+          "mean": 0.808863392615717,
+          "sample_std": null
+        },
+        "mae": {
+          "mean": 0.6121617008588264,
+          "sample_std": null
+        },
+        "ci": {
+          "mean": 0.8108312134587247,
+          "sample_std": null
+        },
+        "pearson": {
+          "mean": 0.8124567112010145,
+          "sample_std": null
+        },
+        "r2": {
+          "mean": 0.6521811039974559,
+          "sample_std": null
+        }
+      },
+      "replicates": 1,
+      "all_serving_parity_passed": true,
+      "test_evaluations": 0,
+      "iteration_budget_reached": [
+        "nonkinase_ki_xgb_seed42"
+      ]
+    },
+    {
+      "contract_id": "808600c300df728e9ecc344177766dcaf1505e684fcca95e1d2c0306da532fa4",
+      "contract": {
+        "data_sha256": "f0bcd19ca1dabaf6e1c108f453bde336c94f10a34627f643d1b08cd69319e515",
+        "dataset": "NonKinaseBroad",
+        "dataset_version": "202610_v3",
+        "endpoint": "Ki",
+        "model": "xgboost",
+        "model_params": {
+          "early_stopping_rounds": 60,
+          "learning_rate": 0.03,
+          "max_depth": 9,
+          "n_estimators": 1800,
+          "n_jobs": 4
+        },
+        "protein_feature_contract": null,
+        "source_sha256": "e265d729db86ce986602c35ba35417270eec00295876ae587e0e172e3b9759e6",
+        "split": "random",
+        "split_seed": 42,
+        "training": {
+          "threads": 4
+        },
+        "validation_membership_sha256": "ac09b848ac30a8ab5d973ee34329d004f317ab3430405e2256015eceaf1297dc"
+      },
+      "model_seeds": [
+        42
+      ],
+      "runs": [
+        "nonkinase_ki_xgb_v3_seed42"
+      ],
+      "validation_metrics": {
+        "rmse": {
+          "mean": 0.7601517676366948,
+          "sample_std": null
+        },
+        "mae": {
+          "mean": 0.5684130075475575,
+          "sample_std": null
+        },
+        "ci": {
+          "mean": 0.8353212527344894,
+          "sample_std": null
+        },
+        "pearson": {
+          "mean": 0.8571712383226506,
+          "sample_std": null
+        },
+        "r2": {
+          "mean": 0.728918033148942,
+          "sample_std": null
+        }
+      },
+      "replicates": 1,
+      "all_serving_parity_passed": true,
+      "test_evaluations": 0,
+      "iteration_budget_reached": [
+        "nonkinase_ki_xgb_v3_seed42"
+      ]
+    },
+    {
+      "contract_id": "349a40900cada5f5c643457d3a10fb921b2b4c3fdf0b09257f7daeba49cf01e3",
+      "contract": {
+        "data_sha256": "1965691400bf0b41388c5448e3447e8f05165987921d9867aca387df334889ea",
+        "dataset": "NonKinasePanel",
+        "dataset_version": "202610_v1",
+        "endpoint": "Ki",
+        "model": "deeptda",
+        "model_params": {
+          "auxiliary_dim": 1774,
+          "auxiliary_interactions": true,
+          "deduplicate_proteins": true,
+          "dropout": 0.1,
+          "drug_embed_dim": 64,
+          "drug_max_len": 150,
+          "fc_dims": [
+            512,
+            256
+          ],
+          "mask_padding": true,
+          "num_filters": 32,
+          "protein_embed_dim": 64,
+          "protein_max_len": 1500,
+          "use_protein_cnn": false
+        },
+        "protein_feature_contract": {
+          "manifest": "C:\\Users\\abhij\\Documents\\projects\\pharmalens\\data\\processed\\features\\esm2_affinity_202610_v1\\manifest.json",
+          "regression_sha256": "8f7a4557d57713b97ba0e484303007efb7230d25299c0ac47a0a1b12a87bbb9d",
+          "sha256": "6fc771b5a1dc79ca198401a0dd57cf16838fd7ee7d0129af36618e03c7c352ca"
+        },
+        "source_sha256": "0a1c1fac04cdd4adcdbc6374e88f1b5b7dadcc89594292636535c79c06081884",
+        "split": "random",
+        "split_seed": 42,
+        "training": {
+          "batch_size": 128,
+          "device": "xpu",
+          "epochs": 120,
+          "learning_rate": 0.001,
+          "normalize_targets": true,
+          "patience": 20,
+          "threads": 2,
+          "weight_decay": 0.0001
+        },
+        "validation_membership_sha256": "2872f500cf3783f02d483e543e2fba5538b87b2a84d450bf08956eb994b90f16"
+      },
+      "model_seeds": [
+        42
+      ],
+      "runs": [
+        "original_panel_deeptda_esm_v1_seed42"
+      ],
+      "validation_metrics": {
+        "rmse": {
+          "mean": 0.8053610832112083,
+          "sample_std": null
+        },
+        "mae": {
+          "mean": 0.5686633528047356,
+          "sample_std": null
+        },
+        "ci": {
+          "mean": 0.815415728154161,
+          "sample_std": null
+        },
+        "pearson": {
+          "mean": 0.8112109884186678,
+          "sample_std": null
+        },
+        "r2": {
+          "mean": 0.655186635257553,
+          "sample_std": null
+        }
+      },
+      "replicates": 1,
+      "all_serving_parity_passed": true,
+      "test_evaluations": 0,
+      "iteration_budget_reached": []
+    },
+    {
+      "contract_id": "8b39638ff11dcc28dcf41340c73ca198490f7181bed9e3658573e86f0dbef7e0",
+      "contract": {
+        "data_sha256": "1965691400bf0b41388c5448e3447e8f05165987921d9867aca387df334889ea",
+        "dataset": "NonKinasePanel",
+        "dataset_version": "202610_v1",
+        "endpoint": "Ki",
+        "model": "gnn",
+        "model_params": {
+          "auxiliary_dim": 1774,
+          "auxiliary_interactions": true,
+          "deduplicate_proteins": true,
+          "dropout": 0.1,
+          "fc_dims": [
+            512,
+            256
+          ],
+          "gnn_hidden_dim": 128,
+          "gnn_output_dim": 128,
+          "gnn_type": "gine",
+          "mask_padding": true,
+          "protein_embed_dim": 64,
+          "protein_max_len": 1500,
+          "protein_num_filters": 32,
+          "use_protein_cnn": false
+        },
+        "protein_feature_contract": {
+          "manifest": "C:\\Users\\abhij\\Documents\\projects\\pharmalens\\data\\processed\\features\\esm2_affinity_202610_v1\\manifest.json",
+          "regression_sha256": "8f7a4557d57713b97ba0e484303007efb7230d25299c0ac47a0a1b12a87bbb9d",
+          "sha256": "6fc771b5a1dc79ca198401a0dd57cf16838fd7ee7d0129af36618e03c7c352ca"
+        },
+        "source_sha256": "0a1c1fac04cdd4adcdbc6374e88f1b5b7dadcc89594292636535c79c06081884",
+        "split": "random",
+        "split_seed": 42,
+        "training": {
+          "batch_size": 128,
+          "device": "xpu",
+          "epochs": 120,
+          "learning_rate": 0.0005,
+          "normalize_targets": true,
+          "patience": 20,
+          "threads": 2,
+          "weight_decay": 0.0001
+        },
+        "validation_membership_sha256": "2872f500cf3783f02d483e543e2fba5538b87b2a84d450bf08956eb994b90f16"
+      },
+      "model_seeds": [
+        42
+      ],
+      "runs": [
+        "original_panel_gnn_esm_v1_seed42"
+      ],
+      "validation_metrics": {
+        "rmse": {
+          "mean": 0.7908084221311478,
+          "sample_std": null
+        },
+        "mae": {
+          "mean": 0.5671868753942259,
+          "sample_std": null
+        },
+        "ci": {
+          "mean": 0.8165296792563945,
+          "sample_std": null
+        },
+        "pearson": {
+          "mean": 0.8178179730571536,
+          "sample_std": null
+        },
+        "r2": {
+          "mean": 0.6675354204316657,
+          "sample_std": null
+        }
+      },
+      "replicates": 1,
+      "all_serving_parity_passed": true,
+      "test_evaluations": 0,
+      "iteration_budget_reached": []
+    },
+    {
+      "contract_id": "905c9cb9e489683d919ac02c107c55466ff01c9cbd56d226b95d3f7fe14b8a7d",
+      "contract": {
+        "data_sha256": "1965691400bf0b41388c5448e3447e8f05165987921d9867aca387df334889ea",
+        "dataset": "NonKinasePanel",
+        "dataset_version": "202610_v1",
+        "endpoint": "Ki",
+        "model": "xgboost",
+        "model_params": {
+          "early_stopping_rounds": 60,
+          "learning_rate": 0.03,
+          "max_depth": 9,
+          "n_estimators": 1800,
+          "n_jobs": 4
+        },
+        "protein_feature_contract": {
+          "manifest": "C:\\Users\\abhij\\Documents\\projects\\pharmalens\\data\\processed\\features\\esm2_affinity_202610_v1\\manifest.json",
+          "regression_sha256": "8f7a4557d57713b97ba0e484303007efb7230d25299c0ac47a0a1b12a87bbb9d",
+          "sha256": "6fc771b5a1dc79ca198401a0dd57cf16838fd7ee7d0129af36618e03c7c352ca"
+        },
+        "source_sha256": "0a1c1fac04cdd4adcdbc6374e88f1b5b7dadcc89594292636535c79c06081884",
+        "split": "random",
+        "split_seed": 42,
+        "training": {
+          "threads": 4
+        },
+        "validation_membership_sha256": "2872f500cf3783f02d483e543e2fba5538b87b2a84d450bf08956eb994b90f16"
+      },
+      "model_seeds": [
+        42
+      ],
+      "runs": [
+        "original_panel_xgboost_esm_v1_seed42"
+      ],
+      "validation_metrics": {
+        "rmse": {
+          "mean": 0.7588897501094437,
+          "sample_std": null
+        },
+        "mae": {
+          "mean": 0.5481978204942443,
+          "sample_std": null
+        },
+        "ci": {
+          "mean": 0.8255063717663058,
+          "sample_std": null
+        },
+        "pearson": {
+          "mean": 0.8337459126227262,
+          "sample_std": null
+        },
+        "r2": {
+          "mean": 0.6938317265040475,
+          "sample_std": null
+        }
+      },
+      "replicates": 1,
+      "all_serving_parity_passed": true,
+      "test_evaluations": 0,
+      "iteration_budget_reached": []
+    },
+    {
+      "contract_id": "76674b02218a4b43c7ab4ebd8d76aa3b36431265ccd1006b612d6d6f8c41e983",
+      "contract": {
+        "data_sha256": "65d1ddd2d1cd4624c7a384c08ce8b3058a6b547447da5883d066911c8c004ad3",
+        "dataset": "BindingDB_PDSPKi",
+        "dataset_version": "202610_prepared_v1",
+        "endpoint": "Ki",
+        "model": "xgboost",
+        "model_params": {
+          "early_stopping_rounds": 30,
+          "learning_rate": 0.05,
+          "max_depth": 7,
+          "n_estimators": 500,
+          "n_jobs": 4
+        },
+        "protein_feature_contract": null,
+        "source_sha256": "9714cc0446aa113ec153784bca04ce47d8dabd6b50c4954f9a36ceb872d03a6c",
+        "split": "random",
+        "split_seed": 42,
+        "training": {
+          "threads": 4
+        },
+        "validation_membership_sha256": "f8f148e923ddfdb9a8f9d757d7f1a7e40d3dcda08382b658668bd4641b76f307"
+      },
+      "model_seeds": [
+        123,
+        456
+      ],
+      "runs": [
+        "pdsp_ki_xgb_seed123",
+        "pdsp_ki_xgb_seed456"
+      ],
+      "validation_metrics": {
+        "rmse": {
+          "mean": 0.9126690580149559,
+          "sample_std": 0.005693093450607544
+        },
+        "mae": {
+          "mean": 0.7180054172327098,
+          "sample_std": 0.0029541508376730577
+        },
+        "ci": {
+          "mean": 0.7734848493647182,
+          "sample_std": 0.00137655798766202
+        },
+        "pearson": {
+          "mean": 0.7442837827705577,
+          "sample_std": 0.0040292192662452694
+        },
+        "r2": {
+          "mean": 0.5469139296824768,
+          "sample_std": 0.005652456678310899
+        }
+      },
+      "replicates": 2,
+      "all_serving_parity_passed": true,
+      "test_evaluations": 0,
+      "iteration_budget_reached": [
+        "pdsp_ki_xgb_seed123"
+      ]
+    },
+    {
+      "contract_id": "9cfac87c251a121f9ece2cc7cf1a97d77c7bbed5dbec3f7edb128c85da2baf40",
+      "contract": {
+        "data_sha256": "65d1ddd2d1cd4624c7a384c08ce8b3058a6b547447da5883d066911c8c004ad3",
+        "dataset": "BindingDB_PDSPKi",
+        "dataset_version": "202610_prepared_v1",
+        "endpoint": "Ki",
+        "model": "xgboost",
+        "model_params": {
+          "early_stopping_rounds": 30,
+          "learning_rate": 0.05,
+          "max_depth": 7,
+          "n_estimators": 500,
+          "n_jobs": 4
+        },
+        "protein_feature_contract": null,
+        "source_sha256": "82051aa62458df9c3fb01a2200313802ea65f3cfd6949c2546c21d01221d8b1d",
+        "split": "random",
+        "split_seed": 42,
+        "training": {
+          "threads": 4
+        },
+        "validation_membership_sha256": "f8f148e923ddfdb9a8f9d757d7f1a7e40d3dcda08382b658668bd4641b76f307"
+      },
+      "model_seeds": [
+        42
+      ],
+      "runs": [
+        "pdsp_ki_xgb_seed42"
+      ],
+      "validation_metrics": {
+        "rmse": {
+          "mean": 0.9115353306309391,
+          "sample_std": null
+        },
+        "mae": {
+          "mean": 0.7148143586042967,
+          "sample_std": null
+        },
+        "ci": {
+          "mean": 0.7744646107067406,
+          "sample_std": null
+        },
+        "pearson": {
+          "mean": 0.7448335437914844,
+          "sample_std": null
+        },
+        "r2": {
+          "mean": 0.5480476802831773,
+          "sample_std": null
+        }
+      },
+      "replicates": 1,
+      "all_serving_parity_passed": true,
+      "test_evaluations": 0,
+      "iteration_budget_reached": []
+    }
+  ],
+  "smoke_checks_excluded_from_model_ranking": [
+    {
+      "run": "nonkinase_cnn_esm_xpu_smoke_v1",
+      "status": "smoke_complete",
+      "serving_parity": true
+    },
+    {
+      "run": "nonkinase_gine_esm_xpu_smoke_v1",
+      "status": "smoke_complete",
+      "serving_parity": true
+    },
+    {
+      "run": "nonkinase_ki_cnn_smoke_seed42",
+      "status": "smoke_complete",
+      "serving_parity": true
+    },
+    {
+      "run": "nonkinase_ki_gine_smoke_seed42",
+      "status": "smoke_complete",
+      "serving_parity": true
+    }
+  ],
+  "primary_model_selected": false,
+  "limitations": "Seed variation is not a confidence interval or proof of architecture superiority; different label scales and splits are not ranked together"
+}

@@ -1,14 +1,16 @@
 # PharmaLens — Dataset Plan
 
+> Completed expansion (31 October 2026): the full BindingDB release yielded 330,904 curated Ki/Kd observations across 1,638 non-kinase proteins and six target families. All 57 new benchmark runs and their separate held-out evaluations are complete. See [expansion and reproducibility](docs/RESEARCH_EXPANSION.md) and the [complete benchmark](results/reports/final_benchmark_v1.md). The original planning notes below include additional proposed datasets; they are not a record of datasets already trained.
+
 ## Primary Dataset: KIBA
 
 ### Overview
-KIBA (Kinase Inhibitor BioActivity) integrates bioactivity data from multiple sources (Ki, Kd, IC50) into a single unified score called the **KIBA score**. Higher KIBA scores indicate weaker binding (less interaction).
+KIBA (Kinase Inhibitor BioActivity) integrates bioactivity data from multiple sources (Ki, Kd, IC50) into a single unified score called the **KIBA score**. The DeepDTA benchmark uses transformed scores with higher values indicating stronger binding. Raw and transformed KIBA conventions must be distinguished in dataset metadata.
 
 ### Source
-- **Origin**: He et al., 2017 — "SimBoost: a read-across approach for predicting drug–target binding affinities using gradient boosting machines"
+- **Original KIBA method**: Tang et al., 2014; benchmark preprocessing: He et al., 2017 — "SimBoost: a read-across approach for predicting drug–target binding affinities using gradient boosting machines"
 - **Common download**: [DeepDTA GitHub](https://github.com/hkmztrk/DeepDTA/tree/master/data) or [Therapeutics Data Commons (TDC)](https://tdcommons.ai/multi_pred_tasks/dti/)
-- **License**: Academic/research use
+- **License**: Record the terms for the exact downloaded release; academic intent alone does not establish a dataset license.
 
 ### Expected Format
 ```
@@ -32,9 +34,9 @@ data/raw/kiba/
 > **IMPORTANT**: These numbers are approximate. The actual values must be computed from the downloaded data and reported in Notebook 01.
 
 ### KIBA Score Interpretation
-- **Low KIBA score** → Strong binding / high affinity
-- **High KIBA score** → Weak binding / low affinity
-- Common threshold for "active": KIBA < 12.1 (median), but this is dataset-dependent
+- **Transformed DeepDTA KIBA: higher score** → Stronger binding / higher affinity.
+- The literature uses 12.1 as an activity threshold for this transformed benchmark; it is not a universal median or concentration cutoff. Define the boundary rule explicitly before evaluation.
+- Verify source release and transformation against the committed CSV before correcting runtime ranking. See [DeepDTA source documentation](https://github.com/hkmztrk/DeepDTA/blob/master/data/README.md) and [SimBoost preprocessing](https://pmc.ncbi.nlm.nih.gov/articles/5395521/).
 
 ---
 

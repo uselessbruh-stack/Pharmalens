@@ -1,0 +1,22 @@
+{
+  "dataset": "NonKinasePanel",
+  "dataset_version": "202610_v1",
+  "endpoint": "Ki",
+  "input": "data/processed/prepared/nonkinase_ki_202610_v1/Ki.csv",
+  "preprocessing_version": "standardized_v1",
+  "model": "xgboost",
+  "model_params": {
+    "n_estimators": 500,
+    "max_depth": 7,
+    "learning_rate": 0.05,
+    "early_stopping_rounds": 30,
+    "n_jobs": 4
+  },
+  "split": "random",
+  "split_seed": 42,
+  "seed": 42,
+  "training": {
+    "threads": 4
+  },
+  "smoke": false
+}

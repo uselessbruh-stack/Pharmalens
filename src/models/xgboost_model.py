@@ -5,11 +5,10 @@ XGBoost wrapper with SHAP explainability support for DTI prediction.
 """
 
 import logging
+import json
 import time
 from pathlib import Path
-from typing import Optional
 
-import numpy as np
 import xgboost as xgb
 from sklearn.base import BaseEstimator, RegressorMixin
 
@@ -37,6 +36,7 @@ class XGBoostDTI(BaseEstimator, RegressorMixin):
         random_state: int = 42,
         n_jobs: int = -1,
         early_stopping_rounds: int = 50,
+        protein_embedding_cache=None,
     ):
         self.n_estimators = n_estimators
         self.max_depth = max_depth
@@ -49,6 +49,7 @@ class XGBoostDTI(BaseEstimator, RegressorMixin):
         self.random_state = random_state
         self.n_jobs = n_jobs
         self.early_stopping_rounds = early_stopping_rounds
+        self.protein_embedding_cache = protein_embedding_cache
 
         self.model = None
         self.training_time = None
@@ -69,6 +70,9 @@ class XGBoostDTI(BaseEstimator, RegressorMixin):
             n_jobs=self.n_jobs,
             tree_method="hist",
             verbosity=0,
+            early_stopping_rounds=self.early_stopping_rounds
+            if X_val is not None and y_val is not None
+            else None,
         )
 
         fit_params = {}
@@ -81,7 +85,9 @@ class XGBoostDTI(BaseEstimator, RegressorMixin):
         self.training_time = time.time() - t_start
 
         self.best_iteration = getattr(self.model, "best_iteration", self.n_estimators)
-        logger.info(f"XGBoost trained in {self.training_time:.1f}s (best_iter={self.best_iteration})")
+        logger.info(
+            f"XGBoost trained in {self.training_time:.1f}s (best_iter={self.best_iteration})"
+        )
 
         return self
 
@@ -97,6 +103,11 @@ class XGBoostDTI(BaseEstimator, RegressorMixin):
         """Save the model."""
         path = Path(path)
         path.parent.mkdir(parents=True, exist_ok=True)
+        self.model.get_booster().set_attr(
+            pharmalens_protein_embedding_cache=json.dumps(self.protein_embedding_cache)
+            if self.protein_embedding_cache
+            else None
+        )
         self.model.save_model(str(path))
         logger.info(f"XGBoost model saved to {path}")
 
@@ -104,6 +115,8 @@ class XGBoostDTI(BaseEstimator, RegressorMixin):
         """Load a saved model."""
         self.model = xgb.XGBRegressor()
         self.model.load_model(str(path))
+        metadata = self.model.get_booster().attr("pharmalens_protein_embedding_cache")
+        self.protein_embedding_cache = json.loads(metadata) if metadata else None
         logger.info(f"XGBoost model loaded from {path}")
         return self
 

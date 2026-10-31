@@ -6,13 +6,108 @@ for evaluating DTI prediction models on different generalization scenarios.
 """
 
 import logging
-from typing import Optional
+from functools import lru_cache
 
 import numpy as np
 import pandas as pd
 from sklearn.model_selection import train_test_split
 
 logger = logging.getLogger("pharmalens.evaluation.splits")
+
+
+@lru_cache(maxsize=100000)
+def scaffold_identity(smiles):
+    from rdkit import Chem
+    from rdkit.Chem.Scaffolds import MurckoScaffold
+
+    molecule = Chem.MolFromSmiles(smiles)
+    if molecule is None:
+        raise ValueError("Scaffold split requires valid standardized SMILES")
+    # Acyclic compounds share the empty Murcko scaffold; never disperse that
+    # group across partitions just to obtain convenient row fractions.
+    return MurckoScaffold.MurckoScaffoldSmiles(mol=molecule, includeChirality=False)
+
+
+def grouped_domain_split(df, strategy, seed=42, train_ratio=0.8, val_ratio=0.1, test_ratio=0.1):
+    if strategy == "scaffold":
+        groups = df.smiles.map(scaffold_identity)
+    elif strategy == "family":
+        if (
+            "family" not in df
+            or df.family.isin(["", "unclassified"]).any()
+            or df.family.isna().any()
+        ):
+            raise ValueError("Family holdout requires verified family annotations for every row")
+        groups = df.family
+    else:
+        raise ValueError("Unknown grouped domain strategy")
+    identities = _partition(groups, train_ratio, val_ratio, test_ratio, seed)
+    parts = tuple(df[groups.isin(values)].reset_index(drop=True) for values in identities)
+    validate_split_integrity(*parts, strategy)
+    return parts
+
+
+def _validate_ratios(train_ratio, val_ratio, test_ratio):
+    ratios = np.asarray([train_ratio, val_ratio, test_ratio], dtype=float)
+    if not np.isfinite(ratios).all() or (ratios <= 0).any() or not np.isclose(ratios.sum(), 1):
+        raise ValueError("Train, validation and test ratios must be positive and sum to 1")
+
+
+def _identity_column(df, kind, fallback):
+    # Data must be chemically standardized before splitting. Clean SMILES and
+    # exact sequences prevent aliases in source IDs from leaking across splits.
+    column = "smiles" if kind == "drug" else "sequence"
+    column = column if column in df.columns else fallback
+    if (
+        column not in df.columns
+        or df[column].isna().any()
+        or df[column].astype(str).str.strip().eq("").any()
+    ):
+        raise ValueError(f"Missing or empty {kind} identity column: {column}")
+    return column
+
+
+def _partition(values, train_ratio, val_ratio, test_ratio, seed):
+    _validate_ratios(train_ratio, val_ratio, test_ratio)
+    values = np.array(sorted(set(values)), dtype=object)
+    if len(values) < 3:
+        raise ValueError("At least three distinct identity groups are required")
+    np.random.RandomState(seed).shuffle(values)
+    n_test = max(1, int(len(values) * test_ratio))
+    n_val = max(1, int(len(values) * val_ratio))
+    n_train = len(values) - n_test - n_val
+    if n_train < 1:
+        raise ValueError("Ratios leave no training identity groups")
+    return (
+        set(values[:n_train]),
+        set(values[n_train : n_train + n_val]),
+        set(values[n_train + n_val :]),
+    )
+
+
+def validate_split_integrity(
+    train, val, test, strategy="random", drug_col="drug_id", target_col="target_id"
+):
+    """Fail on repeated pair identities or held-out entity leakage."""
+    frames = [train, val, test]
+    if any(frame.empty for frame in frames):
+        raise ValueError("A split partition is empty; revise group allocation or collect more data")
+    dc = _identity_column(train, "drug", drug_col)
+    tc = _identity_column(train, "target", target_col)
+    for left, right in [(0, 1), (0, 2), (1, 2)]:
+        a, b = frames[left], frames[right]
+        if set(zip(a[dc], a[tc])) & set(zip(b[dc], b[tc])):
+            raise ValueError("Interaction identity leakage across partitions")
+        if strategy in {"cold_drug", "cold_both"} and set(a[dc]) & set(b[dc]):
+            raise ValueError("Molecule identity leakage across partitions")
+        if strategy in {"cold_target", "cold_both"} and set(a[tc]) & set(b[tc]):
+            raise ValueError("Protein identity leakage across partitions")
+        if strategy == "scaffold" and set(a[dc].map(scaffold_identity)) & set(
+            b[dc].map(scaffold_identity)
+        ):
+            raise ValueError("Molecular scaffold leakage across partitions")
+        if strategy == "family" and set(a.family) & set(b.family):
+            raise ValueError("Protein family leakage across partitions")
 
 
 def random_split(
@@ -38,24 +133,30 @@ def random_split(
     Returns:
         tuple: (train_df, val_df, test_df)
     """
-    assert abs(train_ratio + val_ratio + test_ratio - 1.0) < 1e-6, \
-        f"Ratios must sum to 1.0, got {train_ratio + val_ratio + test_ratio}"
+    _validate_ratios(train_ratio, val_ratio, test_ratio)
+    dc = _identity_column(df, "drug", "drug_id")
+    tc = _identity_column(df, "target", "target_id")
+    # Split unique pair identities, then recover all replicates/aliases. This
+    # intentionally supersedes the historical leaky row-wise random split.
+    groups = df[[dc, tc]].drop_duplicates().sort_values([dc, tc]).reset_index(drop=True)
 
     # First split: train+val vs test
     train_val, test = train_test_split(
-        df, test_size=test_ratio, random_state=seed, shuffle=True
+        groups, test_size=test_ratio, random_state=seed, shuffle=True
     )
 
     # Second split: train vs val
     val_frac = val_ratio / (train_ratio + val_ratio)
-    train, val = train_test_split(
-        train_val, test_size=val_frac, random_state=seed, shuffle=True
-    )
+    train, val = train_test_split(train_val, test_size=val_frac, random_state=seed, shuffle=True)
 
-    logger.info(
-        f"Random split (seed={seed}): "
-        f"train={len(train)}, val={len(val)}, test={len(test)}"
-    )
+    pair_index = pd.MultiIndex.from_frame(df[[dc, tc]])
+    train, val, test = [
+        df[pair_index.isin(pd.MultiIndex.from_frame(part[[dc, tc]]))].reset_index(drop=True)
+        for part in (train, val, test)
+    ]
+    validate_split_integrity(train, val, test)
+
+    logger.info(f"Random split (seed={seed}): train={len(train)}, val={len(val)}, test={len(test)}")
 
     return (
         train.reset_index(drop=True),
@@ -91,8 +192,12 @@ def cold_drug_split(
     Returns:
         tuple: (train_df, val_df, test_df)
     """
-    unique_drugs = df[drug_col].unique()
+    drug_col = _identity_column(df, "drug", drug_col)
+    _validate_ratios(train_ratio, val_ratio, test_ratio)
+    unique_drugs = np.array(sorted(df[drug_col].unique()), dtype=object)
     n_drugs = len(unique_drugs)
+    if n_drugs < 3:
+        raise ValueError("At least three distinct molecules are required")
 
     # Split drugs (not interactions)
     rng = np.random.RandomState(seed)
@@ -103,12 +208,13 @@ def cold_drug_split(
     n_train = n_drugs - n_test - n_val
 
     train_drugs = set(unique_drugs[:n_train])
-    val_drugs = set(unique_drugs[n_train:n_train + n_val])
-    test_drugs = set(unique_drugs[n_train + n_val:])
+    val_drugs = set(unique_drugs[n_train : n_train + n_val])
+    test_drugs = set(unique_drugs[n_train + n_val :])
 
     train = df[df[drug_col].isin(train_drugs)].reset_index(drop=True)
     val = df[df[drug_col].isin(val_drugs)].reset_index(drop=True)
     test = df[df[drug_col].isin(test_drugs)].reset_index(drop=True)
+    validate_split_integrity(train, val, test, "cold_drug", drug_col=drug_col)
 
     logger.info(
         f"Cold-drug split (seed={seed}): "
@@ -152,8 +258,12 @@ def cold_target_split(
     Returns:
         tuple: (train_df, val_df, test_df)
     """
-    unique_targets = df[target_col].unique()
+    target_col = _identity_column(df, "target", target_col)
+    _validate_ratios(train_ratio, val_ratio, test_ratio)
+    unique_targets = np.array(sorted(df[target_col].unique()), dtype=object)
     n_targets = len(unique_targets)
+    if n_targets < 3:
+        raise ValueError("At least three distinct proteins are required")
 
     rng = np.random.RandomState(seed)
     rng.shuffle(unique_targets)
@@ -163,12 +273,13 @@ def cold_target_split(
     n_train = n_targets - n_test - n_val
 
     train_targets = set(unique_targets[:n_train])
-    val_targets = set(unique_targets[n_train:n_train + n_val])
-    test_targets = set(unique_targets[n_train + n_val:])
+    val_targets = set(unique_targets[n_train : n_train + n_val])
+    test_targets = set(unique_targets[n_train + n_val :])
 
     train = df[df[target_col].isin(train_targets)].reset_index(drop=True)
     val = df[df[target_col].isin(val_targets)].reset_index(drop=True)
     test = df[df[target_col].isin(test_targets)].reset_index(drop=True)
+    validate_split_integrity(train, val, test, "cold_target", target_col=target_col)
 
     logger.info(
         f"Cold-target split (seed={seed}): "
@@ -209,25 +320,14 @@ def cold_both_split(
     Returns:
         tuple: (train_df, val_df, test_df)
     """
-    unique_drugs = df[drug_col].unique()
-    unique_targets = df[target_col].unique()
-
-    rng = np.random.RandomState(seed)
-    rng.shuffle(unique_drugs)
-    rng.shuffle(unique_targets)
-
-    n_test_drugs = max(1, int(len(unique_drugs) * test_ratio))
-    n_val_drugs = max(1, int(len(unique_drugs) * val_ratio))
-    n_test_targets = max(1, int(len(unique_targets) * test_ratio))
-    n_val_targets = max(1, int(len(unique_targets) * val_ratio))
-
-    test_drugs = set(unique_drugs[:n_test_drugs])
-    val_drugs = set(unique_drugs[n_test_drugs:n_test_drugs + n_val_drugs])
-    train_drugs = set(unique_drugs[n_test_drugs + n_val_drugs:])
-
-    test_targets = set(unique_targets[:n_test_targets])
-    val_targets = set(unique_targets[n_test_targets:n_test_targets + n_val_targets])
-    train_targets = set(unique_targets[n_test_targets + n_val_targets:])
+    drug_col = _identity_column(df, "drug", drug_col)
+    target_col = _identity_column(df, "target", target_col)
+    train_drugs, val_drugs, test_drugs = _partition(
+        df[drug_col], train_ratio, val_ratio, test_ratio, seed
+    )
+    train_targets, val_targets, test_targets = _partition(
+        df[target_col], train_ratio, val_ratio, test_ratio, seed + 1
+    )
 
     # Test: both drug AND target are unseen
     test_mask = df[drug_col].isin(test_drugs) & df[target_col].isin(test_targets)
@@ -237,14 +337,16 @@ def cold_both_split(
     val_mask = df[drug_col].isin(val_drugs) & df[target_col].isin(val_targets)
     val = df[val_mask].reset_index(drop=True)
 
-    # Train: everything else (may include some interactions with val/test drugs/targets
-    # as long as not BOTH are unseen)
-    train_mask = ~(test_mask | val_mask)
+    # Cross-block pairs are excluded: the complement would expose test entities.
+    train_mask = df[drug_col].isin(train_drugs) & df[target_col].isin(train_targets)
     train = df[train_mask].reset_index(drop=True)
+    dropped = len(df) - len(train) - len(val) - len(test)
+    validate_split_integrity(train, val, test, "cold_both", drug_col, target_col)
+    for part in (train, val, test):
+        part.attrs["excluded_cross_block_rows"] = dropped
 
     logger.info(
-        f"Cold-both split (seed={seed}): "
-        f"train={len(train)}, val={len(val)}, test={len(test)}"
+        f"Cold-both split (seed={seed}): train={len(train)}, val={len(val)}, test={len(test)}"
     )
 
     return train, val, test
@@ -268,6 +370,8 @@ def get_split(
     Returns:
         tuple: (train_df, val_df, test_df)
     """
+    if strategy in {"scaffold", "family"}:
+        return grouped_domain_split(df, strategy, seed=seed, **kwargs)
     strategies = {
         "random": random_split,
         "cold_drug": cold_drug_split,
@@ -276,7 +380,9 @@ def get_split(
     }
 
     if strategy not in strategies:
-        raise ValueError(f"Unknown split strategy: '{strategy}'. Choose from {list(strategies.keys())}")
+        raise ValueError(
+            f"Unknown split strategy: '{strategy}'. Choose from {list(strategies.keys())}"
+        )
 
     return strategies[strategy](df, seed=seed, **kwargs)
 
@@ -297,6 +403,7 @@ def save_splits(
         split_name: Name prefix for files.
     """
     from pathlib import Path
+
     output_dir = Path(output_dir)
     output_dir.mkdir(parents=True, exist_ok=True)
 
@@ -322,6 +429,7 @@ def load_splits(
         tuple: (train_df, val_df, test_df)
     """
     from pathlib import Path
+
     input_dir = Path(input_dir)
 
     train = pd.read_csv(input_dir / f"{split_name}_train.csv")

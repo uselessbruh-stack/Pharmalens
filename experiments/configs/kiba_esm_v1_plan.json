@@ -1,0 +1,24 @@
+{
+  "source_sha256": "0a1c1fac04cdd4adcdbc6374e88f1b5b7dadcc89594292636535c79c06081884",
+  "jobs": [
+    {
+      "id": "kiba_xgboost_esm_seed42",
+      "config": "experiments/configs/kiba_xgboost_esm_v1.json",
+      "config_sha256": "8c4cf44ae54dec83675a151e88a38129f2992241718f9d47d60743c035cfb387",
+      "output": "experiments/runs/kiba_xgboost_esm_v1_seed42"
+    },
+    {
+      "id": "kiba_deeptda_esm_seed42",
+      "config": "experiments/configs/kiba_deeptda_esm_v1.json",
+      "config_sha256": "abcdc04f444f97bb80ea75e9a82c48ef05c47fb1ec6b21b3f00181e08fc36db9",
+      "output": "experiments/runs/kiba_deeptda_esm_v1_seed42"
+    },
+    {
+      "id": "kiba_gnn_esm_seed42",
+      "config": "experiments/configs/kiba_gnn_esm_v1.json",
+      "config_sha256": "7b15a1d17d9f3884f4f1e220ac9a2b1dfe755880079a659e1ad8faf51bf81795",
+      "output": "experiments/runs/kiba_gnn_esm_v1_seed42"
+    }
+  ],
+  "test_evaluation_requested": false
+}

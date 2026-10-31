@@ -1,0 +1,94 @@
+{
+  "created_at": "2026-10-31T02:03:34.154667+00:00",
+  "status": "passed_local_research_verification",
+  "data": {
+    "nonkinase_ki_observations": 309685,
+    "nonkinase_kd_observations": 21219,
+    "unique_nonkinase_proteins": 1638,
+    "target_families": 6,
+    "supported_family_endpoint_cohorts": 11,
+    "family_views_overlap_broad_tasks": true
+  },
+  "training": {
+    "completed_new_runs": 57,
+    "heldout_evaluated_runs": 57,
+    "recovered_publications": 1,
+    "registered_models": 69,
+    "selection_policy": "Lowest mean validation RMSE across available initialization seeds; seed 42 is the fixed serving representative, never best-seed selection",
+    "test_used_for_selection": false,
+    "selection_lock_sha256": "cea0f58eb0f0a6d846e7c86e0bb4f3db47dc88da5589a0df06d0496844a4750c",
+    "benchmark": "results/reports/final_benchmark_v1.json"
+  },
+  "checks": {
+    "pytest": {
+      "tests": 93,
+      "failures": 0,
+      "errors": 0,
+      "dependency_deprecation_warnings": 2,
+      "report": "results/reports/expanded_tests.xml"
+    },
+    "typescript": "passed",
+    "next_production_build": "passed",
+    "pip_check_cpu_and_xpu": "passed",
+    "critical_ruff_checks": "passed",
+    "remote_ci": "configured_not_run",
+    "browser_batch": {
+      "status": "passed",
+      "mixed_validity_rows": 2,
+      "partial_failure_preserved": true,
+      "browser_refresh_restored_result": true,
+      "cancelled_rows_processed": 10,
+      "retried_rows_completed": 1000,
+      "retry_attempts": 2,
+      "exported_rows": 1000,
+      "export_identifiers_and_artifact_checksum": "verified",
+      "browser_console_errors_observed": 0
+    },
+    "final_http": {
+      "health": {
+        "status": "healthy",
+        "model_loaded": true,
+        "model_name": "gnn",
+        "uptime": 4.327686786651611,
+        "jobs_ready": true
+      },
+      "static_files": {
+        "/": {
+          "nonempty": true
+        },
+        "/app.js": {
+          "nonempty": true
+        },
+        "/style.css": {
+          "nonempty": true
+        }
+      },
+      "status": "passed",
+      "actual_artifacts": 4,
+      "concurrent_requests": 16,
+      "concurrent_workers": 4,
+      "http_request_latency_seconds_p50": 0.024427600001217797,
+      "http_request_latency_seconds_p95": 0.04215180000755936,
+      "prediction_parity": true,
+      "partial_failure_json": true,
+      "production_registry_modified": false,
+      "browser_verified": false,
+      "limitations": "Local concurrent smoke test, not a capacity benchmark or browser-rendering test"
+    }
+  },
+  "evidence": {
+    "batch_browser": "experiments/runs/durable_batch_qa/report.json",
+    "serving": "experiments/runs/final_http_qa_v2/report.json",
+    "quality": "results/reports/expanded_affinity_quality.json",
+    "test_report_sha256": "9583dabb383213db339273fb4677cb1ec0f15dae413930d17962055edde58ff5",
+    "benchmark_sha256": "627feb1826cafc167d2ac959d0cee430b0c37d7a04b901ebd76717dff78cbb05"
+  },
+  "limitations": [
+    "Most tasks have one initialization seed; nuclear-receptor tasks have three.",
+    "Completed scores use identity-grouped random splits; harder holdouts and sequence-homology controls remain.",
+    "Neural improvements vary by task; nuclear validation improvements did not establish test superiority.",
+    "Neural candidates are hybrids with frozen ESM-2 and shared descriptor features.",
+    "Authentication, hosted worker isolation and sustained capacity testing remain deployment work.",
+    "Large raw data, feature caches, artifacts, run directories and job databases require separate archiving."
+  ]
+}

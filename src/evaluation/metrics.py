@@ -5,6 +5,8 @@ Unified metrics computation for DTI prediction.
 Includes regression metrics, ranking metrics, and the Concordance Index (CI).
 """
 
+from typing import Optional
+
 import numpy as np
 from scipy import stats
 from sklearn.metrics import (
@@ -12,12 +14,11 @@ from sklearn.metrics import (
     mean_squared_error,
     r2_score,
 )
-from typing import Optional
-
 
 # ==============================================================================
 # Concordance Index
 # ==============================================================================
+
 
 def concordance_index(y_true: np.ndarray, y_pred: np.ndarray) -> float:
     """
@@ -128,9 +129,53 @@ def concordance_index_fast(y_true: np.ndarray, y_pred: np.ndarray) -> float:
     return (concordant + 0.5 * tied) / total
 
 
+def concordance_index_exact(y_true, y_pred):
+    """Exact O(n log n) concordance using a Fenwick rank-count tree.
+
+    Equal labels are not comparable; equal predictions receive half credit.
+    Process equal-label groups before adding them to avoid self/group pairs.
+    """
+    truth, prediction = np.asarray(y_true).reshape(-1), np.asarray(y_pred).reshape(-1)
+    if truth.size != prediction.size or not truth.size:
+        raise ValueError("Concordance requires matching nonempty arrays")
+    if not np.isfinite(truth).all() or not np.isfinite(prediction).all():
+        raise ValueError("Concordance requires finite arrays")
+    order = np.argsort(truth, kind="stable")
+    truth = truth[order]
+    ranks = np.searchsorted(np.unique(prediction), prediction[order]) + 1
+    tree = np.zeros(int(ranks.max()) + 1, dtype=np.int64)
+
+    def prefix(index):
+        result = 0
+        while index:
+            result += int(tree[index])
+            index -= index & -index
+        return result
+
+    score, comparable, seen, start = 0.0, 0, 0, 0
+    while start < len(truth):
+        end = start + 1
+        while end < len(truth) and truth[end] == truth[start]:
+            end += 1
+        for rank in ranks[start:end]:
+            less = prefix(int(rank) - 1)
+            equal = prefix(int(rank)) - less
+            score += less + 0.5 * equal
+            comparable += seen
+        for rank in ranks[start:end]:
+            index = int(rank)
+            while index < len(tree):
+                tree[index] += 1
+                index += index & -index
+        seen += end - start
+        start = end
+    return score / comparable if comparable else float("nan")
+
+
 # ==============================================================================
 # Regression Metrics
 # ==============================================================================
+
 
 def compute_regression_metrics(
     y_true: np.ndarray,
@@ -151,39 +196,39 @@ def compute_regression_metrics(
     y_true = np.asarray(y_true).flatten()
     y_pred = np.asarray(y_pred).flatten()
 
-    assert len(y_true) == len(y_pred), (
-        f"Length mismatch: y_true={len(y_true)}, y_pred={len(y_pred)}"
-    )
-
-    # Remove NaN entries
-    mask = ~(np.isnan(y_true) | np.isnan(y_pred))
-    y_true = y_true[mask]
-    y_pred = y_pred[mask]
-
-    if len(y_true) == 0:
-        return {k: float("nan") for k in ["rmse", "mae", "mse", "pearson", "spearman", "r2", "ci"]}
+    if len(y_true) != len(y_pred) or not len(y_true):
+        raise ValueError("Labels and predictions must have matching nonempty lengths")
+    if not np.isfinite(y_true).all() or not np.isfinite(y_pred).all():
+        raise ValueError(
+            "Evaluation requires finite labels and predictions; no rows are silently excluded"
+        )
 
     mse = float(mean_squared_error(y_true, y_pred))
     rmse = float(np.sqrt(mse))
     mae = float(mean_absolute_error(y_true, y_pred))
-    r2 = float(r2_score(y_true, y_pred))
+    r2 = float(r2_score(y_true, y_pred)) if len(y_true) > 1 else float("nan")
+    if len(y_true) > 1 and np.ptp(y_true) > 0 and np.ptp(y_pred) > 0:
+        pearson_r, pearson_p = stats.pearsonr(y_true, y_pred)
+        spearman_r, spearman_p = stats.spearmanr(y_true, y_pred)
+    else:
+        pearson_r = pearson_p = spearman_r = spearman_p = float("nan")
 
-    pearson_r, pearson_p = stats.pearsonr(y_true, y_pred)
-    spearman_r, spearman_p = stats.spearmanr(y_true, y_pred)
-
-    ci_func = concordance_index_fast if use_fast_ci else concordance_index
+    # The scalable exact algorithm supersedes sampling. Keep the argument for
+    # notebook compatibility; new results identify the exact algorithm explicitly.
+    ci_func = concordance_index_exact
     ci = ci_func(y_true, y_pred)
 
     return {
-        "rmse": round(rmse, 4),
-        "mae": round(mae, 4),
-        "mse": round(mse, 4),
-        "pearson": round(float(pearson_r), 4),
+        "rmse": rmse,
+        "mae": mae,
+        "mse": mse,
+        "pearson": float(pearson_r),
         "pearson_pvalue": float(pearson_p),
-        "spearman": round(float(spearman_r), 4),
+        "spearman": float(spearman_r),
         "spearman_pvalue": float(spearman_p),
-        "r2": round(r2, 4),
-        "ci": round(ci, 4),
+        "r2": r2,
+        "ci": float(ci),
+        "ci_method": "exact_fenwick",
         "n_samples": len(y_true),
     }
 
@@ -192,7 +237,10 @@ def compute_regression_metrics(
 # Ranking Metrics
 # ==============================================================================
 
-def precision_at_k(y_true: np.ndarray, y_pred: np.ndarray, k: int, threshold: Optional[float] = None) -> float:
+
+def precision_at_k(
+    y_true: np.ndarray, y_pred: np.ndarray, k: int, threshold: Optional[float] = None
+) -> float:
     """
     Precision@K: fraction of top-K predicted items that are truly relevant.
 
@@ -214,7 +262,9 @@ def precision_at_k(y_true: np.ndarray, y_pred: np.ndarray, k: int, threshold: Op
     return float(np.mean(relevant))
 
 
-def recall_at_k(y_true: np.ndarray, y_pred: np.ndarray, k: int, threshold: Optional[float] = None) -> float:
+def recall_at_k(
+    y_true: np.ndarray, y_pred: np.ndarray, k: int, threshold: Optional[float] = None
+) -> float:
     """
     Recall@K: fraction of all relevant items that appear in top-K predictions.
     """
@@ -256,7 +306,9 @@ def ndcg_at_k(y_true: np.ndarray, y_pred: np.ndarray, k: int) -> float:
     return float(dcg / idcg)
 
 
-def hit_rate_at_k(y_true: np.ndarray, y_pred: np.ndarray, k: int, threshold: Optional[float] = None) -> float:
+def hit_rate_at_k(
+    y_true: np.ndarray, y_pred: np.ndarray, k: int, threshold: Optional[float] = None
+) -> float:
     """
     Hit Rate@K: 1 if at least one relevant item appears in top-K, else 0.
     """
@@ -267,7 +319,9 @@ def hit_rate_at_k(y_true: np.ndarray, y_pred: np.ndarray, k: int, threshold: Opt
     return float(np.any(y_true[top_k_idx] >= threshold))
 
 
-def enrichment_factor_at_k(y_true: np.ndarray, y_pred: np.ndarray, k: int, threshold: Optional[float] = None) -> float:
+def enrichment_factor_at_k(
+    y_true: np.ndarray, y_pred: np.ndarray, k: int, threshold: Optional[float] = None
+) -> float:
     """
     Enrichment Factor@K: ratio of relevant items in top-K vs. random expectation.
 
@@ -331,6 +385,7 @@ def compute_ranking_metrics(
 # ==============================================================================
 # Summary Formatting
 # ==============================================================================
+
 
 def format_metrics_table(metrics: dict, model_name: str = "") -> str:
     """Format metrics as a readable table string."""
